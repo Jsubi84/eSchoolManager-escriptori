@@ -5,36 +5,29 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+
+import controller.Crida;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import java.awt.Dimension;
 
-public class MainPanel extends JDialog {
+public class PrincipalPanelSwing extends JDialog {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -334876030333481156L;
-	private static MainPanel dialog;
-
+	private static final long serialVersionUID = -9079607942999779149L;
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		try {
-			dialog = new MainPanel();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private String missatge;
 
 	/**
 	 * Create the dialog.
 	 */
-	public MainPanel() {
+	public PrincipalPanelSwing() {
 		setSize(new Dimension(1000, 600));
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(10);
@@ -47,8 +40,11 @@ public class MainPanel extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				missatge = Crida.logoutJSon("dfasdagasdf");
+				System.out.println(missatge);
+				
 				setVisible(false);				
-				Login login = new Login();
+				LoginMainSwing login = new LoginMainSwing();
 				login.setVisible(true);
 				dispose();
 				

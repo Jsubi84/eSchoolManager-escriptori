@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.Login;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -19,18 +21,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
-public class Login extends JFrame {
+public class LoginMainSwing extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4402339031261816900L;
 	private JPanel contentPane;
-	private JTextField txtUser;
+	private JTextField txtUsuari;
 	private JPasswordField txtPassword;
 	private JSeparator separatorUser;
 	private JSeparator separatorPassword;
-	private static Login frame;
+	private static LoginMainSwing frame;
+	private String contrasenya, usuari;
+	
 				
 	/**
 	 * Launch the application.
@@ -39,7 +43,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new Login();
+					frame = new LoginMainSwing();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +55,7 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login() {
+	public LoginMainSwing() {
 		setResizable(false);
 		setType(Type.UTILITY);
 		setBounds(new Rectangle(0, 0, 380, 434));
@@ -70,16 +74,16 @@ public class Login extends JFrame {
 		
 		JLabel lblIconUser = new JLabel("");
 		lblIconUser.setSize(new Dimension(200, 200));
-		lblIconUser.setIcon(new ImageIcon(Login.class.getResource("/pictures/user.png")));
+		lblIconUser.setIcon(new ImageIcon(LoginMainSwing.class.getResource("/pictures/user.png")));
 		lblIconUser.setBounds(80, 5, 200, 217);
 		panel.add(lblIconUser);
 		
-		txtUser = new JTextField();
-		txtUser.setFont(new Font("Dubai", Font.PLAIN, 15));
-		txtUser.setBorder(null);
-		txtUser.setBounds(80, 244, 200, 30);
-		panel.add(txtUser);
-		txtUser.setColumns(10);
+		txtUsuari = new JTextField();
+		txtUsuari.setFont(new Font("Dubai", Font.PLAIN, 15));
+		txtUsuari.setBorder(null);
+		txtUsuari.setBounds(80, 244, 200, 30);
+		panel.add(txtUsuari);
+		txtUsuari.setColumns(10);
 		
 		txtPassword = new JPasswordField();
 		txtPassword.setFont(new Font("Dubai", Font.PLAIN, 15));
@@ -94,10 +98,18 @@ public class Login extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				setVisible(false);				
-				MainPanel principal = new MainPanel(); 
-				principal.setVisible(true);
-				dispose();
+				//Agafar usuari i contrasenya 
+				usuari = txtUsuari.getText();
+				contrasenya = new String(txtPassword.getPassword());
+				
+				Login login =new Login(usuari, contrasenya);
+				
+				if (login.CheckLogin()) {
+					setVisible(false);				
+					PrincipalPanelSwing principal = new PrincipalPanelSwing(); 
+					principal.setVisible(true);
+					dispose();					
+				}
 				
 			}
 		});
