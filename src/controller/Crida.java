@@ -3,7 +3,8 @@
  */
 package controller;
 
-import  javax.json.*;
+import org.json.JSONObject;
+
 
 /**
  * @author Jorsu
@@ -12,30 +13,34 @@ import  javax.json.*;
 
 public class Crida {
 	
-	public static JsonObject StringToJson(String missatge) {
-	//	JsonObject json= Json.createParser(null)
-		
-		return null;
+	//Convertir a JSONObject
+	public static JSONObject StringToJson(String resposta) {
+		JSONObject jsonObject = new JSONObject(resposta);
+		return jsonObject;
 	}
 	
-
 	// Crear Json per a la crida Login
 	public static String loginJSon (String usuari, String password) {
-		JsonObject json = Json.createObjectBuilder() 
-				.add("crida", "LOGIN")
-				.add("usuari",usuari)
-				.add("contrasenya", password).build();
+		JSONObject json = new JSONObject();		
+		json.put("crida", "LOGIN");	
+		JSONObject dades = new JSONObject();	
+		dades.put("usuari",usuari);			
+		dades.put("contrasenya", password);	
+		json.put("dades", dades);
 		return json.toString();
 	}
+	
 	
 	// Crear Json per a la crida Logout
 	public static String logoutJSon (String codisessio) {
 		
 		// Create Json and serialize
-		JsonObject json = Json.createObjectBuilder() 
-				.add("crida", "LOGOUT")
-				.add("codisessio", codisessio).build();
+		JSONObject json = new JSONObject();
+			json.put("crida", "LOGOUT");
+			json.put("codisessio", codisessio);
 		return json.toString();
 	}
+	
+
 		
 }

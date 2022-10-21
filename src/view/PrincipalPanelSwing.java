@@ -3,7 +3,7 @@ package view;
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controller.Crida;
@@ -12,8 +12,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import java.awt.Dimension;
+import java.awt.Rectangle;
+import javax.swing.SwingConstants;
 
-public class PrincipalPanelSwing extends JDialog {
+public class PrincipalPanelSwing extends JFrame {
 
 	/**
 	 * 
@@ -37,6 +39,7 @@ public class PrincipalPanelSwing extends JDialog {
 		getContentPane().add(panel, BorderLayout.NORTH);
 		
 		JButton btnNewButton = new JButton("Sortir");
+		btnNewButton.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -46,7 +49,7 @@ public class PrincipalPanelSwing extends JDialog {
 				setVisible(false);				
 				LoginMainSwing login = new LoginMainSwing();
 				login.setVisible(true);
-				dispose();
+				//dispose();
 				
 			}
 			
@@ -58,6 +61,11 @@ public class PrincipalPanelSwing extends JDialog {
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JButton btnNewButton_1 = new JButton("Opcio 1");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1.setBounds(new Rectangle(0, 0, 20, 10));
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Opcio 2");

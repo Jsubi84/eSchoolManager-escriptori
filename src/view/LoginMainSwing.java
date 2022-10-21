@@ -20,6 +20,9 @@ import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.SwingConstants;
+import java.awt.Component;
+import javax.swing.border.CompoundBorder;
 
 public class LoginMainSwing extends JFrame {
 
@@ -29,9 +32,9 @@ public class LoginMainSwing extends JFrame {
 	private static final long serialVersionUID = -4402339031261816900L;
 	private JPanel contentPane;
 	private JTextField txtUsuari;
-	private JPasswordField txtPassword;
+	private JPasswordField txtContrasenya;
 	private JSeparator separatorUser;
-	private JSeparator separatorPassword;
+	private JSeparator separatorContrasenya;
 	private static LoginMainSwing frame;
 	private String contrasenya, usuari;
 	
@@ -57,8 +60,7 @@ public class LoginMainSwing extends JFrame {
 	 */
 	public LoginMainSwing() {
 		setResizable(false);
-		setType(Type.UTILITY);
-		setBounds(new Rectangle(0, 0, 380, 434));
+		setBounds(new Rectangle(0, 0, 461, 545));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,42 +70,54 @@ public class LoginMainSwing extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(0, 0, 360, 400);
+		panel.setBounds(0, 0, 461, 545);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblIconUser = new JLabel("");
-		lblIconUser.setSize(new Dimension(200, 200));
-		lblIconUser.setIcon(new ImageIcon(LoginMainSwing.class.getResource("/pictures/user.png")));
-		lblIconUser.setBounds(80, 5, 200, 217);
-		panel.add(lblIconUser);
+		separatorUser = new JSeparator();
+		separatorUser.setBounds(140, 336, 280, 8);
+		panel.add(separatorUser);
+		
+		separatorContrasenya = new JSeparator();
+		separatorContrasenya.setBounds(140, 388, 280, 8);
+		panel.add(separatorContrasenya);
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLogo.setSize(new Dimension(200, 200));
+		lblLogo.setIcon(new ImageIcon(LoginMainSwing.class.getResource("/pictures/logo_school.png")));
+		lblLogo.setBounds(38, 47, 385, 226);
+		panel.add(lblLogo);
 		
 		txtUsuari = new JTextField();
 		txtUsuari.setFont(new Font("Dubai", Font.PLAIN, 15));
 		txtUsuari.setBorder(null);
-		txtUsuari.setBounds(80, 244, 200, 30);
+		txtUsuari.setBounds(140, 306, 283, 30);
 		panel.add(txtUsuari);
 		txtUsuari.setColumns(10);
 		
-		txtPassword = new JPasswordField();
-		txtPassword.setFont(new Font("Dubai", Font.PLAIN, 15));
-		txtPassword.setBorder(null);
-		txtPassword.setBounds(80, 295, 200, 30);
-		panel.add(txtPassword);
+		txtContrasenya = new JPasswordField();
+		txtContrasenya.setFont(new Font("Dubai", Font.PLAIN, 15));
+		txtContrasenya.setBorder(null);
+		txtContrasenya.setBounds(140, 357, 283, 30);
+		panel.add(txtContrasenya);
 		
-		JButton btnEntrar = new JButton("ENTRAR");
-		btnEntrar.setForeground(new Color(255, 255, 255));
-		btnEntrar.setFont(new Font("Dubai", Font.PLAIN, 15));
-		btnEntrar.setBackground(new Color(80, 169, 245));
-		btnEntrar.addActionListener(new ActionListener() {
+		JButton btnIniciSessio = new JButton("INICIAR SESSIÓ");
+		btnIniciSessio.setForeground(new Color(255, 255, 255));
+		btnIniciSessio.setFont(new Font("Dubai", Font.PLAIN, 15));
+		btnIniciSessio.setBackground(new Color(61, 9, 205));
+		btnIniciSessio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				//Agafar usuari i contrasenya 
 				usuari = txtUsuari.getText();
-				contrasenya = new String(txtPassword.getPassword());
+				contrasenya = new String(txtContrasenya.getPassword());
 				
+				//Crear un login
 				Login login =new Login(usuari, contrasenya);
 				
+				//Verificar que el login es correcte
 				if (login.CheckLogin()) {
 					setVisible(false);				
 					PrincipalPanelSwing principal = new PrincipalPanelSwing(); 
@@ -113,16 +127,21 @@ public class LoginMainSwing extends JFrame {
 				
 			}
 		});
-		btnEntrar.setBounds(80, 350, 200, 30);
-		panel.add(btnEntrar);
+		btnIniciSessio.setBounds(38, 439, 385, 30);
+		panel.add(btnIniciSessio);
 		
-		separatorUser = new JSeparator();
-		separatorUser.setBounds(80, 282, 200, 8);
-		panel.add(separatorUser);
+		JLabel lblUsuari = new JLabel("Usuari  ");
+		lblUsuari.setBorder(new CompoundBorder());
+		lblUsuari.setFont(new Font("Dubai", Font.PLAIN, 15));
+		lblUsuari.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblUsuari.setBounds(38, 306, 92, 30);
+		panel.add(lblUsuari);
 		
-		separatorPassword = new JSeparator();
-		separatorPassword.setBounds(80, 335, 200, 8);
-		panel.add(separatorPassword);
+		JLabel lblContrasenya = new JLabel("Contrasenya");
+		lblContrasenya.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblContrasenya.setFont(new Font("Dubai", Font.PLAIN, 15));
+		lblContrasenya.setBounds(38, 365, 92, 30);
+		panel.add(lblContrasenya);
 		
 		setLocationRelativeTo(null);
 	}
