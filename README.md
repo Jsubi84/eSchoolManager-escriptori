@@ -1,6 +1,6 @@
 # eSchoolManager-escriptori
 
-Projecte final del CFGS Desenvolupament d'aplicacions multiplataforma.
+Projecte final del CFGS Desenvolupament d'aplicacions multiplataforma (DAM).
 
 El projecte consisteix en la gestio d'un centre de necesitats especial en educació.
 
