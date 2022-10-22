@@ -10,7 +10,7 @@ import java.net.ConnectException;
 import java.net.Socket;
 
 
-public class SocketToServer {
+public class TalkToServer {
 	
 	
     private static final int PORT=1234;
@@ -23,7 +23,7 @@ public class SocketToServer {
      * @throws IOException if an IO error occurs
     */
     
-    public static String talkToServer(String crida) throws IOException, ConnectException{
+    public static String connection(String crida) throws IOException, ConnectException{
     	
     	String entrada;
       
@@ -34,16 +34,7 @@ public class SocketToServer {
     	
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     	entrada = in.readLine();
-    	
-    	/**
-        DataOutputStream out = new DataOutputStream (socket.getOutputStream());
-        out.writeUTF(crida);   		
-            
-        DataInputStream in = new DataInputStream (socket.getInputStream());
-        entrada = in.readUTF();
-    	 */ 
-    	
-    	
+ 	
         socket.close();            
        
         return entrada;

@@ -1,12 +1,10 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controller.Login;
+import controller.ControllerView;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -24,43 +22,26 @@ import javax.swing.SwingConstants;
 import java.awt.Component;
 import javax.swing.border.CompoundBorder;
 
-public class LoginMainSwing extends JFrame {
+public class LoginView extends JFrame {
 
 	/**
-	 * 
+	 * Declaració variables
 	 */
 	private static final long serialVersionUID = -4402339031261816900L;
 	private JPanel contentPane;
 	private JTextField txtUsuari;
 	private JPasswordField txtContrasenya;
-	private JSeparator separatorUser;
-	private JSeparator separatorContrasenya;
-	private static LoginMainSwing frame;
-	private String contrasenya, usuari;
+	private ControllerView controllerView;
 	
-				
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frame = new LoginMainSwing();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
-	 * Create the frame.
+	 * Creació de la pantalla.
 	 */
-	public LoginMainSwing() {
+	public LoginView() {
+		
 		setResizable(false);
-		setBounds(new Rectangle(0, 0, 461, 545));
+		setBounds(new Rectangle(0, 0, 460, 550));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,37 +51,22 @@ public class LoginMainSwing extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(0, 0, 461, 545);
+		panel.setBounds(0, 0, 460, 550);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		separatorUser = new JSeparator();
-		separatorUser.setBounds(140, 336, 280, 8);
-		panel.add(separatorUser);
-		
-		separatorContrasenya = new JSeparator();
-		separatorContrasenya.setBounds(140, 388, 280, 8);
-		panel.add(separatorContrasenya);
 		
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogo.setSize(new Dimension(200, 200));
-		lblLogo.setIcon(new ImageIcon(LoginMainSwing.class.getResource("/pictures/logo_school.png")));
-		lblLogo.setBounds(38, 47, 385, 226);
+		lblLogo.setIcon(new ImageIcon(LoginView.class.getResource("/pictures/logo_school.png")));
+		lblLogo.setBounds(24, 28, 385, 226);
 		panel.add(lblLogo);
-		
-		txtUsuari = new JTextField();
-		txtUsuari.setFont(new Font("Dubai", Font.PLAIN, 15));
-		txtUsuari.setBorder(null);
-		txtUsuari.setBounds(140, 306, 283, 30);
-		panel.add(txtUsuari);
-		txtUsuari.setColumns(10);
 		
 		txtContrasenya = new JPasswordField();
 		txtContrasenya.setFont(new Font("Dubai", Font.PLAIN, 15));
 		txtContrasenya.setBorder(null);
-		txtContrasenya.setBounds(140, 357, 283, 30);
+		txtContrasenya.setBounds(38, 380, 385, 30);
 		panel.add(txtContrasenya);
 		
 		JButton btnIniciSessio = new JButton("INICIAR SESSIÓ");
@@ -109,40 +75,71 @@ public class LoginMainSwing extends JFrame {
 		btnIniciSessio.setBackground(new Color(61, 9, 205));
 		btnIniciSessio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				//Agafar usuari i contrasenya 
-				usuari = txtUsuari.getText();
-				contrasenya = new String(txtContrasenya.getPassword());
-				
-				//Crear un login
-				Login login =new Login(usuari, contrasenya);
-				
-				//Verificar que el login es correcte
-				if (login.CheckLogin()) {
-					setVisible(false);				
-					PrincipalPanelSwing principal = new PrincipalPanelSwing(); 
-					principal.setVisible(true);
-					dispose();					
-				}
-				
+				btnIniciarSessio ();
 			}
 		});
-		btnIniciSessio.setBounds(38, 439, 385, 30);
+		btnIniciSessio.setBounds(38, 446, 385, 30);
 		panel.add(btnIniciSessio);
 		
 		JLabel lblUsuari = new JLabel("Usuari  ");
 		lblUsuari.setBorder(new CompoundBorder());
 		lblUsuari.setFont(new Font("Dubai", Font.PLAIN, 15));
-		lblUsuari.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUsuari.setBounds(38, 306, 92, 30);
+		lblUsuari.setHorizontalAlignment(SwingConstants.LEFT);
+		lblUsuari.setBounds(38, 282, 385, 30);
 		panel.add(lblUsuari);
 		
 		JLabel lblContrasenya = new JLabel("Contrasenya");
-		lblContrasenya.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblContrasenya.setHorizontalAlignment(SwingConstants.LEFT);
 		lblContrasenya.setFont(new Font("Dubai", Font.PLAIN, 15));
-		lblContrasenya.setBounds(38, 365, 92, 30);
+		lblContrasenya.setBounds(38, 351, 385, 30);
 		panel.add(lblContrasenya);
 		
+		JSeparator separatorUsuari = new JSeparator();
+		separatorUsuari.setBounds(38, 340, 385, 2);
+		panel.add(separatorUsuari);
+		
+		txtUsuari = new JTextField();
+		txtUsuari.setFont(new Font("Dubai", Font.PLAIN, 15));
+		txtUsuari.setBorder(null);
+		txtUsuari.setBounds(38, 310, 385, 30);
+		panel.add(txtUsuari);
+		txtUsuari.setColumns(10);
+		
+		JSeparator separatorContrasenya = new JSeparator();
+		separatorContrasenya.setBounds(38, 410, 385, 2);
+		panel.add(separatorContrasenya);
+		
 		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+
+
+	public ControllerView getControllerView() {
+		return controllerView;
+	}
+
+
+	public void setControllerView(ControllerView controllerView) {
+		this.controllerView = controllerView;
+	}	
+	
+	
+	/**
+	 * Metode per inicia verificació i access a l'aplicació.
+	 */
+	public void btnIniciarSessio() {
+		Boolean loginOK = controllerView.getControlOper()
+				.iniciarSessio(txtUsuari.getText(), new String(txtContrasenya.getPassword()));
+		txtUsuari.setText("");
+		txtContrasenya.setText("");
+		
+		//Verificar que el login es correcte pero obrir pantalla principal
+		if (loginOK) {
+			controllerView.getLoginview().setVisible(false);	
+			
+			//GOTO posar la gestió segons departament, fer visibles els botons. Passar dades a visualitzar.
+			controllerView.carregarOpcionsUsuari();
+			controllerView.getMainview().setVisible(true);				
+		}
 	}
 }

@@ -11,7 +11,7 @@ import org.json.JSONObject;
  *
  */
 
-public class Crida {
+public class JSonOperations {
 	
 	//Convertir a JSONObject
 	public static JSONObject StringToJson(String resposta) {
@@ -19,7 +19,7 @@ public class Crida {
 		return jsonObject;
 	}
 	
-	// Crear Json per a la crida Login
+	// Crear Json per a la crida LoginControl
 	public static String loginJSon (String usuari, String password) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "LOGIN");	

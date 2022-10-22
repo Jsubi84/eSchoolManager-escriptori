@@ -5,36 +5,36 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
 
-public class Login {
+import model.Login;
+
+public class LoginControl {
 	
 	private static final String RESPOSTA_OK= "OK";
 	private static final String DATA_MISSING= "Falta introduir alguna dada per poder entrar";
 	private static final String CONNECTION_MISSING= "No s'ha pogut establir la connexió";
 	
-	private String usuari, contrasenya, crida, resposta;
+	private String crida, resposta;
 	JSONObject jsonUsuari;
+	Login login;
 	
-	private String codiSessio;
-	
-	public Login (String usuari, String contrasenya){
-		this.usuari = usuari;
-		this.contrasenya= contrasenya;
+	public LoginControl (Login login){
+		this.login = login;
 	}
 	
 
 	public Boolean CheckLogin(){
 		
-		if (!(usuari.isBlank() || contrasenya.isBlank()) ) {
+		if (!(login.getUsuari().isBlank() || login.getContrasenya().isBlank()) ) {
 			
 			//Crear conversor i obtenir missatge
-			crida = Crida.loginJSon(usuari, contrasenya);
+			crida = JSonOperations.loginJSon(login.getUsuari(), login.getContrasenya());
 			
 			// Resultat de la crida per consola per fer seguiment d'enviament.
 			System.out.println(crida); 			
 			
 			//Tranferencia crida / recepcio de resposta
 			try {
-				resposta = SocketToServer.talkToServer(crida);
+				resposta = TalkToServer.connection(crida);
 			} catch (IOException e) { 
 				System.out.println(e.getMessage());
 			}
@@ -43,12 +43,15 @@ public class Login {
 				// Resposta a la crida per consola per fer seguiment part rebuda.
 				System.out.println(resposta); 	
 				
-				jsonUsuari = Crida.StringToJson(resposta);
+				jsonUsuari = JSonOperations.StringToJson(resposta);
 				
 				if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
 					JSONObject dades = (JSONObject) jsonUsuari.get("dades");
 					
-					setCodiSessio((String) dades.get("codiSessio"));	
+					login.setCodiSessio((String) dades.get("codiSessio"));
+					login.setCodiDepartament((String) dades.get("codiDepartament"));
+					login.setNom((String) dades.get("nom"));
+					
 					return true;
 				} else {
 					JOptionPane.showMessageDialog(null, jsonUsuari.get("missatge"));
@@ -66,15 +69,6 @@ public class Login {
 		}	
 	}
 
-
-	public String getCodiSessio() {
-		return codiSessio;
-	}
-
-
-	public void setCodiSessio(String codiSessio) {
-		this.codiSessio = codiSessio;
-	}
 }
 
 
