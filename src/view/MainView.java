@@ -1,18 +1,14 @@
 package view;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import controller.ControllerView;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Image;
-
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -29,14 +25,15 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 
 
+/**
+ * @author Jordi Subirana
+ *
+ */
 public class MainView extends JFrame {
 
 
 	private static final long serialVersionUID = -9079607942999779149L;
 	
-	/**
-	 * 
-	 */
 	ControllerView controllerView;
 	JLabel lblNomEmpleat, lblNomDepartament, lblLogo;
 	JButton btnServei, btnBeca, btnSessions, btnEstudiant, btnEmpleats, btnDepartament, btnEscola;
@@ -180,7 +177,11 @@ public class MainView extends JFrame {
 		getContentPane().add(dades, BorderLayout.CENTER);
 		
 	}
-
+	
+	
+	/**
+	 * Setters i Getters
+	 */
 	public ControllerView getControllerView() {
 		return controllerView;
 	}
@@ -198,6 +199,11 @@ public class MainView extends JFrame {
 		this.lblNomDepartament.setText(lblNomDepartament);
 	}
 	
+	
+	
+	/**
+	 * Opcions per departament Administrador
+	 */
 	public void opcionsAdministrador() {
 		btnServei.setVisible(true);
 		btnBeca.setVisible(true);
@@ -208,6 +214,10 @@ public class MainView extends JFrame {
 		btnEscola.setVisible(true);
 	}
 	
+	
+	/**
+	 * Opcions per departament Administratiu
+	 */
 	public void opcionsAdministratiu() {
 		btnServei.setVisible(true);
 		btnBeca.setVisible(true);
@@ -216,10 +226,16 @@ public class MainView extends JFrame {
 		btnEmpleats.setVisible(true);
 	}
 	
+	/**
+	 * Opcions per departament Docent
+	 */
 	public void opcionsDocent() {
 		btnSessions.setVisible(true);
 	}
 	
+	/**
+	 * Posar tot invisible per poder recarregar.
+	 */
 	public void opcionsReset() {
 		btnServei.setVisible(false);
 		btnBeca.setVisible(false);
@@ -230,6 +246,9 @@ public class MainView extends JFrame {
 		btnEscola.setVisible(false);
 	}
 	
+	/**
+	 * Metode per sortir de la sessio i tornar a la pantalla de login.
+	 */
 	public void sortirSessio() {
 		controllerView.getControlOper().sortirSessio();
 		controllerView.getMainview().setVisible(false);		

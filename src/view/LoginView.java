@@ -3,9 +3,7 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import controller.ControllerView;
-
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -22,6 +20,11 @@ import javax.swing.SwingConstants;
 import java.awt.Component;
 import javax.swing.border.CompoundBorder;
 
+
+/**
+ * @author Jordi Subirana
+ *
+ */
 public class LoginView extends JFrame {
 
 	/**
@@ -32,7 +35,6 @@ public class LoginView extends JFrame {
 	private JTextField txtUsuari;
 	private JPasswordField txtContrasenya;
 	private ControllerView controllerView;
-	
 	
 
 	/**
@@ -114,10 +116,12 @@ public class LoginView extends JFrame {
 	}
 
 
+	/**
+	 * Setters i Getters
+	 */
 	public ControllerView getControllerView() {
 		return controllerView;
 	}
-
 
 	public void setControllerView(ControllerView controllerView) {
 		this.controllerView = controllerView;
@@ -137,7 +141,6 @@ public class LoginView extends JFrame {
 		if (loginOK) {
 			controllerView.getLoginview().setVisible(false);	
 			
-			//GOTO posar la gestió segons departament, fer visibles els botons. Passar dades a visualitzar.
 			controllerView.carregarOpcionsUsuari();
 			controllerView.getMainview().setVisible(true);				
 		}
