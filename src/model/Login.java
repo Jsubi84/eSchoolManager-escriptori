@@ -8,8 +8,8 @@ package model;
 
 public class Login {
 
-	private String usuari, contrasenya, codiSessio, nom, codiDepartament;
-	
+	private String usuari, contrasenya, codiSessio, nom;
+	private Integer codiDepartament; 
 	
 	/**
 	 * Constructor per defecte.
@@ -38,12 +38,12 @@ public class Login {
 	}
 
 
-	public String getCodiDepartament() {
+	public Integer getCodiDepartament() {
 		return codiDepartament;
 	}
 
 
-	public void setCodiDepartament(String codiDepartament) {
+	public void setCodiDepartament(Integer codiDepartament) {
 		this.codiDepartament = codiDepartament;
 	}
 
@@ -72,8 +72,6 @@ public class Login {
 	public void setContrasenya(String contrasenya) {
 		this.contrasenya = contrasenya;
 	}
-
-
 }
 
 

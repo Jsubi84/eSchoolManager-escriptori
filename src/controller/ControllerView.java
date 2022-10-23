@@ -45,13 +45,13 @@ public class ControllerView {
 	
 	public void carregarOpcionsUsuari() {
 		mainview.setTextLblNomEmpleat( controlOper.getLogin().getNom().toUpperCase());
-		mainview.setTextLblNomDepartament(controlOper.getLogin().getCodiDepartament().toUpperCase());
+		mainview.setTextLblNomDepartament(Integer.toString(controlOper.getLogin().getCodiDepartament()));
 		
-		if(controlOper.getLogin().getCodiDepartament().equalsIgnoreCase("administrador")) {
+		if(controlOper.getLogin().getCodiDepartament() == 1){
 			mainview.opcionsAdministrador();
-		}else if(controlOper.getLogin().getCodiDepartament().equalsIgnoreCase("administratiu")) {
+		}else if(controlOper.getLogin().getCodiDepartament() == 2) {
 			mainview.opcionsAdministratiu();
-		}else{
+		}else if (controlOper.getLogin().getCodiDepartament() == 3) {
 			mainview.opcionsDocent();
 		}
 	}

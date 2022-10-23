@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import controller.ControllerOperation;
 import controller.ControllerView;

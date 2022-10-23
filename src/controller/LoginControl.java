@@ -49,7 +49,7 @@ public class LoginControl {
 					JSONObject dades = (JSONObject) jsonUsuari.get("dades");
 					
 					login.setCodiSessio((String) dades.get("codiSessio"));
-					login.setCodiDepartament((String) dades.get("codiDepartament"));
+					login.setCodiDepartament((int) dades.get("codiDepartament"));
 					login.setNom((String) dades.get("nom"));
 					
 					return true;
