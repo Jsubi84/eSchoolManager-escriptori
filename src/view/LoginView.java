@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import controller.ControllerView;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -143,6 +144,9 @@ public class LoginView extends JFrame {
 			
 			controllerView.carregarOpcionsUsuari();
 			controllerView.getMainview().setVisible(true);				
+		}else{
+			//Visualització del missatge d'error en la classe vista
+			JOptionPane.showMessageDialog(null, (String)controllerView.getControlOper().getLogin().getIncidencia());
 		}
 	}
 }

@@ -1,5 +1,8 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
+import model.Login;
 import view.LoginView;
 import view.MainView;
 
@@ -51,21 +54,17 @@ public class ControllerView {
 	 * Carregar opcions segons departament que pertany l'usuari.
 	 */
 	public void carregarOpcionsUsuari() {
-		String departament = null;
+		Login login = controlOper.getLogin();
+		mainview.permisos(login);
 		
-		if(controlOper.getLogin().getCodiDepartament() == 1){
-			mainview.opcionsAdministrador();
-			departament = "Administrador";
-		}else if(controlOper.getLogin().getCodiDepartament() == 2) {
-			mainview.opcionsAdministratiu();
-			departament = "Administratiu";
-		}else if (controlOper.getLogin().getCodiDepartament() == 3) {
-			mainview.opcionsDocent();
-			departament = "Docent";
-		}
-		
-		mainview.setTextLblNomEmpleat( controlOper.getLogin().getNom().toUpperCase());
-		mainview.setTextLblNomDepartament(departament);		
+		mainview.setTextLblNomEmpleat(controlOper.getLogin().getNom().toUpperCase());
+		mainview.setTextLblNomDepartament(controlOper.getLogin().getNomDepartament().toUpperCase());		
 	}
+	
+	
+	public void missatgeIncidencia(String missatge) {
+		JOptionPane.showMessageDialog(null, missatge);
+	}
+
 	
 }
