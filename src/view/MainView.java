@@ -24,6 +24,9 @@ import javax.swing.border.EtchedBorder;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Font;
+import javax.swing.JLayeredPane;
+
 
 
 /**
@@ -34,18 +37,27 @@ import java.awt.event.MouseEvent;
 public class MainView extends JFrame {
 
 
-	private static final long serialVersionUID = -9079607942999779149L;
+	private static final long serialVersionUID = -1L;
 	
 	private ControllerView controllerView;
 	private JLabel lblNomEmpleat, lblNomDepartament, lblLogo;
-	private JButton btnServei, btnBeca, btnSessio, btnEstudiant, btnEmpleat, btnDepartament, btnEscola;
-	private JPanel dades, dadesEscola, dadesDepartament;
-	private JPanel dadesEmpleat;
+	private JButton btnServei, btnBeca, btnSessio, btnEstudiant, btnEmpleat, btnDepartament, btnEscola, btnConfigUsuari, btnSortirSessio;
+	private JPanel dades;
+	private Boolean isServei, isBeca, isSessio, isEstudiant, isEmpleat, isDepartament, isEscola;
 
 	/**
 	 * Create MainViewModern.
 	 */
 	public MainView() {
+		isServei = false;
+		isBeca = false;
+		isSessio = false; 
+		isEstudiant= false; 
+		isEmpleat= false; 
+		isDepartament = false; 
+		isEscola = false;
+		
+		
 		setResizable(false);
 		setSize(new Dimension(1000, 600));
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
@@ -58,10 +70,60 @@ public class MainView extends JFrame {
 		capçalera.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		capçalera.setBackground(new Color(255, 255, 255));
 		getContentPane().add(capçalera, BorderLayout.NORTH);
+		capçalera.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnSortirSessio = new JButton("Sortir Sessio");
+		JPanel panelCapçalera = new JPanel();
+		panelCapçalera.setBackground(Color.WHITE);
+		capçalera.add(panelCapçalera, BorderLayout.WEST);
+		
+		JLabel lblLabelUsuari = new JLabel("Usuari : ");
+		lblLabelUsuari.setFont(new Font("Dubai", Font.PLAIN, 14));
+		lblLabelUsuari.setBackground(new Color(255, 255, 255));
+		panelCapçalera.add(lblLabelUsuari);
+		
+		
+		lblNomEmpleat = new JLabel("");
+		lblNomEmpleat.setFont(new Font("Dubai", Font.PLAIN, 14));
+		lblNomEmpleat.setBackground(new Color(0, 255, 127));
+		panelCapçalera.add(lblNomEmpleat);		
+		
+		JLabel lblLabelEmpleat = new JLabel("   Departament: ");
+		lblLabelEmpleat.setFont(new Font("Dubai", Font.PLAIN, 14));
+		panelCapçalera.add(lblLabelEmpleat);
+		
+		lblNomDepartament = new JLabel("");
+		lblNomDepartament.setFont(new Font("Dubai", Font.PLAIN, 14));
+		lblNomDepartament.setBackground(new Color(0, 255, 127));
+		panelCapçalera.add(lblNomDepartament);
+		
+		JPanel panelConfigOut = new JPanel();
+		panelConfigOut.setBackground(Color.WHITE);
+		capçalera.add(panelConfigOut, BorderLayout.EAST);
+		
+		btnConfigUsuari = new JButton("");
+		btnConfigUsuari.setFocusable(false);
+		btnConfigUsuari.setSize(new Dimension(25, 25));
+		btnConfigUsuari.setBorder(null);
+		btnConfigUsuari.setPreferredSize(new Dimension(25, 25));
+		btnConfigUsuari.setIcon(setIcons("/pictures/settings.png", btnConfigUsuari));
+		btnConfigUsuari.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnConfigUsuari.setForeground(Color.WHITE);
+		btnConfigUsuari.setFont(new Font("Dubai", Font.PLAIN, 14));
+		btnConfigUsuari.setBorder(null);
+		btnConfigUsuari.setBackground(Color.WHITE);
+		panelConfigOut.add(btnConfigUsuari);
+		
+		btnSortirSessio = new JButton("");
+		btnSortirSessio.setFocusable(false);
+		panelConfigOut.add(btnSortirSessio);
+		btnSortirSessio.setPreferredSize(new Dimension(25, 25));
+		btnSortirSessio.setBorder(null);
+		btnSortirSessio.setSize(new Dimension(25, 25));
+		btnSortirSessio.setFont(new Font("Dubai", Font.PLAIN, 14));
+		btnSortirSessio.setSize(new Dimension(91, 23));
+		btnSortirSessio.setIcon(setIcons("/pictures/logout.png", btnSortirSessio));
 		btnSortirSessio.setForeground(new Color(255, 255, 255));
-		btnSortirSessio.setBackground(new Color(255, 0, 0));
+		btnSortirSessio.setBackground(Color.WHITE);
 		btnSortirSessio.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnSortirSessio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -69,28 +131,6 @@ public class MainView extends JFrame {
 			}
 			
 		});
-		capçalera.setLayout(new BorderLayout(0, 0));
-		capçalera.add(btnSortirSessio, BorderLayout.EAST);
-		
-		JPanel panelCapçalera = new JPanel();
-		panelCapçalera.setBackground(Color.WHITE);
-		capçalera.add(panelCapçalera, BorderLayout.WEST);
-		
-		JLabel lblLabelUsuari = new JLabel("Usuari : ");
-		lblLabelUsuari.setBackground(new Color(255, 255, 255));
-		panelCapçalera.add(lblLabelUsuari);
-		
-		
-		lblNomEmpleat = new JLabel("");
-		lblNomEmpleat.setBackground(new Color(0, 255, 127));
-		panelCapçalera.add(lblNomEmpleat);		
-		
-		JLabel lblLabelEmpleat = new JLabel("   Departament: ");
-		panelCapçalera.add(lblLabelEmpleat);
-		
-		lblNomDepartament = new JLabel("");
-		lblNomDepartament.setBackground(new Color(0, 255, 127));
-		panelCapçalera.add(lblNomDepartament);
 		
 		JPanel menu = new JPanel();
 		menu.setSize(new Dimension(150, 0));
@@ -103,6 +143,7 @@ public class MainView extends JFrame {
 
 		//Button ESCOLA
 		btnEscola = new JButton("Escola");
+		btnEscola.setFont(new Font("Dubai", Font.PLAIN, 14));
 		btnEscola.setFocusable(false);
 		btnEscola.setPreferredSize(new Dimension(60, 60));
 		btnEscola.setSize(new Dimension(60, 60));
@@ -110,16 +151,33 @@ public class MainView extends JFrame {
 		btnEscola.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEscola.setBorder(null);
 		
-		efectButton(btnEscola);
+		//efectButton(btnEscola, isEscola);
 		btnEscola.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioEscola();
 			}
 		});
 		
+		btnEscola.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEscola.setBackground(Color.lightGray);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+					System.out.println(isEscola);				
+				if (isEscola) {
+					btnEscola.setBackground(Color.lightGray);
+				}else {
+					btnEscola.setBackground(Color.WHITE);	
+				}	
+			}
+		});
+		
 		
 		//Button DEPARTAMENT
 		btnDepartament = new JButton("Departament");
+		btnDepartament.setFont(new Font("Dubai", Font.PLAIN, 14));
 		btnDepartament.setFocusable(false);
 		btnDepartament.setPreferredSize(new Dimension(60, 60));
 		btnDepartament.setSize(new Dimension(60, 60));
@@ -127,10 +185,26 @@ public class MainView extends JFrame {
 		btnDepartament.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDepartament.setBorder(null);
 		
-		efectButton(btnDepartament);
+		//efectButton(btnDepartament, isDepartament);
 		btnDepartament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioDepartament();
+			}
+		});
+		
+		btnDepartament.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDepartament.setBackground(Color.lightGray);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+					System.out.println(isDepartament);				
+				if (isDepartament) {
+					btnDepartament.setBackground(Color.lightGray);
+				}else {
+					btnDepartament.setBackground(Color.WHITE);	
+				}	
 			}
 		});
 		
@@ -138,14 +212,16 @@ public class MainView extends JFrame {
 		
 		//Button EMPLEAT
 		btnEmpleat = new JButton("Empleat");
+		btnEmpleat.setPreferredSize(new Dimension(40, 40));
+		btnEmpleat.setSize(new Dimension(40, 40));		
+		//btnEmpleat.setIcon(new ImageIcon(MainView.class.getResource("/pictures/estudiant.png")));		
+		btnEmpleat.setFont(new Font("Dubai", Font.PLAIN, 14));
 		btnEmpleat.setFocusable(false);
-		btnEmpleat.setPreferredSize(new Dimension(60, 60));
-		btnEmpleat.setSize(new Dimension(60, 60));
 		btnEmpleat.setBackground(Color.WHITE);
 		btnEmpleat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEmpleat.setBorder(null);
 		
-		efectButton(btnEmpleat);
+		efectButton(btnEmpleat, isEmpleat);
 		btnEmpleat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioEmpleat();
@@ -155,6 +231,7 @@ public class MainView extends JFrame {
 		
 		//Button ESTUDIANT
 		btnEstudiant = new JButton("Estudiant");
+		btnEstudiant.setFont(new Font("Dubai", Font.PLAIN, 14));
 		btnEstudiant.setFocusable(false);
 		btnEstudiant.setPreferredSize(new Dimension(60, 60));
 		btnEstudiant.setSize(new Dimension(60, 60));
@@ -162,7 +239,7 @@ public class MainView extends JFrame {
 		btnEstudiant.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEstudiant.setBorder(null);
 		
-		efectButton(btnEstudiant);
+		efectButton(btnEstudiant, isEstudiant);
 		btnEstudiant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioEstudiant();
@@ -172,6 +249,7 @@ public class MainView extends JFrame {
 		
 		//Button SESSIO
 		btnSessio = new JButton("Sessio");
+		btnSessio.setFont(new Font("Dubai", Font.PLAIN, 14));
 		btnSessio.setFocusable(false);
 		btnSessio.setPreferredSize(new Dimension(60, 60));
 		btnSessio.setSize(new Dimension(60, 60));
@@ -179,7 +257,7 @@ public class MainView extends JFrame {
 		btnSessio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSessio.setBorder(null);
 		
-		efectButton(btnSessio);
+		efectButton(btnSessio, isSessio);
 		btnSessio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioSessio();
@@ -189,6 +267,7 @@ public class MainView extends JFrame {
 		
 		//Button BECA
 		btnBeca = new JButton("Beca");
+		btnBeca.setFont(new Font("Dubai", Font.PLAIN, 14));
 		btnBeca.setFocusable(false);
 		btnBeca.setPreferredSize(new Dimension(60, 60));
 		btnBeca.setSize(new Dimension(60, 60));
@@ -196,7 +275,7 @@ public class MainView extends JFrame {
 		btnBeca.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnBeca.setBorder(null);
 		
-		efectButton(btnBeca);
+		efectButton(btnBeca, isBeca);
 		btnBeca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioBeca();
@@ -205,6 +284,7 @@ public class MainView extends JFrame {
 		
 		//Button SERVI
 		btnServei = new JButton("Servei");
+		btnServei.setFont(new Font("Dubai", Font.PLAIN, 14));
 		btnServei.setFocusable(false);
 		btnServei.setPreferredSize(new Dimension(60, 60));
 		btnServei.setSize(new Dimension(60, 60));
@@ -212,7 +292,7 @@ public class MainView extends JFrame {
 		btnServei.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnServei.setBorder(null);
 		
-		efectButton(btnServei);
+		efectButton(btnServei, isServei);
 		btnServei.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioServei();
@@ -275,26 +355,14 @@ public class MainView extends JFrame {
 		dades.setLayout(null);
 		getContentPane().add(dades, BorderLayout.CENTER);
 		
-		dadesEmpleat = new JPanel();
-		dadesEmpleat.setVisible(false);		
-		dadesEmpleat.setBackground(Color.CYAN);
-		dadesEmpleat.setBounds(0, 0, 818, 535);
-		dades.add(dadesEmpleat);
-		dadesEmpleat.setLayout(null);
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBounds(0, 0, 816, 525);
+		dades.add(layeredPane);
 		
-		dadesEscola = new JPanel();
-		dadesEscola.setVisible(false);		
-		dadesEscola.setBackground(Color.YELLOW);
-		dadesEscola.setBounds(0, 0, 818, 535);
-		dades.add(dadesEscola);
-		dadesEscola.setLayout(null);
-		
-		dadesDepartament = new JPanel();
-		dadesDepartament.setVisible(false);
-		dadesDepartament.setBackground(Color.RED);
-		dadesDepartament.setBounds(0, 0, 818, 535);
-		dades.add(dadesDepartament);
-		dadesDepartament.setLayout(null);
+		DepartamentFiltreForm departamentFiltreForm = new DepartamentFiltreForm();
+		departamentFiltreForm.setBounds(0, 0, 818, 525);
+		//departamentFiltreForm.getcla
+		layeredPane.add(departamentFiltreForm);
 
 		setLocationRelativeTo(null);
 	}
@@ -326,7 +394,7 @@ public class MainView extends JFrame {
 	 * @param button
 	 * @param url
 	 */
-	public void efectButton (JButton button) {
+	public void efectButton (JButton button, Boolean selected) {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -334,26 +402,31 @@ public class MainView extends JFrame {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				button.setBackground(Color.WHITE);
+					System.out.println(selected);				
+				if (selected) {
+					button.setBackground(Color.lightGray);
+				}else {
+					button.setBackground(Color.WHITE);	
+				}	
 			}
 		});
 	}
 	
 	
 	
-//	/**
-//	 * Escalat dels icones dels botons de selecció
-//	 * @param url
-//	 * @param button
-//	 */
-//	public Icon setIcons (String url, JButton button) {	
-//	    ImageIcon imgIcon = new ImageIcon(getClass().getResource(url));
-//	    Image imgEscalada = imgIcon.getImage().getScaledInstance(button.getWidth()-10,
-//	            button.getHeight()-10, Image.SCALE_DEFAULT);
-//	    Icon icon = new ImageIcon(imgEscalada);
-//	    return icon;
-//	}
-//	
+	/**
+	 * Escalat dels icones dels botons de selecció
+	 * @param url
+	 * @param button
+	 */
+	public Icon setIcons (String url, JButton button) {	
+	    ImageIcon imgIcon = new ImageIcon(getClass().getResource(url));
+	    Image imgEscalada = imgIcon.getImage().getScaledInstance(button.getHeight(),
+	            button.getHeight(), Image.SCALE_SMOOTH);
+	    Icon icon = new ImageIcon(imgEscalada);
+	    return icon;
+	}
+	
 	
 	/**
 	 * Permisos per cada tipus d'usuari carrega de opcions visibles
@@ -378,43 +451,69 @@ public class MainView extends JFrame {
 	}
 	
 	
-	public void resetDades() {
-		dadesDepartament.setVisible(false);
-		dadesEscola.setVisible(false);
-		dadesEmpleat.setVisible(false);
+	public void resetIsSelectedMenu() {
+		isServei = false;
+		isBeca = false;
+		isSessio = false; 
+		isEstudiant = false;
+		isEmpleat = false; 
+		isDepartament = false;
+		isEscola = false;
+		btnServei.setBackground(Color.WHITE);	
+		btnBeca.setBackground(Color.WHITE);
+		btnSessio.setBackground(Color.WHITE);
+		btnEstudiant.setBackground(Color.WHITE);
+		btnEmpleat.setBackground(Color.WHITE);
+		btnDepartament.setBackground(Color.WHITE);
+		btnEscola.setBackground(Color.WHITE);
 	}
 	
 	
+	
+	public void resetDades() {
+//		dadesDepartament.setVisible(false);
+//		dadesEscola.setVisible(false);
+//		dadesEmpleat.setVisible(false);
+		resetIsSelectedMenu();
+	}
+//	
+//	
 	public void opcioEscola() {
 		resetDades();
-		dadesEscola.setVisible(true);
+		isEscola = true;
+		System.out.println(isEscola);
+//		dadesEscola.setVisible(true);
 	}
-	
+//	
 	public void opcioDepartament() {
 		resetDades();
-		dadesDepartament.setVisible(true);
+		isDepartament = true;
+//		dadesDepartament.setVisible(true);
 	}
-	
+//	
 	public void opcioEmpleat() {
 		resetDades();
-		dadesEmpleat.setVisible(true);
-	}
+		isEmpleat = true; 
+//		dadesEmpleat.setVisible(true);
+}
 	
 	public void opcioEstudiant() {
 		resetDades();
+		isEstudiant = true;
 	}
 	
 	public void opcioServei() {
-		resetDades();
-
+		resetDades();		
+		isServei = true;
 	}
 	
 	public void opcioBeca() {
-		resetDades();
+		resetDades();	
+		isBeca = true;
 	}
 	
 	public void opcioSessio() {
-		resetDades();
+		resetDades();		
+		isSessio = true; 
 	}
-	
 }

@@ -26,7 +26,7 @@ public class LoginTest {
 	 */	
 	@Test
 	public void credencialsIncorrectes() {
-		Login login = new Login ("jordi","jordi");		
+		Login login = new Login ("jordi","noemi");		
 		Assertions.assertFalse(login.CheckLogin());
 	}
 
