@@ -1,14 +1,17 @@
 package view;
 
 import javax.swing.JPanel;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
-public class DepartamentFiltreForm extends JPanel {
+public class DepartamentFilterForm extends JPanel {
 	/**
 	 * 
 	 */
@@ -18,17 +21,19 @@ public class DepartamentFiltreForm extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public DepartamentFiltreForm() {
-		setPreferredSize(new Dimension(818, 529));
-		setSize(new Dimension(818, 535));
+	public DepartamentFilterForm() {
+		setPreferredSize(new Dimension(818, 524));
+		setSize(new Dimension(818, 524));
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 818, 524);
+		panel.setBackground(Color.WHITE);
 		add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblTitolDepartament = new JLabel("Departament");
+		lblTitolDepartament.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lblTitolDepartament.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitolDepartament.setFont(new Font("Dubai", Font.BOLD, 21));
 		lblTitolDepartament.setBounds(10, 11, 798, 41);

@@ -25,7 +25,7 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
-import javax.swing.JLayeredPane;
+import java.awt.CardLayout;
 
 
 
@@ -164,8 +164,7 @@ public class MainView extends JFrame {
 				btnEscola.setBackground(Color.lightGray);
 			}
 			@Override
-			public void mouseExited(MouseEvent e) {
-					System.out.println(isEscola);				
+			public void mouseExited(MouseEvent e) {				
 				if (isEscola) {
 					btnEscola.setBackground(Color.lightGray);
 				}else {
@@ -198,8 +197,7 @@ public class MainView extends JFrame {
 				btnDepartament.setBackground(Color.lightGray);
 			}
 			@Override
-			public void mouseExited(MouseEvent e) {
-					System.out.println(isDepartament);				
+			public void mouseExited(MouseEvent e) {				
 				if (isDepartament) {
 					btnDepartament.setBackground(Color.lightGray);
 				}else {
@@ -228,6 +226,21 @@ public class MainView extends JFrame {
 			}
 		});
 		
+		btnEmpleat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEmpleat.setBackground(Color.lightGray);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {				
+				if (isEmpleat) {
+					btnEmpleat.setBackground(Color.lightGray);
+				}else {
+					btnEmpleat.setBackground(Color.WHITE);	
+				}	
+			}
+		});
+		
 		
 		//Button ESTUDIANT
 		btnEstudiant = new JButton("Estudiant");
@@ -243,6 +256,21 @@ public class MainView extends JFrame {
 		btnEstudiant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioEstudiant();
+			}
+		});
+		
+		btnEstudiant.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEstudiant.setBackground(Color.lightGray);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {				
+				if (isEstudiant) {
+					btnEstudiant.setBackground(Color.lightGray);
+				}else {
+					btnEstudiant.setBackground(Color.WHITE);	
+				}	
 			}
 		});
 		
@@ -264,6 +292,21 @@ public class MainView extends JFrame {
 			}
 		});
 		
+		btnSessio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSessio.setBackground(Color.lightGray);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {				
+				if (isSessio) {
+					btnSessio.setBackground(Color.lightGray);
+				}else {
+					btnSessio.setBackground(Color.WHITE);	
+				}	
+			}
+		});
+		
 		
 		//Button BECA
 		btnBeca = new JButton("Beca");
@@ -282,6 +325,22 @@ public class MainView extends JFrame {
 			}
 		});
 		
+		btnBeca.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBeca.setBackground(Color.lightGray);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {				
+				if (isBeca) {
+					btnBeca.setBackground(Color.lightGray);
+				}else {
+					btnBeca.setBackground(Color.WHITE);	
+				}	
+			}
+		});
+		
+		
 		//Button SERVI
 		btnServei = new JButton("Servei");
 		btnServei.setFont(new Font("Dubai", Font.PLAIN, 14));
@@ -299,6 +358,20 @@ public class MainView extends JFrame {
 			}
 		});
 		
+		btnServei.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnServei.setBackground(Color.lightGray);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {				
+				if (isServei) {
+					btnServei.setBackground(Color.lightGray);
+				}else {
+					btnServei.setBackground(Color.WHITE);	
+				}	
+			}
+		});
 		
 		
 		lblLogo = new JLabel("");
@@ -352,17 +425,8 @@ public class MainView extends JFrame {
 		
 		dades = new JPanel();
 		dades.setBackground(Color.WHITE);
-		dades.setLayout(null);
 		getContentPane().add(dades, BorderLayout.CENTER);
-		
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 0, 816, 525);
-		dades.add(layeredPane);
-		
-		DepartamentFiltreForm departamentFiltreForm = new DepartamentFiltreForm();
-		departamentFiltreForm.setBounds(0, 0, 818, 525);
-		//departamentFiltreForm.getcla
-		layeredPane.add(departamentFiltreForm);
+		dades.setLayout(new CardLayout(0, 0));
 
 		setLocationRelativeTo(null);
 	}
@@ -471,49 +535,69 @@ public class MainView extends JFrame {
 	
 	
 	public void resetDades() {
-//		dadesDepartament.setVisible(false);
-//		dadesEscola.setVisible(false);
-//		dadesEmpleat.setVisible(false);
 		resetIsSelectedMenu();
 	}
-//	
-//	
+
 	public void opcioEscola() {
 		resetDades();
 		isEscola = true;
-		System.out.println(isEscola);
-//		dadesEscola.setVisible(true);
+		
+		EscolaUpdateForm escolaForm = new EscolaUpdateForm();
+		carregarPanel(escolaForm);
 	}
-//	
+	
 	public void opcioDepartament() {
 		resetDades();
 		isDepartament = true;
-//		dadesDepartament.setVisible(true);
-	}
-//	
+		
+		DepartamentFilterForm departamentForm = new DepartamentFilterForm();
+		carregarPanel(departamentForm);
+	}	
+	
 	public void opcioEmpleat() {
 		resetDades();
 		isEmpleat = true; 
-//		dadesEmpleat.setVisible(true);
-}
+		
+		EmpleatFilterForm empleatForm = new EmpleatFilterForm();
+		carregarPanel(empleatForm);
+	}
 	
 	public void opcioEstudiant() {
 		resetDades();
 		isEstudiant = true;
+		
+		EstudiantFilterForm estudiantForm = new EstudiantFilterForm();
+		carregarPanel(estudiantForm);
 	}
 	
 	public void opcioServei() {
 		resetDades();		
 		isServei = true;
+		
+		ServeiFilterForm serveiForm = new ServeiFilterForm();
+		carregarPanel(serveiForm);
 	}
 	
 	public void opcioBeca() {
 		resetDades();	
 		isBeca = true;
+		
+		BecaFilterForm becaForm = new BecaFilterForm();
+		carregarPanel(becaForm);
 	}
 	
 	public void opcioSessio() {
 		resetDades();		
 		isSessio = true; 
+		
+		SessioFilterForm sessioForm = new SessioFilterForm();
+		carregarPanel(sessioForm);
+	}
+	
+	public void carregarPanel(JPanel panel) {
+		dades.removeAll();
+		dades.add(panel);
+		dades.revalidate();
+		dades.repaint();
 	}
 }

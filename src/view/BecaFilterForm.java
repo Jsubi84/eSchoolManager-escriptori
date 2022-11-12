@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -7,9 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
-import java.awt.Color;
 
-public class EscolaUpdateForm extends JPanel {
+public class BecaFilterForm extends JPanel {
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class EscolaUpdateForm extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public EscolaUpdateForm() {
+	public BecaFilterForm() {;
 		setPreferredSize(new Dimension(818, 524));
 		setSize(new Dimension(818, 524));
 		setLayout(null);
@@ -30,12 +30,14 @@ public class EscolaUpdateForm extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblTitolDepartament = new JLabel("Escola");
-		lblTitolDepartament.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		lblTitolDepartament.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitolDepartament.setFont(new Font("Dubai", Font.BOLD, 21));
-		lblTitolDepartament.setBounds(10, 11, 798, 41);
-		panel.add(lblTitolDepartament);
+		JLabel lblEmpleat = new JLabel("Beca");
+		lblEmpleat.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		lblEmpleat.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmpleat.setFont(new Font("Dubai", Font.BOLD, 21));
+		lblEmpleat.setBounds(10, 11, 798, 41);
+		panel.add(lblEmpleat);
+
 
 	}
+
 }
