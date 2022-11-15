@@ -2,7 +2,6 @@ package model;
 
 import java.io.IOException;
 import org.json.JSONObject;
-import util.JSonOperations;
 import util.TalkToServer;
 
 
@@ -183,10 +182,7 @@ public Boolean CheckLogin(){
 		if (!(getUsuari().isBlank() || getContrasenya().isBlank()) ) {
 			
 			//Exectuar conversor i obtenir missatge
-			crida = JSonOperations.loginJSon(getUsuari(), getContrasenya());
-			
-			// Resultat de la crida per consola per fer seguiment d'enviament.
-			System.out.println(crida); 			
+			crida = this.loginJSon();		
 			
 			//Tranferencia crida / recepcio de resposta
 			try {
@@ -195,11 +191,9 @@ public Boolean CheckLogin(){
 				System.out.println(e.getMessage());
 			}
 			
-			if (resposta != null) {
-				// Resposta a la crida per consola per fer seguiment resposta.
-				System.out.println(resposta); 	
+			if (resposta != null) {	
 				
-				JSONObject jsonUsuari = JSonOperations.StringToJson(resposta);
+				JSONObject jsonUsuari = new JSONObject(resposta);
 				
 				if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
 					JSONObject dades = (JSONObject) jsonUsuari.get("dades");
@@ -237,6 +231,37 @@ public Boolean CheckLogin(){
 			setIncidencia(DATA_MISSING);
 			return false;
 		}	
+	}
+
+
+	/**
+	 * @param usuari Usuari passat a pantalla login
+	 * @param password Password passat a pantalla login
+	 * @return crida Envia String en format JSON que conte la crida per fer el Login
+	 */
+	public String loginJSon () {
+		JSONObject json = new JSONObject();		
+		json.put("crida", "LOGIN");	
+		JSONObject dades = new JSONObject();	
+		dades.put("usuari", this.getUsuari());			
+		dades.put("contrasenya", this.getContrasenya());	
+		json.put("dades", dades);
+		return json.toString();
+	}
+	
+	
+	
+	/**
+	 * @param codisessio
+	 * @return crida String en format JSON que conte la crida per fer el Logout
+	 */
+	public String logoutJSon () {
+		
+		// Create Json and serialize
+		JSONObject json = new JSONObject();
+			json.put("crida", "LOGOUT");
+			json.put("codiSessio", this.getCodiSessio());
+		return json.toString();
 	}
 }
 

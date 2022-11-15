@@ -26,6 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
 import java.awt.CardLayout;
+import java.awt.Toolkit;
 
 
 
@@ -44,11 +45,19 @@ public class MainView extends JFrame {
 	private JButton btnServei, btnBeca, btnSessio, btnEstudiant, btnEmpleat, btnDepartament, btnEscola, btnConfigUsuari, btnSortirSessio;
 	private JPanel dades;
 	private Boolean isServei, isBeca, isSessio, isEstudiant, isEmpleat, isDepartament, isEscola;
+	private EscolaUpdateForm escolaForm;
+	private DepartamentFilterForm departamentForm;
+	private SessioFilterForm sessioForm;
+	private BecaFilterForm becaForm;
+	private EstudiantFilterForm estudiantForm;
+	private ServeiFilterForm serveiForm;
+	
 
 	/**
 	 * Create MainViewModern.
 	 */
 	public MainView() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainView.class.getResource("/pictures/logo_icon_XL_.png")));
 		isServei = false;
 		isBeca = false;
 		isSessio = false; 
@@ -129,7 +138,6 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				sortirSessio();
 			}
-			
 		});
 		
 		JPanel menu = new JPanel();
@@ -150,8 +158,6 @@ public class MainView extends JFrame {
 		btnEscola.setBackground(Color.WHITE);
 		btnEscola.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEscola.setBorder(null);
-		
-		//efectButton(btnEscola, isEscola);
 		btnEscola.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioEscola();
@@ -183,8 +189,6 @@ public class MainView extends JFrame {
 		btnDepartament.setBackground(Color.WHITE);
 		btnDepartament.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDepartament.setBorder(null);
-		
-		//efectButton(btnDepartament, isDepartament);
 		btnDepartament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioDepartament();
@@ -218,8 +222,6 @@ public class MainView extends JFrame {
 		btnEmpleat.setBackground(Color.WHITE);
 		btnEmpleat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEmpleat.setBorder(null);
-		
-		efectButton(btnEmpleat, isEmpleat);
 		btnEmpleat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioEmpleat();
@@ -251,8 +253,6 @@ public class MainView extends JFrame {
 		btnEstudiant.setBackground(Color.WHITE);
 		btnEstudiant.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEstudiant.setBorder(null);
-		
-		efectButton(btnEstudiant, isEstudiant);
 		btnEstudiant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioEstudiant();
@@ -284,8 +284,6 @@ public class MainView extends JFrame {
 		btnSessio.setBackground(Color.WHITE);
 		btnSessio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSessio.setBorder(null);
-		
-		efectButton(btnSessio, isSessio);
 		btnSessio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioSessio();
@@ -317,8 +315,6 @@ public class MainView extends JFrame {
 		btnBeca.setBackground(Color.WHITE);
 		btnBeca.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnBeca.setBorder(null);
-		
-		efectButton(btnBeca, isBeca);
 		btnBeca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioBeca();
@@ -350,8 +346,6 @@ public class MainView extends JFrame {
 		btnServei.setBackground(Color.WHITE);
 		btnServei.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnServei.setBorder(null);
-		
-		efectButton(btnServei, isServei);
 		btnServei.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opcioServei();
@@ -435,9 +429,82 @@ public class MainView extends JFrame {
 	/**
 	 * Setters i Getters
 	 */
+	
+	
+	
 	public ControllerView getControllerView() {
 		return controllerView;
 	}
+
+	public JPanel getDades() {
+		return dades;
+	}
+
+
+	public void setDades(JPanel dades) {
+		this.dades = dades;
+	}
+
+
+	public EscolaUpdateForm getEscolaForm() {
+		return escolaForm;
+	}
+
+
+	public void setEscolaForm(EscolaUpdateForm escolaForm) {
+		this.escolaForm = escolaForm;
+	}
+
+
+	public DepartamentFilterForm getDepartamentForm() {
+		return departamentForm;
+	}
+
+
+	public void setDepartamentForm(DepartamentFilterForm departamentForm) {
+		this.departamentForm = departamentForm;
+	}
+
+
+	public SessioFilterForm getSessioForm() {
+		return sessioForm;
+	}
+
+
+	public void setSessioForm(SessioFilterForm sessioForm) {
+		this.sessioForm = sessioForm;
+	}
+
+
+	public BecaFilterForm getBecaForm() {
+		return becaForm;
+	}
+
+
+	public void setBecaForm(BecaFilterForm becaForm) {
+		this.becaForm = becaForm;
+	}
+
+
+	public EstudiantFilterForm getEstudiantForm() {
+		return estudiantForm;
+	}
+
+
+	public void setEstudiantForm(EstudiantFilterForm estudiantForm) {
+		this.estudiantForm = estudiantForm;
+	}
+
+
+	public ServeiFilterForm getServeiForm() {
+		return serveiForm;
+	}
+
+
+	public void setServeiForm(ServeiFilterForm serveiForm) {
+		this.serveiForm = serveiForm;
+	}
+
 
 	public void setControllerView(ControllerView controllerView) {
 		this.controllerView = controllerView;
@@ -451,31 +518,6 @@ public class MainView extends JFrame {
 	public void setTextLblNomDepartament(String lblNomDepartament) {
 		this.lblNomDepartament.setText(lblNomDepartament);
 	}
-	
-	
-	/**
-	 * Parametrizar buttons selecció
-	 * @param button
-	 * @param url
-	 */
-	public void efectButton (JButton button, Boolean selected) {
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				button.setBackground(Color.lightGray);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-					System.out.println(selected);				
-				if (selected) {
-					button.setBackground(Color.lightGray);
-				}else {
-					button.setBackground(Color.WHITE);	
-				}	
-			}
-		});
-	}
-	
 	
 	
 	/**
@@ -541,22 +583,25 @@ public class MainView extends JFrame {
 	public void opcioEscola() {
 		resetDades();
 		isEscola = true;
+		btnEscola.setBackground(Color.lightGray);
 		
-		EscolaUpdateForm escolaForm = new EscolaUpdateForm();
+		escolaForm = new EscolaUpdateForm();
 		carregarPanel(escolaForm);
 	}
 	
 	public void opcioDepartament() {
 		resetDades();
 		isDepartament = true;
+		btnDepartament.setBackground(Color.lightGray);
 		
-		DepartamentFilterForm departamentForm = new DepartamentFilterForm();
+		departamentForm = new DepartamentFilterForm (getControllerView());
 		carregarPanel(departamentForm);
 	}	
 	
 	public void opcioEmpleat() {
 		resetDades();
 		isEmpleat = true; 
+		btnEmpleat.setBackground(Color.lightGray);
 		
 		EmpleatFilterForm empleatForm = new EmpleatFilterForm();
 		carregarPanel(empleatForm);
@@ -565,32 +610,36 @@ public class MainView extends JFrame {
 	public void opcioEstudiant() {
 		resetDades();
 		isEstudiant = true;
+		btnEstudiant.setBackground(Color.lightGray);
 		
-		EstudiantFilterForm estudiantForm = new EstudiantFilterForm();
+		estudiantForm = new EstudiantFilterForm();
 		carregarPanel(estudiantForm);
 	}
 	
 	public void opcioServei() {
 		resetDades();		
 		isServei = true;
+		btnServei.setBackground(Color.lightGray);
 		
-		ServeiFilterForm serveiForm = new ServeiFilterForm();
+		serveiForm = new ServeiFilterForm();
 		carregarPanel(serveiForm);
 	}
 	
 	public void opcioBeca() {
 		resetDades();	
 		isBeca = true;
+		btnBeca.setBackground(Color.lightGray);
 		
-		BecaFilterForm becaForm = new BecaFilterForm();
+		becaForm = new BecaFilterForm();
 		carregarPanel(becaForm);
 	}
 	
 	public void opcioSessio() {
 		resetDades();		
 		isSessio = true; 
+		btnSessio.setBackground(Color.lightGray);
 		
-		SessioFilterForm sessioForm = new SessioFilterForm();
+		sessioForm = new SessioFilterForm();
 		carregarPanel(sessioForm);
 	}
 	

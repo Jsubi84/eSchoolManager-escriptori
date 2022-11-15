@@ -20,6 +20,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import javax.swing.border.CompoundBorder;
+import java.awt.Toolkit;
 
 
 /**
@@ -42,6 +43,7 @@ public class LoginView extends JFrame {
 	 * Creació de la pantalla.
 	 */
 	public LoginView() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginView.class.getResource("/pictures/logo_icon_XL_.png")));
 		
 		setResizable(false);
 		setBounds(new Rectangle(0, 0, 460, 550));

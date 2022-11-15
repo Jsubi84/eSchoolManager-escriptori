@@ -1,10 +1,15 @@
 package model;
 
+import org.json.JSONObject;
+
+
 public class Departament {
 	
+
 	private int codi;
 	private String nomDepartament;
-	private Boolean empleat, estudiant, servei, beca, sessio, informe;
+	private Boolean empleat, departament, escola, estudiant, servei, beca, sessio, informe;
+	
 	
 	public Departament() {}
 	
@@ -22,6 +27,23 @@ public class Departament {
 	}
 
 	
+	
+	public Boolean getEscola() {
+		return escola;
+	}
+
+	public void setEscola(Boolean escola) {
+		this.escola = escola;
+	}
+
+	public Boolean getDepartament() {
+		return departament;
+	}
+
+	public void setDepartament(Boolean departament) {
+		this.departament = departament;
+	}
+
 	public int getCodi() {
 		return codi;
 	}
@@ -85,6 +107,86 @@ public class Departament {
 	public void setInforme(Boolean informe) {
 		this.informe = informe;
 	}
+	
 
 	
+	
+	public String altaJSon (String codiSessio) {
+		JSONObject json = new JSONObject();		
+		json.put("crida", "ALTA DEPARTAMENT");
+		json.put("codiSessio", codiSessio);
+		JSONObject dades = new JSONObject();
+		dades.put("nomDepartament",this.getNomDepartament());
+		JSONObject permisos = new JSONObject();
+		permisos.put("empleat", this.getEmpleat());	
+		permisos.put("estudiant", this.getEstudiant());	
+		permisos.put("servei", this.getServei());	
+		permisos.put("beca", this.getBeca());	
+		permisos.put("sessio", this.getSessio());	
+		permisos.put("informe", this.getInforme());	
+		dades.put("permisos", permisos);
+		json.put("dades", dades);
+		return json.toString();
+	}
+
+	
+	public static String baixaJSon (String codiSessio, int codi) {
+		JSONObject json = new JSONObject();		
+		json.put("crida", "BAIXA DEPARTAMENT");
+		json.put("codiSessio", codiSessio);	
+		JSONObject dades = new JSONObject();	
+		dades.put("codiDepartament", codi);				
+		json.put("dades", dades);
+		return json.toString();
+	}
+	
+	
+	public String modiJSon (String codiSessio) {
+		JSONObject json = new JSONObject();		
+		json.put("crida", "MODI DEPARTAMENT");
+		json.put("codiSessio", codiSessio);
+		JSONObject dades = new JSONObject();
+		dades.put("codiDepartament", this.getCodi());
+		dades.put("nomDepartament",this.getNomDepartament());
+		JSONObject permisos = new JSONObject();
+		permisos.put("empleat", this.getEmpleat());	
+		permisos.put("estudiant", this.getEstudiant());	
+		permisos.put("servei", this.getServei());	
+		permisos.put("beca", this.getBeca());	
+		permisos.put("sessio", this.getSessio());	
+		permisos.put("informe", this.getInforme());	
+		dades.put("permisos", permisos);
+		json.put("dades", dades);
+		return json.toString();
+	}
+
+	
+	public static String llistatJSon (String codiSessio, String camp, String valor, String ordre) {
+		JSONObject json = new JSONObject();		
+		json.put("crida", "LLISTA DEPARTAMENT");
+		json.put("codiSessio", codiSessio);	
+		JSONObject dades = new JSONObject();	
+		dades.put("camp", camp);
+		dades.put("ordre", ordre);				
+		json.put("dades", dades);
+		return json.toString();
+	}	
+
+	
+	public static String consultaJSon (String codiSessio, int codi) {
+		JSONObject json = new JSONObject();		
+		json.put("crida", "CONSULTA DEPARTAMENT");
+		json.put("codiSessio", codiSessio);	
+		JSONObject dades = new JSONObject();	
+		dades.put("codiDepartament", codi);				
+		json.put("dades", dades);
+		return json.toString();
+	}
+	
+	
+	// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
+	public Object[] getRow(){
+		return new Object[] {this.codi, this.nomDepartament, this.escola, this.departament, this.empleat, this.estudiant, this.servei, this.beca,  this.sessio, this.informe};
+	}
+    
 }

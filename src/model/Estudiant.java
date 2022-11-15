@@ -36,7 +36,7 @@ public class Estudiant extends Persona {
 	}
 	
 	
-	public String AltaJSon (String codiSessio, Usuari usuari) {
+	public String AltaJSon (String codiSessio) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "ALTA ESTUDIANT");
 		json.put("codiSessio", codiSessio);		

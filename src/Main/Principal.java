@@ -42,9 +42,6 @@ public class Principal {
 		//Relacio entre vistes i control
 		controllerView.setControlOper(controlleroperations);
 		controlleroperations.setControlView(controllerView);
-		
-		//Empleat empleat = new Empleat();
-		
-
+				
 	}
 }

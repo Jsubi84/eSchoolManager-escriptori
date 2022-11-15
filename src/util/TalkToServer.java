@@ -8,12 +8,14 @@ import java.net.ConnectException;
 import java.net.Socket;
 
 
+
 /**
  * @author Jordi Subirana
  *
  * Classe destinada a la comunicació
  */
 public class TalkToServer {
+
 	
     private static final int PORT=8080;
     //private static final String IPADDRESS="10.2.55.226";
@@ -30,7 +32,10 @@ public class TalkToServer {
     public static String connection(String crida) throws IOException, ConnectException{
     	
     	String entrada;
-      
+    	
+		// Resultat de la crida per consola per fer seguiment d'enviament.
+		System.out.println(crida); 	
+    	
     	Socket socket = new Socket(IPADDRESS, PORT);
     	
     	PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -39,8 +44,12 @@ public class TalkToServer {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     	entrada = in.readLine();
  	
-        socket.close();            
+        socket.close();           
+        
+		// Resposta a la crida per consola per fer seguiment resposta.
+		System.out.println(entrada); 
        
         return entrada;
-    }	
+    }		
+ 
 }
