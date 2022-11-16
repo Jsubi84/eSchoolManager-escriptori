@@ -109,20 +109,15 @@ public class ControllerView {
 		dept.setEscola(mainview.getDepartamentForm().getDeptEditForm().getChckbxEscola().isSelected());
 		dept.setInforme(mainview.getDepartamentForm().getDeptEditForm().getChckbxInforme().isSelected());
 		
-		// Per treure>>>>>>>>>>>>>>>>>>>>>>>
-		
-		dept.setCodi(1);
-		
-			mainview.getDepartamentForm().getModel().insertRow(0, dept.getRow());
-			
-		// Per treure>>>>>>>>>>>>>>>>>>>>>>>
-		
-		
 		if (controlOper.altaDepartament(dept)) {
 			missatgeIncidencia(ALTA_OK);
+			//Afegim la fila a la taula de la nova alta
+		//	mainview.getDepartamentForm().getModel().insertRow(0, dept.getRow());
 		}else{
 			missatgeErrorIncidencia(incidencia);
 		}
+		
+		
 	}
 	
 	
@@ -133,7 +128,6 @@ public class ControllerView {
 	public void baixaDepartament(int codi) {
 		if (controlOper.baixaDepartament(codi)) {
 			missatgeIncidencia(BAIXA_OK);
-			//mainview.del
 		}else{
 			missatgeErrorIncidencia(incidencia);
 		}
@@ -164,8 +158,15 @@ public class ControllerView {
 	
 	
 	public void llistarDepartament() {
-		//TODO
-		Departament.llistatJSon(incidencia, MODI_OK, BAIXA_OK, ALTA_OK);
+		Departament depts[] = controlOper.llistarDepartament("", "", "");
+		for(int i=0; i<depts.length; i++){
+			mainview.getDepartamentForm().getModel().insertRow(0, depts[i].getRow());
+		}
+	}
+	
+	public void consultaIndDepartament() {
+		// Faltar implementar els metodes correctament
+		//controlOper.consultaIndDepartaments(MODI_OK, BAIXA_OK, ALTA_OK)
 	}
 	
 }

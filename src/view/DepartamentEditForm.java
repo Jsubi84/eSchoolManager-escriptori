@@ -27,6 +27,7 @@ public class DepartamentEditForm extends JDialog{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final String NOM_DEPARTAMENT_ISBLACK = "El nom del departament s'ha d'omplenar";
 	
 	
 	private JPanel contentPanel = new JPanel();
@@ -67,13 +68,22 @@ public class DepartamentEditForm extends JDialog{
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (isAlta) {
-					getControllerView().altaDepartament();					
+					if(getTfnomDep().getText().isBlank()){
+						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
+					}else {
+						getControllerView().altaDepartament();
+						tancarAddForm();
+					}
 				}else {
-					int fila = (int)(controllerView.getMainview().getDepartamentForm().getTable().getSelectedRow());
-					int codi = (int)controllerView.getMainview().getDepartamentForm().getTable().getValueAt(fila, 1);
-					getControllerView().modiDepartament(codi);
+					if(getTfnomDep().getText().isBlank()){
+						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
+					}else {
+						int fila = (int)(controllerView.getMainview().getDepartamentForm().getTable().getSelectedRow());
+						int codi = (int)controllerView.getMainview().getDepartamentForm().getTable().getValueAt(fila, 1);
+						getControllerView().modiDepartament(codi);	
+						tancarAddForm();
+					}
 				}
-				tancarAddForm();
 			}
 		});
 		panel.add(okButton);
@@ -98,13 +108,12 @@ public class DepartamentEditForm extends JDialog{
 		panel.add(tfnomDep);
 		tfnomDep.setColumns(10);
 
-
 		chckbxEscola = new JCheckBox("Escola");
 		chckbxEscola.setBounds(23, 103, 99, 23);
 		panel.add(chckbxEscola);
 
 		chckbxDep = new JCheckBox("Departament");
-		chckbxDep.setBounds(23, 129, 99, 23);
+		chckbxDep.setBounds(23, 129, 107, 23);
 		panel.add(chckbxDep);
 
 		chckbxEmpleat = new JCheckBox("Empleat");

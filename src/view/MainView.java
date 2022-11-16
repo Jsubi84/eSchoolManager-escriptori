@@ -596,6 +596,7 @@ public class MainView extends JFrame {
 		
 		departamentForm = new DepartamentFilterForm (getControllerView());
 		carregarPanel(departamentForm);
+		departamentForm.llistarDepartament();
 	}	
 	
 	public void opcioEmpleat() {

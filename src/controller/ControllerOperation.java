@@ -2,7 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.util.Iterator;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.Departament;
@@ -21,6 +23,7 @@ public class ControllerOperation {
 	
 	private Login login;
 	private ControllerView controlView;
+	private Departament depts[];
 	
 	
 	/**
@@ -80,11 +83,11 @@ public class ControllerOperation {
 	
 	
 	/**
-	 * Metode per agrupar l'enviament de les crides.
+	 * Metode per agrupar l'enviament de les crides per a Create, Update, Delete.
 	 * @param crida
 	 * @return resposta
 	 */
-	private Boolean enviarCrida(String crida) {
+	private Boolean enviarCridaSimple(String crida) {
 		String resposta="";
 		try {
 			resposta = TalkToServer.connection(crida);
@@ -106,24 +109,69 @@ public class ControllerOperation {
 	
 	
 	
+	/**
+	 * Metode per agrupar l'enviament de les crides Read.
+	 * @param crida
+	 * @return resposta
+	 */
+	public JSONArray enviarCridaRetornObjectes(String crida) {
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(crida);
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		
+	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+	   	JSONArray jsonArray = new JSONArray();
+
+		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+			JSONObject dades = jsonUsuari.getJSONObject("dades");
+						
+			Iterator<String> x = dades.keys();
+			while (x.hasNext()){
+			    String key = (String) x.next();
+			    jsonArray.put(dades.get(key));
+			}
+		
+			return jsonArray;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			return null;
+		}		
+	}
+	
 	public Boolean altaDepartament(Departament departament) {
-		return enviarCrida(departament.altaJSon(login.getCodiSessio()));
+		return enviarCridaSimple(departament.altaJSon(login.getCodiSessio()));
 	}
 	
 	public Boolean baixaDepartament(int codi) {		
-		return enviarCrida(Departament.baixaJSon(login.getCodiSessio(), codi));	
+		return enviarCridaSimple(Departament.baixaJSon(login.getCodiSessio(), codi));	
 	}
 	
 	public Boolean modiDepartament(Departament departament) {
-		return enviarCrida(departament.modiJSon(login.getCodiSessio()));	
+		return enviarCridaSimple(departament.modiJSon(login.getCodiSessio()));	
 	}
 	
-	public void llistarDepartament(String camp, String valor, String ordre) {
-		Departament.llistatJSon(login.getCodiSessio(), camp, valor, ordre);
-	}
-	
-	public void consultaIndDepartaments() {
+	public Departament[] llistarDepartament(String camp, String valor, String ordre) {
+		JSONArray arr = enviarCridaRetornObjectes(Departament.llistatJSon(login.getCodiSessio(), camp, valor, ordre));
 		
+		depts = new Departament[arr.length()];
+		for(int i=0; i<arr.length(); i++){   
+			  JSONObject o = arr.getJSONObject(i);
+			  depts[i]= new Departament();
+			  depts[i].setCodi(o.getInt("codiDepartament"));
+			  depts[i].setNomDepartament(o.getString("nomDepartament"));
+		}
+		return depts; 
 	}
 	
+	public Departament consultaIndDepartaments(int codi) {
+		
+		enviarCridaRetornObjectes(Departament.consultaJSon(login.getCodiSessio(), codi));
+		return null;
+	}
 }

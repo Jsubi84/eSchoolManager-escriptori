@@ -75,7 +75,7 @@ public class DepartamentFilterForm extends JPanel{
 		
 		// Posar header i dades buides
 		model = new DefaultTableModel(new Object[][] {}, 
-				new String[] { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }); 
+				new String[] { "Id","Nom Departament"}); 
 		
 		table = new JTable(model);
 		table.setBounds(0, 181, 818, 343);
@@ -180,7 +180,6 @@ public class DepartamentFilterForm extends JPanel{
 //		comboBox_1.setBounds(394, 82, 80, 22);
 //		panel.add(comboBox_1);
 
-		llistarDepartament();
 	}
 	
 	
@@ -291,9 +290,13 @@ public class DepartamentFilterForm extends JPanel{
 	 * Metode per llistar els diferents items a la taula en forma de fila.
 	 */
 	public void llistarDepartament() {
-		//TODO
 		controllerView.llistarDepartament();
 	}
 	
 
+	public void consultaIndDepartament() {
+		//TODO
+		controllerView.llistarDepartament();
+	}
+	
 }

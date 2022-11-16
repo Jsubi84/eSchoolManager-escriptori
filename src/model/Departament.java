@@ -186,7 +186,7 @@ public class Departament {
 	
 	// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
 	public Object[] getRow(){
-		return new Object[] {this.codi, this.nomDepartament, this.escola, this.departament, this.empleat, this.estudiant, this.servei, this.beca,  this.sessio, this.informe};
+		return new Object[] {this.codi, this.nomDepartament};
 	}
     
 }
