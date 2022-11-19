@@ -46,7 +46,9 @@ public class DepartamentEditForm extends JDialog{
 	/**
 	 * Create the dialog.
 	 */
-	public DepartamentEditForm(ControllerView controllerView, Short mode) {
+	public DepartamentEditForm(MainView parent, boolean modal ,ControllerView controllerView, Short mode) {
+		super(parent, modal);
+		
 		setResizable(false);
 
 		setControllerView(controllerView);

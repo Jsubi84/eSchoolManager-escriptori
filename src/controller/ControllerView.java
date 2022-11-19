@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 
 import model.Departament;
 import model.Login;
+import model.Servei;
 import view.LoginView;
 import view.MainView;
 
@@ -92,10 +93,12 @@ public class ControllerView {
 		return this.getMainview();
 	}
 	
-	
+	/**
+	 * 	METODES PER A DEPARTAMENT
+	 */
 	
 	/**
-	 * 
+	 * Metode controlar la part de la vist d'alta departament.
 	 */
 	public void altaDepartament() {
 		Departament dept= new Departament();
@@ -111,17 +114,15 @@ public class ControllerView {
 		
 		if (controlOper.altaDepartament(dept)) {
 			missatgeIncidencia(ALTA_OK);
-			//Afegim la fila a la taula de la nova alta
-		//	mainview.getDepartamentForm().getModel().insertRow(0, dept.getRow());
 		}else{
 			missatgeErrorIncidencia(incidencia);
 		}
 	}
 	
 	
-	
 	/**
-	 * @param codi
+	 * Metode controlar la part de la vist baixa departament.
+	 * @param codi. Codi del registre que s'ha de borrar.
 	 */
 	public void baixaDepartament(int codi) {
 		if (controlOper.baixaDepartament(codi)) {
@@ -132,8 +133,11 @@ public class ControllerView {
 	}
 	
 	
+
+	
 	/**
-	 * @param codi
+	 * Metode controlar la part de la vist modificar departament.
+	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
 	public void modiDepartament(int codi) {
 		Departament dept= new Departament();
@@ -155,6 +159,9 @@ public class ControllerView {
 	}
 	
 	
+	/**
+	 * Metode controlar la part de la vist de llistar departament.
+	 */
 	public void llistarDepartament() {						
 		Departament depts[] = controlOper.llistarDepartament("", "", "");
 		if (depts == null) {
@@ -166,6 +173,12 @@ public class ControllerView {
 		}
 	}
 	
+	
+	/**
+	 * Metode controlar la part de la vist consulta individual que s'ha de buscar departament.
+	 * @param codi. Codi del registre que s'ha de consultar.
+	 * @return Departament. Retorna la consulta
+	 */
 	public Departament consultaIndDepartament(int codi) {
 		Departament dept = controlOper.consultaIndDepartaments(codi);
 		if (dept == null) {
@@ -173,6 +186,91 @@ public class ControllerView {
 			return null;
 		} else {
 			return dept;
+		}
+	}
+	
+	
+	
+	/**
+	 * 	METODES PER A SERVEI
+	 */
+	
+	/**
+	 * Metode controlar la part de la vist d'alta departament.
+	 */
+	public void altaServei() {
+		Servei ser= new Servei();
+		ser.setNom(mainview.getServeiForm().getServeiEditForm().getTfnomDep().getText());
+		ser.setDurada(Integer.parseInt(mainview.getServeiForm().getServeiEditForm().getTfDurada().getText()));
+		ser.setCost(Double.parseDouble(mainview.getServeiForm().getServeiEditForm().getTfCost().getText()));
+		if (controlOper.altaServei(ser)) {
+			missatgeIncidencia(ALTA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist baixa d'un servei.
+	 * @param codi. Codi del registre que s'ha de borrar.
+	 */
+	public void baixaServei(int codi) {
+		if (controlOper.baixaServei(codi)) {
+			missatgeIncidencia(BAIXA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+
+	
+	/**
+	 * Metode controlar la part de la vist modificar departament.
+	 * @param codi. Codi del registre que s'ha de modificar.
+	 */
+	public void modiServei(int codi) {
+		Servei ser= new Servei();
+		ser.setCodi(codi);
+		ser.setNom(mainview.getServeiForm().getServeiEditForm().getTfnomServei().getText());
+		ser.setDurada(Integer.parseInt(mainview.getServeiForm().getServeiEditForm().getTfDurada().getText()));
+		ser.setCost(Double.parseDouble(mainview.getServeiForm().getServeiEditForm().getTfCost().getText()));
+		if (controlOper.modiServei(ser)) {
+			missatgeIncidencia(MODI_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist de llistar servei.
+	 */
+	public void llistarServei() {						
+		Servei serveis[] = controlOper.llistarServei("", "", "");
+		if (serveis == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<serveis.length; i++){
+				mainview.getServeiForm().getModel().insertRow(0, serveis[i].getRow());
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist consulta individual que s'ha de buscar servei.
+	 * @param codi. Codi del registre que s'ha de consultar.
+	 * @return Servei. Retorna la consulta
+	 */
+	public Servei consultaIndServei(int codi) {
+		Servei ser = controlOper.consultaIndServei(codi);
+		if (ser == null) {
+			missatgeErrorIncidencia(incidencia);
+			return null;
+		} else {
+			return ser;
 		}
 	}
 	

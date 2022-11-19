@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 import java.awt.Font;
@@ -227,7 +228,7 @@ public class DepartamentFilterForm extends JPanel{
 	 * Metode per donar d'alta un departament nou.
 	 */
 	public void altaDepartament() {
-		deptEditForm= new DepartamentEditForm(controllerView, ALTA);
+		deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true ,controllerView, ALTA);
 		deptEditForm.setLocationRelativeTo(null);
 		deptEditForm.setVisible(true);
 	}
@@ -255,7 +256,7 @@ public class DepartamentFilterForm extends JPanel{
 			// Ordre de la taula			
 			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
 			// Fer la consulta individual per omplir les dades
-			deptEditForm= new DepartamentEditForm(controllerView, MODI);
+			deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true ,controllerView, MODI);
 			deptEditForm.setLocationRelativeTo(null);
 			Departament dept = controllerView.consultaIndDepartament(idSelec);
 			if (dept != null) {
@@ -298,14 +299,20 @@ public class DepartamentFilterForm extends JPanel{
 			// Ordre de la taula			
 			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
 			// Fer la consulta individual per omplir les dades
-			deptEditForm= new DepartamentEditForm(controllerView, LLEGIR);
+			deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true ,controllerView, LLEGIR);
 			deptEditForm.setLocationRelativeTo(null);
 			Departament dept = controllerView.consultaIndDepartament(idSelec);
 			if (dept != null) {
 				deptEditForm.getTfCodi().setText(String.valueOf(dept.getCodi()));
 				deptEditForm.getTfCodi().setEnabled(false);
+				deptEditForm.getTfCodi().setVisible(true);
+				deptEditForm.getTfCodi().setForeground(Color.BLACK);
+				deptEditForm.getTfCodi().setBackground(Color.WHITE);
+				deptEditForm.getTfCodi().setHorizontalAlignment(JTextField.CENTER);
 				deptEditForm.getTfnomDep().setText(dept.getNomDepartament());
 				deptEditForm.getTfnomDep().setEnabled(false);
+				deptEditForm.getTfnomDep().setForeground(Color.BLACK);
+				deptEditForm.getTfnomDep().setBackground(Color.WHITE);
 				deptEditForm.getChckbxBeca().setSelected(dept.getBeca());    
 				deptEditForm.getChckbxBeca().setEnabled(false);
 				deptEditForm.getChckbxEscola().setSelected(dept.getEscola());

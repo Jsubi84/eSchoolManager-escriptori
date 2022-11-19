@@ -118,6 +118,8 @@ public class Departament {
 		JSONObject dades = new JSONObject();
 		dades.put("nomDepartament",this.getNomDepartament());
 		JSONObject permisos = new JSONObject();
+		permisos.put("escola", this.getEscola());	
+		permisos.put("departament", this.getDepartament());	
 		permisos.put("empleat", this.getEmpleat());	
 		permisos.put("estudiant", this.getEstudiant());	
 		permisos.put("servei", this.getServei());	
@@ -176,7 +178,7 @@ public class Departament {
 	
 	public static String consultaJSon (String codiSessio, int codi) {
 		JSONObject json = new JSONObject();		
-		json.put("crida", "CONSULTA DEPARTAMENTS");
+		json.put("crida", "CONSULTA DEPARTAMENT");
 		json.put("codiSessio", codiSessio);	
 		JSONObject dades = new JSONObject();	
 		dades.put("codiDepartament", codi);				

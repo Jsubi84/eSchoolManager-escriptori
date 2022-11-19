@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+
 public class Escola {
 	
+	private int codi;
 	private String nom;
 	private String adreca;
 	private String telefon;
@@ -10,7 +13,7 @@ public class Escola {
 	public Escola() {}
 	
 	
-	public Escola(String nom, String adreca, String telefon) {
+	public Escola(int codi, String nom, String adreca, String telefon) {
 		super();
 		this.nom = nom;
 		this.adreca = adreca;
@@ -18,6 +21,14 @@ public class Escola {
 	}
 
 
+	
+	public int getCodi() {
+		return codi;
+	}
+
+	public void setCodi(int codi) {
+		this.codi = codi;
+	}
 
 	public String getNom() {
 		return nom;
@@ -45,5 +56,26 @@ public class Escola {
 	
 	
 	
+	public String ModiJSon (String codiSessio, Usuari usuari) {
+		JSONObject json = new JSONObject();		
+		json.put("crida", "MODI ESCOLA");
+		json.put("codiSessio", codiSessio);		
+		JSONObject dades = new JSONObject();
+		dades.put("nom", this.getNom());		
+		dades.put("adreca", this.getAdreca());	
+		dades.put("telefon", this.getTelefon());	
+		json.put("dades", dades);
+		return json.toString();
+	}
+
+	public static String ConsultaJSon (String codiSessio, int codi) {
+		JSONObject json = new JSONObject();		
+		json.put("crida", "CONSULTA ESCOLA");
+		json.put("codiSessio", codiSessio);	
+		JSONObject dades = new JSONObject();	
+		dades.put("codiEscola", codi);				
+		json.put("dades", dades);
+		return json.toString();
+	}
 
 }

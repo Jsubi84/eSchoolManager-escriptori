@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import model.Departament;
 import model.Login;
+import model.Servei;
 import util.TalkToServer;
 
 /**
@@ -16,6 +17,7 @@ import util.TalkToServer;
  *
  * Classe per poder executar les operacions
  */
+
 public class ControllerOperation {
 	
 	private static final String RESPOSTA_OK= "OK";
@@ -24,6 +26,7 @@ public class ControllerOperation {
 	private Login login;
 	private ControllerView controlView;
 	private Departament depts[];
+	private Servei serveis[];
 	
 	
 	/**
@@ -144,19 +147,51 @@ public class ControllerOperation {
 		}		
 	}
 	
+	
+	
+	/**
+	 * METODES DEPARTAMENTS
+	 */
+	
+	
+	/**
+	 * Metode per donar d'alta un Departament confeccionant la crida i enviant-la
+	 * @param departament. Rep un departament a donar d'alta.
+	 * @return Retorna resposta afirmativa si ha s'ha donat d'alta
+	 */
 	public Boolean altaDepartament(Departament departament) {
 		return enviarCridaSimple(departament.altaJSon(login.getCodiSessio()));
 	}
 	
+
+	/**
+	 * Metode per donar de baixa un Departament confeccionant la crida i enviant-la
+	 * @param codi. Rep un codi del quan es el id del registre a borrar.
+	 * @return Retorna resposta afirmativa si s'ha pogut borrar.
+	 */
 	public Boolean baixaDepartament(int codi) {		
 		return enviarCridaSimple(Departament.baixaJSon(login.getCodiSessio(), codi));	
 	}
 	
+	/**
+	 * Metode per modificar un Departament confeccionant la crida i enviant-la
+	 * @param departament. Rep un departament el qual sera modificara al actual registre persistent.
+	 * @return Retorna resposta afirmativa si ha s'ha pogut modificar
+	 */
 	public Boolean modiDepartament(Departament departament) {
 		return enviarCridaSimple(departament.modiJSon(login.getCodiSessio()));	
 	}
 	
 	
+	
+	/**
+	 * Metode per llistar departament confeccionant la crida i enviant-la
+	 * si no rebem els parametres buits retornem tots els registres
+	 * @param camp. Rep un parametre com camp on s'ha de buscar
+	 * @param valor. Rep un parametre com a valor a buscar
+	 * @param ordre. Rep un parametre per llistar en aquell ordre
+	 * @return Retorna en forma d'array de Departaments
+	 */
 	public Departament[] llistarDepartament(String camp, String valor, String ordre) {
 		JSONArray arr = enviarCridaRetornObjectes(Departament.llistatJSon(login.getCodiSessio(), camp, valor, ordre));
 		if (arr == null) {
@@ -174,6 +209,12 @@ public class ControllerOperation {
 	}
 	
 	
+	
+	/**
+	 * Metode per consultar un departament confeccionant la crida i enviant-la
+	 * @param codi. Rep codi del qual es el codi del Departament a consultar
+	 * @return Retorna el departament a recuperat
+	 */
 	public Departament consultaIndDepartaments(int codi) {
 		
 		String resposta="";
@@ -205,6 +246,108 @@ public class ControllerOperation {
 			dept.setInforme(permisos.getBoolean("informe"));
 					
 			return dept;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			return null;
+		}	
+	}
+	
+	
+	
+	
+	/**
+	 * METODES SERVEIS
+	 */
+	
+	
+	/**
+	 * Metode per donar d'alta un servei confeccionant la crida i enviant-la
+	 * @param servei. Rep un servei a donar d'alta.
+	 * @return Retorna resposta afirmativa si ha s'ha donat d'alta
+	 */
+	public Boolean altaServei(Servei servei) {
+		return enviarCridaSimple(servei.altaJSon(login.getCodiSessio()));
+	}
+	
+
+	/**
+	 * Metode per donar de baixa un servei confeccionant la crida i enviant-la
+	 * @param codi. Rep un codi del quan es el id del registre a borrar.
+	 * @return Retorna resposta afirmativa si s'ha pogut borrar.
+	 */
+	public Boolean baixaServei(int codi) {		
+		return enviarCridaSimple(Servei.baixaJSon(login.getCodiSessio(), codi));	
+	}
+	
+	/**
+	 * Metode per modificar un servei confeccionant la crida i enviant-la
+	 * @param servei. Rep un servei el qual sera modificara al actual registre persistent.
+	 * @return Retorna resposta afirmativa si ha s'ha pogut modificar
+	 */
+	public Boolean modiServei(Servei servei) {
+		return enviarCridaSimple(servei.modiJSon(login.getCodiSessio()));	
+	}
+	
+	
+	
+	/**
+	 * Metode per llistar servei confeccionant la crida i enviant-la
+	 * si no rebem els parametres buits retornem tots els registres
+	 * @param camp. Rep un parametre com camp on s'ha de buscar
+	 * @param valor. Rep un parametre com a valor a buscar
+	 * @param ordre. Rep un parametre per llistar en aquell ordre
+	 * @return Retorna en forma d'array de Serveis
+	 */
+	public Servei[] llistarServei(String camp, String valor, String ordre) {
+		JSONArray arr = enviarCridaRetornObjectes(Servei.llistatJSon(login.getCodiSessio(), camp, valor, ordre));
+		if (arr == null) {
+			return null;
+		}else {
+			serveis = new Servei[arr.length()];
+			for(int i=0; i<arr.length(); i++){   
+				  JSONObject o = arr.getJSONObject(i);
+				  serveis[i]= new Servei();
+				  serveis[i].setCodi(o.getInt("codiServei"));
+				  serveis[i].setNom(o.getString("nom"));
+				  serveis[i].setDurada(o.getInt("durada"));
+				  serveis[i].setCost(o.getDouble("cost"));
+			}
+			return serveis;			
+		}
+	}
+	
+	
+	
+	/**
+	 * Metode per consultar un servei confeccionant la crida i enviant-la
+	 * @param codi. Rep codi del qual es el codi del servei a consultar
+	 * @return Retorna un servei el qual volem consultar
+	 */
+	public Servei consultaIndServei(int codi) {
+		
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(Servei.consultaJSon(login.getCodiSessio(), codi));
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		
+	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+
+		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+			Servei servei= new Servei();			
+			
+			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			servei.setCodi(dades.getInt("codiServei"));
+			servei.setNom(dades.getString("nom"));
+			servei.setDurada(dades.getInt("durada"));
+			servei.setCost(dades.getDouble("cost"));
+			
+			
+			return servei;
 		} else {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));

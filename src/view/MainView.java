@@ -622,8 +622,9 @@ public class MainView extends JFrame {
 		isServei = true;
 		btnServei.setBackground(Color.lightGray);
 		
-		serveiForm = new ServeiFilterForm();
+		serveiForm = new ServeiFilterForm(getControllerView());
 		carregarPanel(serveiForm);
+		//serveiForm.llistarServei();
 	}
 	
 	public void opcioBeca() {

@@ -182,7 +182,7 @@ public class EmpleatFilterForm extends JPanel {
 	 * Metode per donar d'alta un departament nou.
 	 */
 	public void altaDepartament() {
-		deptEditForm= new DepartamentEditForm(controllerView, ALTA);
+		deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true, controllerView, ALTA);
 		deptEditForm.setLocationRelativeTo(null);
 		deptEditForm.setVisible(true);
 	}
@@ -209,7 +209,7 @@ public class EmpleatFilterForm extends JPanel {
 			// Ordre de la taula			
 			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
 			// Fer la consulta individual per omplir les dades
-			deptEditForm= new DepartamentEditForm(controllerView, MODI);
+			deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true,controllerView, MODI);
 			Departament dept = controllerView.consultaIndDepartament(idSelec);
 			if (dept != null) {
 				deptEditForm.getTfCodi().setText(String.valueOf(dept.getCodi()));

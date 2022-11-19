@@ -29,11 +29,9 @@ public class Servei {
 		return nom;
 	}
 
-
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
 
 	public int getCodi() {
 		return codi;
