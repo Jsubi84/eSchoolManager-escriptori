@@ -12,14 +12,16 @@ import java.awt.Image;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerView;
+import model.Departament;
+
 import javax.swing.JButton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import java.awt.event.ActionListener;
@@ -34,11 +36,11 @@ public class DepartamentFilterForm extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Boolean ALTA = true;
-	private static final Boolean MODI = false;
+	private static final Short ALTA = 1;
+	private static final Short MODI = 2;
+	private static final Short LLEGIR = 3;
 	
 	private JTable table;
-	private JTextField textField_2;
 	DepartamentEditForm deptEditForm;
 	private ControllerView controllerView;
 	DefaultTableModel model;
@@ -61,7 +63,6 @@ public class DepartamentFilterForm extends JPanel{
 		add(panel);
 		panel.setLayout(null);
 		
-		
 		JLabel lblTitolDepartament = new JLabel("Departament");
 		lblTitolDepartament.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lblTitolDepartament.setHorizontalAlignment(SwingConstants.CENTER);
@@ -73,13 +74,26 @@ public class DepartamentFilterForm extends JPanel{
 		scrollPane.setBounds(0, 181, 818, 343);
 		panel.add(scrollPane);
 		
-		// Posar header i dades buides
+		// Posar header i dades buides i fa que no siguin editables
 		model = new DefaultTableModel(new Object[][] {}, 
-				new String[] { "Id","Nom Departament"}); 
-		
+				new String[] { "Id","Nom departament"}) {
+			
+			private static final long serialVersionUID = 1L;
+				@Override
+				public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+	
 		table = new JTable(model);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		table.setBounds(0, 181, 818, 343);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(tcr);
+		table.getColumnModel().getColumn(1).setCellRenderer(tcr);
 		
 		scrollPane.setViewportView(table);
 		
@@ -89,6 +103,7 @@ public class DepartamentFilterForm extends JPanel{
 				altaDepartament();
 			}
 		});
+		
 		btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdd.setFocusable(false);
 		btnAdd.setBorder(null);
@@ -96,8 +111,9 @@ public class DepartamentFilterForm extends JPanel{
 		btnAdd.setPreferredSize(new Dimension(40, 40));
 		btnAdd.setSize(new Dimension(40, 40));
 		btnAdd.setBounds(644, 130, 40, 40);
+		btnAdd.setIcon(setIcons("/pictures/add.png", btnAdd));		
 		panel.add(btnAdd);
-		btnAdd.setIcon(setIcons("/pictures/add.png", btnAdd));
+
 		
 		JButton btnEdit = new JButton("");
 		btnEdit.addActionListener(new ActionListener() {
@@ -112,8 +128,9 @@ public class DepartamentFilterForm extends JPanel{
 		btnEdit.setBorder(null);
 		btnEdit.setBackground(Color.WHITE);
 		btnEdit.setBounds(706, 130, 40, 40);
+		btnEdit.setIcon(setIcons("/pictures/edit.png", btnEdit));		
 		panel.add(btnEdit);
-		btnEdit.setIcon(setIcons("/pictures/edit.png", btnEdit));
+
 		
 		JButton btnDelete = new JButton("");
 		btnDelete.addActionListener(new ActionListener() {
@@ -121,6 +138,7 @@ public class DepartamentFilterForm extends JPanel{
 				baixaDepartament();
 			}
 		});
+		
 		btnDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDelete.setSize(new Dimension(40, 40));
 		btnDelete.setPreferredSize(new Dimension(40, 40));
@@ -128,57 +146,25 @@ public class DepartamentFilterForm extends JPanel{
 		btnDelete.setBorder(null);
 		btnDelete.setBackground(Color.WHITE);
 		btnDelete.setBounds(768, 130, 40, 40);
+		btnDelete.setIcon(setIcons("/pictures/remove.png", btnDelete));		
 		panel.add(btnDelete);
-		btnDelete.setIcon(setIcons("/pictures/remove.png", btnDelete));
+
 		
-		JLabel lblNewLabel = new JLabel("Filtratge :");
-		lblNewLabel.setFont(new Font("Dubai", Font.PLAIN, 14));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(10, 86, 146, 14);
-		panel.add(lblNewLabel);
+		JButton btnSearch = new JButton("");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 llegirDepartament();
+			}
+		});
 		
-		JLabel lblNewLabel_1 = new JLabel("Consulta individual :");
-		lblNewLabel_1.setFont(new Font("Dubai", Font.PLAIN, 14));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setBounds(10, 140, 146, 14);
-		panel.add(lblNewLabel_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_2.setColumns(10);
-		textField_2.setBounds(172, 134, 96, 20);
-		panel.add(textField_2);
-		
-		JButton btnSearchFilter = new JButton("");
-		btnSearchFilter.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSearchFilter.setSize(new Dimension(40, 40));
-		btnSearchFilter.setPreferredSize(new Dimension(40, 40));
-		btnSearchFilter.setFocusable(false);
-		btnSearchFilter.setBorder(null);
-		btnSearchFilter.setBackground(Color.WHITE);
-		btnSearchFilter.setBounds(504, 86, 40, 40);
-		panel.add(btnSearchFilter);
-		btnSearchFilter.setIcon(setIcons("/pictures/search.png", btnSearchFilter));
-		
-		JButton btnSearchInd = new JButton("");
-		btnSearchInd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSearchInd.setSize(new Dimension(40, 40));
-		btnSearchInd.setPreferredSize(new Dimension(40, 40));
-		btnSearchInd.setFocusable(false);
-		btnSearchInd.setBorder(null);
-		btnSearchInd.setBackground(Color.WHITE);
-		btnSearchInd.setBounds(291, 130, 40, 40);
-		panel.add(btnSearchInd);
-		btnSearchInd.setIcon(setIcons("/pictures/search.png", btnSearchInd));
-		
-//		JComboBox comboBox = new JComboBox();
-//		comboBox.setToolTipText("Camp");
-//		comboBox.setBounds(172, 82, 212, 22);
-//		panel.add(comboBox);
-//		
-//		JComboBox comboBox_1 = new JComboBox();
-//		comboBox_1.setBounds(394, 82, 80, 22);
-//		panel.add(comboBox_1);
+		btnSearch.setSize(new Dimension(40, 40));
+		btnSearch.setPreferredSize(new Dimension(40, 40));
+		btnSearch.setFocusable(false);
+		btnSearch.setBorder(null);
+		btnSearch.setBackground(Color.WHITE);
+		btnSearch.setBounds(10, 130, 40, 40);
+		btnSearch.setIcon(setIcons("/pictures/search.png", btnDelete));		
+		panel.add(btnSearch);
 
 	}
 	
@@ -251,8 +237,9 @@ public class DepartamentFilterForm extends JPanel{
 	 */
 	public void baixaDepartament() {
 		try {
-			int idSelec = (int) getTable().getValueAt(table.getSelectedRow(), 0);
+			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
 			controllerView.baixaDepartament(idSelec);
+			controllerView.llistarDepartament();
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per donar de baixa");
@@ -264,25 +251,34 @@ public class DepartamentFilterForm extends JPanel{
 	 */
 	public void modificarDepartament() {
 		try {
-			getTable().getValueAt(table.getSelectedRow(), 0);		
+			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
 			// Ordre de la taula			
 			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
-			
+			// Fer la consulta individual per omplir les dades
 			deptEditForm= new DepartamentEditForm(controllerView, MODI);
-			deptEditForm.getTfnomDep().setText((String)getTable().getValueAt(table.getSelectedRow(), 1));
-			deptEditForm.getChckbxEscola().setSelected((boolean) getTable().getValueAt(table.getSelectedRow(), 2));
-			deptEditForm.getChckbxDep().setSelected((boolean) getTable().getValueAt(table.getSelectedRow(), 3));
-			deptEditForm.getChckbxEmpleat().setSelected((boolean) getTable().getValueAt(table.getSelectedRow(), 4));
-			deptEditForm.getChckbxEstudiant().setSelected((boolean) getTable().getValueAt(table.getSelectedRow(), 5));
-			deptEditForm.getChckbxServei().setSelected((boolean) getTable().getValueAt(table.getSelectedRow(), 6));
-			deptEditForm.getChckbxBeca().setSelected((boolean) getTable().getValueAt(table.getSelectedRow(), 7));
-			deptEditForm.getChckbxSessio().setSelected((boolean) getTable().getValueAt(table.getSelectedRow(), 8));
-			deptEditForm.getChckbxInforme().setSelected((boolean) getTable().getValueAt(table.getSelectedRow(), 9));
 			deptEditForm.setLocationRelativeTo(null);
-			deptEditForm.setVisible(true);	
+			Departament dept = controllerView.consultaIndDepartament(idSelec);
+			if (dept != null) {
+				deptEditForm.getTfCodi().setText(String.valueOf(dept.getCodi()));
+				deptEditForm.getTfnomDep().setText(dept.getNomDepartament());
+				deptEditForm.getChckbxBeca().setSelected(dept.getBeca());     
+				deptEditForm.getChckbxEscola().setSelected(dept.getEscola());
+				deptEditForm.getChckbxDep().setSelected(dept.getDepartament());
+				deptEditForm.getChckbxEmpleat().setSelected(dept.getEmpleat());
+				deptEditForm.getChckbxEstudiant().setSelected(dept.getEstudiant());
+				deptEditForm.getChckbxServei().setSelected(dept.getServei());
+				deptEditForm.getChckbxSessio().setSelected(dept.getSessio());
+				deptEditForm.getChckbxInforme().setSelected(dept.getInforme());
+				// Un cop carregat el formulari el fem visible
+				deptEditForm.setVisible(true);				
+			}else {
+				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest departament");
+				deptEditForm.dispose();
+			}
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
+			deptEditForm.dispose();
 		}
 	}
 	
@@ -293,10 +289,51 @@ public class DepartamentFilterForm extends JPanel{
 		controllerView.llistarDepartament();
 	}
 	
-
-	public void consultaIndDepartament() {
-		//TODO
-		controllerView.llistarDepartament();
+	/**
+	 * Metode per modificar l'item seleccionat a la taula
+	 */
+	public void llegirDepartament() {
+		try {
+			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
+			// Ordre de la taula			
+			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
+			// Fer la consulta individual per omplir les dades
+			deptEditForm= new DepartamentEditForm(controllerView, LLEGIR);
+			deptEditForm.setLocationRelativeTo(null);
+			Departament dept = controllerView.consultaIndDepartament(idSelec);
+			if (dept != null) {
+				deptEditForm.getTfCodi().setText(String.valueOf(dept.getCodi()));
+				deptEditForm.getTfCodi().setEnabled(false);
+				deptEditForm.getTfnomDep().setText(dept.getNomDepartament());
+				deptEditForm.getTfnomDep().setEnabled(false);
+				deptEditForm.getChckbxBeca().setSelected(dept.getBeca());    
+				deptEditForm.getChckbxBeca().setEnabled(false);
+				deptEditForm.getChckbxEscola().setSelected(dept.getEscola());
+				deptEditForm.getChckbxEscola().setEnabled(false);
+				deptEditForm.getChckbxDep().setSelected(dept.getDepartament());
+				deptEditForm.getChckbxDep().setEnabled(false);
+				deptEditForm.getChckbxEmpleat().setSelected(dept.getEmpleat());
+				deptEditForm.getChckbxEmpleat().setEnabled(false);
+				deptEditForm.getChckbxEstudiant().setSelected(dept.getEstudiant());
+				deptEditForm.getChckbxEstudiant().setEnabled(false);
+				deptEditForm.getChckbxServei().setSelected(dept.getServei());
+				deptEditForm.getChckbxServei().setEnabled(false);
+				deptEditForm.getChckbxSessio().setSelected(dept.getSessio());
+				deptEditForm.getChckbxSessio().setEnabled(false);
+				deptEditForm.getChckbxInforme().setSelected(dept.getInforme());
+				deptEditForm.getChckbxInforme().setEnabled(false);
+				
+				deptEditForm.getOkButton().setVisible(false);
+				// Un cop carregat el formulari el fem visible
+				deptEditForm.setVisible(true);				
+			}else {
+				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest departament");
+				deptEditForm.dispose();
+			}
+		} catch (Exception e) {
+			e.getMessage();
+			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
+			deptEditForm.dispose();
+		}
 	}
-	
 }

@@ -116,8 +116,6 @@ public class ControllerView {
 		}else{
 			missatgeErrorIncidencia(incidencia);
 		}
-		
-		
 	}
 	
 	
@@ -157,16 +155,25 @@ public class ControllerView {
 	}
 	
 	
-	public void llistarDepartament() {
+	public void llistarDepartament() {						
 		Departament depts[] = controlOper.llistarDepartament("", "", "");
-		for(int i=0; i<depts.length; i++){
-			mainview.getDepartamentForm().getModel().insertRow(0, depts[i].getRow());
+		if (depts == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<depts.length; i++){
+				mainview.getDepartamentForm().getModel().insertRow(0, depts[i].getRow());
+			}			
 		}
 	}
 	
-	public void consultaIndDepartament() {
-		// Faltar implementar els metodes correctament
-		//controlOper.consultaIndDepartaments(MODI_OK, BAIXA_OK, ALTA_OK)
+	public Departament consultaIndDepartament(int codi) {
+		Departament dept = controlOper.consultaIndDepartaments(codi);
+		if (dept == null) {
+			missatgeErrorIncidencia(incidencia);
+			return null;
+		} else {
+			return dept;
+		}
 	}
 	
 }

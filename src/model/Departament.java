@@ -163,11 +163,12 @@ public class Departament {
 	
 	public static String llistatJSon (String codiSessio, String camp, String valor, String ordre) {
 		JSONObject json = new JSONObject();		
-		json.put("crida", "LLISTA DEPARTAMENT");
+		json.put("crida", "LLISTA DEPARTAMENTS");
 		json.put("codiSessio", codiSessio);	
 		JSONObject dades = new JSONObject();	
 		dades.put("camp", camp);
-		dades.put("ordre", ordre);				
+		dades.put("ordre", ordre);	
+		dades.put("valor", ordre);	
 		json.put("dades", dades);
 		return json.toString();
 	}	
@@ -175,7 +176,7 @@ public class Departament {
 	
 	public static String consultaJSon (String codiSessio, int codi) {
 		JSONObject json = new JSONObject();		
-		json.put("crida", "CONSULTA DEPARTAMENT");
+		json.put("crida", "CONSULTA DEPARTAMENTS");
 		json.put("codiSessio", codiSessio);	
 		JSONObject dades = new JSONObject();	
 		dades.put("codiDepartament", codi);				

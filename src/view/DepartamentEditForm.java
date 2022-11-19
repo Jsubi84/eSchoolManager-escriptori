@@ -4,6 +4,7 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
@@ -12,7 +13,6 @@ import javax.swing.JCheckBox;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.border.TitledBorder;
 
 import controller.ControllerView;
 
@@ -27,6 +27,9 @@ public class DepartamentEditForm extends JDialog{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Short ALTA = 1;
+	private static final Short MODIFICAR = 2;
+	private static final Short LLEGIR = 3;
 	private static final String NOM_DEPARTAMENT_ISBLACK = "El nom del departament s'ha d'omplenar";
 	
 	
@@ -36,19 +39,20 @@ public class DepartamentEditForm extends JDialog{
 	private JButton okButton, cancelButton;
 	private JCheckBox chckbxEscola, chckbxDep, chckbxBeca, chckbxEstudiant, chckbxEmpleat, chckbxServei, chckbxSessio, chckbxInforme;
 	private ControllerView controllerView;
+	private JTextField tfCodi;
 	
 	
 
 	/**
 	 * Create the dialog.
 	 */
-	public DepartamentEditForm(ControllerView controllerView, Boolean isAlta) {
+	public DepartamentEditForm(ControllerView controllerView, Short mode) {
+		setResizable(false);
 
 		setControllerView(controllerView);
-		setUndecorated(true);
-		setType(Type.POPUP);
+		setType(Type.UTILITY);
 		setTitle("Departament");
-		setBounds(100, 100, 280, 280);
+		setBounds(100, 100, 280, 303);
 		getContentPane().setLayout(new CardLayout(0, 0));
 		contentPanel.setSize(new Dimension(280, 280));
 		contentPanel.setPreferredSize(new Dimension(280, 280));
@@ -57,7 +61,7 @@ public class DepartamentEditForm extends JDialog{
 		contentPanel.setLayout(null);
 		
 		panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Formulari Departament", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(null);
 		panel.setBounds(0, 0, 280, 280);
 		contentPanel.add(panel);
 		panel.setLayout(null);
@@ -67,22 +71,29 @@ public class DepartamentEditForm extends JDialog{
 		okButton.setBounds(23, 228, 107, 23);		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (isAlta) {
+				if (mode == ALTA) {
 					if(getTfnomDep().getText().isBlank()){
 						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
-					}else {
+					}else {//Fem l'alta del departament borrem taula i refresquem
 						getControllerView().altaDepartament();
+						JTable table = getControllerView().getMainview().getDepartamentForm().getTable();
+			            int filas =	table.getRowCount();
+			            for (int i = 0;filas>i; i++) {
+			            	getControllerView().getMainview().getDepartamentForm().getModel().removeRow(0);
+			            }
+						getControllerView().llistarDepartament();
 						tancarAddForm();
 					}
-				}else {
+				}else if (mode == MODIFICAR){
 					if(getTfnomDep().getText().isBlank()){
 						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
 					}else {
-						int fila = (int)(controllerView.getMainview().getDepartamentForm().getTable().getSelectedRow());
-						int codi = (int)controllerView.getMainview().getDepartamentForm().getTable().getValueAt(fila, 1);
-						getControllerView().modiDepartament(codi);	
+						getControllerView().modiDepartament(Integer.parseInt(getTfCodi().getText()));
+						getControllerView().llistarDepartament();
 						tancarAddForm();
 					}
+				}else if (mode == LLEGIR){ 
+					getControllerView().getMainview().getDepartamentForm().llegirDepartament();
 				}
 			}
 		});
@@ -143,6 +154,13 @@ public class DepartamentEditForm extends JDialog{
 		JLabel lblPermisos = new JLabel("Permisos");
 		lblPermisos.setBounds(23, 82, 224, 14);
 		panel.add(lblPermisos);
+		
+		tfCodi = new JTextField();
+		tfCodi.setVisible(false);
+		tfCodi.setBounds(215, 11, 36, 20);
+		panel.add(tfCodi);
+		tfCodi.setColumns(10);
+		
 	}
 	
 	
@@ -239,4 +257,23 @@ public class DepartamentEditForm extends JDialog{
 	public void setChckbxInforme(JCheckBox chckbxInforme) {
 		this.chckbxInforme = chckbxInforme;
 	}
+
+
+	public JTextField getTfCodi() {
+		return tfCodi;
+	}
+
+
+	public void setTfCodi(JTextField tfCodi) {
+		this.tfCodi = tfCodi;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
+	}
+	
 }

@@ -156,22 +156,59 @@ public class ControllerOperation {
 		return enviarCridaSimple(departament.modiJSon(login.getCodiSessio()));	
 	}
 	
+	
 	public Departament[] llistarDepartament(String camp, String valor, String ordre) {
 		JSONArray arr = enviarCridaRetornObjectes(Departament.llistatJSon(login.getCodiSessio(), camp, valor, ordre));
-		
-		depts = new Departament[arr.length()];
-		for(int i=0; i<arr.length(); i++){   
-			  JSONObject o = arr.getJSONObject(i);
-			  depts[i]= new Departament();
-			  depts[i].setCodi(o.getInt("codiDepartament"));
-			  depts[i].setNomDepartament(o.getString("nomDepartament"));
+		if (arr == null) {
+			return null;
+		}else {
+			depts = new Departament[arr.length()];
+			for(int i=0; i<arr.length(); i++){   
+				  JSONObject o = arr.getJSONObject(i);
+				  depts[i]= new Departament();
+				  depts[i].setCodi(o.getInt("codiDepartament"));
+				  depts[i].setNomDepartament(o.getString("nomDepartament"));
+			}
+			return depts;			
 		}
-		return depts; 
 	}
+	
 	
 	public Departament consultaIndDepartaments(int codi) {
 		
-		enviarCridaRetornObjectes(Departament.consultaJSon(login.getCodiSessio(), codi));
-		return null;
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(Departament.consultaJSon(login.getCodiSessio(), codi));
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		
+	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+
+		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+			Departament dept= new Departament();			
+			
+			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			dept.setCodi(dades.getInt("codiDepartament"));
+			dept.setNomDepartament(dades.getString("nomDepartament"));
+			
+			JSONObject permisos = dades.getJSONObject("permisos");
+			dept.setEscola(permisos.getBoolean("escola"));
+			dept.setDepartament(permisos.getBoolean("departament"));
+			dept.setEmpleat(permisos.getBoolean("empleat"));
+			dept.setEstudiant(permisos.getBoolean("estudiant"));
+			dept.setServei(permisos.getBoolean("servei"));
+			dept.setBeca(permisos.getBoolean("beca"));
+			dept.setSessio(permisos.getBoolean("sessio"));
+			dept.setInforme(permisos.getBoolean("informe"));
+					
+			return dept;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			return null;
+		}	
 	}
 }
