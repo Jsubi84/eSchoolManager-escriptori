@@ -4,7 +4,6 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
@@ -18,7 +17,7 @@ import controller.ControllerView;
 
 
 /**
- * @author Jorsu
+ * @author Jordi Subirana
  *
  */
 public class DepartamentEditForm extends JDialog{
@@ -30,16 +29,15 @@ public class DepartamentEditForm extends JDialog{
 	private static final Short ALTA = 1;
 	private static final Short MODIFICAR = 2;
 	private static final Short LLEGIR = 3;
-	private static final String NOM_DEPARTAMENT_ISBLACK = "El nom del departament s'ha d'omplenar";
+	private static final String NOM_DEPARTAMENT_ISBLACK = "El nom del departament s'ha d'omplir";
 	
 	
 	private JPanel contentPanel = new JPanel();
 	private JPanel panel;
-	private JTextField tfnomDep;
+	private JTextField tfnomDep, tfCodi;
 	private JButton okButton, cancelButton;
 	private JCheckBox chckbxEscola, chckbxDep, chckbxBeca, chckbxEstudiant, chckbxEmpleat, chckbxServei, chckbxSessio, chckbxInforme;
 	private ControllerView controllerView;
-	private JTextField tfCodi;
 	
 	
 
@@ -78,21 +76,16 @@ public class DepartamentEditForm extends JDialog{
 						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
 					}else {//Fem l'alta del departament borrem taula i refresquem
 						getControllerView().altaDepartament();
-						JTable table = getControllerView().getMainview().getDepartamentForm().getTable();
-			            int filas =	table.getRowCount();
-			            for (int i = 0;filas>i; i++) {
-			            	getControllerView().getMainview().getDepartamentForm().getModel().removeRow(0);
-			            }
-						getControllerView().llistarDepartament();
-						tancarAddForm();
+						getControllerView().getMainview().getDepartamentForm().recarregarTaula();
+						tancarForm();
 					}
 				}else if (mode == MODIFICAR){
 					if(getTfnomDep().getText().isBlank()){
 						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
 					}else {
 						getControllerView().modiDepartament(Integer.parseInt(getTfCodi().getText()));
-						getControllerView().llistarDepartament();
-						tancarAddForm();
+						getControllerView().getMainview().getDepartamentForm().recarregarTaula();
+						tancarForm();
 					}
 				}else if (mode == LLEGIR){ 
 					getControllerView().getMainview().getDepartamentForm().llegirDepartament();
@@ -106,7 +99,7 @@ public class DepartamentEditForm extends JDialog{
 		cancelButton.setBounds(144, 228, 107, 23);		
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tancarAddForm();
+				tancarForm();
 			}
 		});
 		panel.add(cancelButton);
@@ -170,12 +163,10 @@ public class DepartamentEditForm extends JDialog{
 	/**
 	 *Metode per tancar formulari Edit
 	 */
-	public void tancarAddForm(){
+	public void tancarForm(){
 		this.dispose();
 	}
 	
-	
-
 	/**
 	 * Getters i Setters
 	 *
@@ -260,11 +251,9 @@ public class DepartamentEditForm extends JDialog{
 		this.chckbxInforme = chckbxInforme;
 	}
 
-
 	public JTextField getTfCodi() {
 		return tfCodi;
 	}
-
 
 	public void setTfCodi(JTextField tfCodi) {
 		this.tfCodi = tfCodi;
@@ -276,6 +265,14 @@ public class DepartamentEditForm extends JDialog{
 
 	public void setOkButton(JButton okButton) {
 		this.okButton = okButton;
+	}
+
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	public void setCancelButton(JButton cancelButton) {
+		this.cancelButton = cancelButton;
 	}
 	
 }

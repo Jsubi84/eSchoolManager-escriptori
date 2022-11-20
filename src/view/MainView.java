@@ -51,6 +51,7 @@ public class MainView extends JFrame {
 	private BecaFilterForm becaForm;
 	private EstudiantFilterForm estudiantForm;
 	private ServeiFilterForm serveiForm;
+	private EmpleatFilterForm empleatForm;
 	
 
 	/**
@@ -585,8 +586,9 @@ public class MainView extends JFrame {
 		isEscola = true;
 		btnEscola.setBackground(Color.lightGray);
 		
-		escolaForm = new EscolaUpdateForm();
+		escolaForm = new EscolaUpdateForm(getControllerView());
 		carregarPanel(escolaForm);
+		escolaForm.llegirEscola();
 	}
 	
 	public void opcioDepartament() {
@@ -604,7 +606,7 @@ public class MainView extends JFrame {
 		isEmpleat = true; 
 		btnEmpleat.setBackground(Color.lightGray);
 		
-		EmpleatFilterForm empleatForm = new EmpleatFilterForm();
+		empleatForm = new EmpleatFilterForm(getControllerView());
 		carregarPanel(empleatForm);
 	}
 	
@@ -624,7 +626,7 @@ public class MainView extends JFrame {
 		
 		serveiForm = new ServeiFilterForm(getControllerView());
 		carregarPanel(serveiForm);
-		//serveiForm.llistarServei();
+		serveiForm.llistarServei();
 	}
 	
 	public void opcioBeca() {

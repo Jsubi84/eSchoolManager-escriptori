@@ -63,7 +63,7 @@ public class Servei {
 		json.put("crida", "ALTA SERVEI");
 		json.put("codiSessio", codiSessio);
 		JSONObject dades = new JSONObject();
-		dades.put("nom",this.getNom());	
+		dades.put("nomServei",this.getNom());	
 		dades.put("durada",this.getDurada());
 		dades.put("cost",this.getCost());
 		json.put("dades", dades);
@@ -88,7 +88,7 @@ public class Servei {
 		json.put("codiSessio", codiSessio);
 		JSONObject dades = new JSONObject();
 		dades.put("codiServei",this.getCodi());			
-		dades.put("nom",this.getNom());	
+		dades.put("nomServei",this.getNom());	
 		dades.put("durada",this.getDurada());
 		dades.put("cost",this.getCost());
 		json.put("dades", dades);

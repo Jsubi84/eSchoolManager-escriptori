@@ -51,7 +51,7 @@ public class Empleat extends Persona {
 	}
 	
 	
-	public String AltaJSon (String codiSessio, Usuari usuari) {
+	public String altaJSon (String codiSessio, Usuari usuari) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "ALTA EMPLEAT");
 		json.put("codiSessio", codiSessio);		
@@ -71,7 +71,7 @@ public class Empleat extends Persona {
 	}
 	
 	
-	public static String BaixaJSon (String codiSessio, int codi) {
+	public static String baixaJSon (String codiSessio, int codi) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "BAIXA EMPLEAT");
 		json.put("codiSessio", codiSessio);	
@@ -82,7 +82,7 @@ public class Empleat extends Persona {
 	}
 	
 	
-	public String ModiJSon (String codiSessio, Usuari usuari) {
+	public String modiJSon (String codiSessio,  Usuari usuari) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "MODI EMPLEAT");
 		json.put("codiSessio", codiSessio);		

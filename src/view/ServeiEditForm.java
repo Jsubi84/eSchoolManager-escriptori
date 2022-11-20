@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.CardLayout;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,18 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.ControllerView;
 import util.Convert;
 
+
+/**
+ * @author Jordi Subirana
+ *
+ */
 public class ServeiEditForm extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final Short ALTA = 1;
 	private static final Short MODIFICAR = 2;
@@ -50,7 +52,7 @@ public class ServeiEditForm extends JDialog {
 
 		setControllerView(controllerView);
 		setType(Type.UTILITY);
-		setTitle("Departament");
+		setTitle("Servei");
 		setBounds(100, 100, 280, 303);
 		getContentPane().setLayout(new CardLayout(0, 0));
 		contentPanel.setSize(new Dimension(280, 280));
@@ -79,13 +81,8 @@ public class ServeiEditForm extends JDialog {
 						controllerView.missatgeIncidencia(COST_SERVEI);
 					}else {//Fem l'alta del servei borrem taula i refresquem
 						getControllerView().altaServei();
-						JTable table = getControllerView().getMainview().getServeiForm().getTable();
-			            int filas =	table.getRowCount();
-			            for (int i = 0;filas>i; i++) {
-			            	getControllerView().getMainview().getServeiForm().getModel().removeRow(0);
-			            }
-						//getControllerView().llistarServei();
-						tancarAddForm();
+						getControllerView().getMainview().getServeiForm().recarregarTaula(); 
+						tancarForm();
 					}
 				}else if (mode == MODIFICAR){
 					if(getTfnomServei().getText().isBlank() ||getTfDurada().getText().isBlank()|| getTfCost().getText().isBlank()){
@@ -96,8 +93,8 @@ public class ServeiEditForm extends JDialog {
 						controllerView.missatgeIncidencia(COST_SERVEI);						
 					}else {
 						getControllerView().modiServei(Integer.parseInt(getTfCodi().getText()));
-						//getControllerView().llistarServei();
-						tancarAddForm();
+						getControllerView().getMainview().getServeiForm().recarregarTaula();
+						tancarForm();
 					}
 				}else if (mode == LLEGIR){ 
 					getControllerView().getMainview().getServeiForm().llegirServei();
@@ -111,7 +108,7 @@ public class ServeiEditForm extends JDialog {
 		cancelButton.setBounds(144, 228, 107, 23);		
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tancarAddForm();
+				tancarForm();
 			}
 		});
 		panel.add(cancelButton);
@@ -151,17 +148,13 @@ public class ServeiEditForm extends JDialog {
 		panel.add(tfCost);
 		
 	}
-	
-	
 
 	/**
 	 *Metode per tancar formulari Edit
 	 */
-	public void tancarAddForm(){
+	public void tancarForm(){
 		this.dispose();
 	}
-	
-	
 
 	/**
 	 * Getters i Setters
@@ -223,4 +216,11 @@ public class ServeiEditForm extends JDialog {
 		this.tfCost = tfCost;
 	}
 	
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	public void setCancelButton(JButton cancelButton) {
+		this.cancelButton = cancelButton;
+	}
 }

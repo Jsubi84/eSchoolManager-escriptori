@@ -56,19 +56,19 @@ public class Escola {
 	
 	
 	
-	public String ModiJSon (String codiSessio, Usuari usuari) {
+	public String modiJSon (String codiSessio) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "MODI ESCOLA");
 		json.put("codiSessio", codiSessio);		
 		JSONObject dades = new JSONObject();
-		dades.put("nom", this.getNom());		
+		dades.put("nomEscola", this.getNom());		
 		dades.put("adreca", this.getAdreca());	
 		dades.put("telefon", this.getTelefon());	
 		json.put("dades", dades);
 		return json.toString();
 	}
 
-	public static String ConsultaJSon (String codiSessio, int codi) {
+	public static String consultaJSon (String codiSessio, int codi) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "CONSULTA ESCOLA");
 		json.put("codiSessio", codiSessio);	

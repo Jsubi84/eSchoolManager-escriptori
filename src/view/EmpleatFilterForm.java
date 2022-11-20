@@ -34,14 +34,14 @@ public class EmpleatFilterForm extends JPanel {
 	private static final Short MODI = 2;
 	
 	private JTable table;
-	DepartamentEditForm deptEditForm;
+	EmpleatEditForm empleatEditForm;
 	private ControllerView controllerView;
 	DefaultTableModel model;
 
 	/**
 	 * Create the panel.
 	 */
-	public EmpleatFilterForm() {
+	public EmpleatFilterForm(ControllerView controllerView) {
 		
 		setControllerView(controllerView);
 		setPreferredSize(new Dimension(818, 524));
@@ -104,7 +104,7 @@ public class EmpleatFilterForm extends JPanel {
 		JButton btnEdit = new JButton("");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modificarDepartament();
+				//modificarDepartament();
 			}
 		});
 		btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -182,9 +182,9 @@ public class EmpleatFilterForm extends JPanel {
 	 * Metode per donar d'alta un departament nou.
 	 */
 	public void altaDepartament() {
-		deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true, controllerView, ALTA);
-		deptEditForm.setLocationRelativeTo(null);
-		deptEditForm.setVisible(true);
+		empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true, controllerView, ALTA);
+		empleatEditForm.setLocationRelativeTo(null);
+		empleatEditForm.setVisible(true);
 	}
 	
 	/**
@@ -200,40 +200,40 @@ public class EmpleatFilterForm extends JPanel {
 		}
 	}
 	
-	/**
-	 * Metode per modificar l'item seleccionat a la taula
-	 */
-	public void modificarDepartament() {
-		try {
-			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
-			// Ordre de la taula			
-			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
-			// Fer la consulta individual per omplir les dades
-			deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true,controllerView, MODI);
-			Departament dept = controllerView.consultaIndDepartament(idSelec);
-			if (dept != null) {
-				deptEditForm.getTfCodi().setText(String.valueOf(dept.getCodi()));
-				deptEditForm.getTfnomDep().setText(dept.getNomDepartament());
-				deptEditForm.getChckbxBeca().setSelected(dept.getBeca());     
-				deptEditForm.getChckbxEscola().setSelected(dept.getEscola());
-				deptEditForm.getChckbxDep().setSelected(dept.getDepartament());
-				deptEditForm.getChckbxEmpleat().setSelected(dept.getEmpleat());
-				deptEditForm.getChckbxEstudiant().setSelected(dept.getEstudiant());
-				deptEditForm.getChckbxServei().setSelected(dept.getServei());
-				deptEditForm.getChckbxSessio().setSelected(dept.getSessio());
-				deptEditForm.getChckbxInforme().setSelected(dept.getInforme());
-				// Un cop carregat el formulari el fem visible
-				deptEditForm.setVisible(true);				
-			}else {
-				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest departament");
-				deptEditForm.dispose();
-			}
-		} catch (Exception e) {
-			e.getMessage();
-			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
-			deptEditForm.dispose();
-		}
-	}
+//	/**
+//	 * Metode per modificar l'item seleccionat a la taula
+//	 */
+//	public void modificarDepartament() {
+//		try {
+//			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
+//			// Ordre de la taula			
+//			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
+//			// Fer la consulta individual per omplir les dades
+//			deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true,controllerView, MODI);
+//			Departament dept = controllerView.consultaIndDepartament(idSelec);
+//			if (dept != null) {
+//				deptEditForm.getTfCodi().setText(String.valueOf(dept.getCodi()));
+//				deptEditForm.getTfnomDep().setText(dept.getNomDepartament());
+//				deptEditForm.getChckbxBeca().setSelected(dept.getBeca());     
+//				deptEditForm.getChckbxEscola().setSelected(dept.getEscola());
+//				deptEditForm.getChckbxDep().setSelected(dept.getDepartament());
+//				deptEditForm.getChckbxEmpleat().setSelected(dept.getEmpleat());
+//				deptEditForm.getChckbxEstudiant().setSelected(dept.getEstudiant());
+//				deptEditForm.getChckbxServei().setSelected(dept.getServei());
+//				deptEditForm.getChckbxSessio().setSelected(dept.getSessio());
+//				deptEditForm.getChckbxInforme().setSelected(dept.getInforme());
+//				// Un cop carregat el formulari el fem visible
+//				deptEditForm.setVisible(true);				
+//			}else {
+//				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest departament");
+//				deptEditForm.dispose();
+//			}
+//		} catch (Exception e) {
+//			e.getMessage();
+//			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
+//			deptEditForm.dispose();
+//		}
+//	}
 	
 	/**
 	 * Metode per llistar els diferents items a la taula en forma de fila.

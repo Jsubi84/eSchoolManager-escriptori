@@ -240,7 +240,7 @@ public class DepartamentFilterForm extends JPanel{
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
 			controllerView.baixaDepartament(idSelec);
-			controllerView.llistarDepartament();
+			recarregarTaula();
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per donar de baixa");
@@ -291,7 +291,7 @@ public class DepartamentFilterForm extends JPanel{
 	}
 	
 	/**
-	 * Metode per modificar l'item seleccionat a la taula
+	 * Metode per llegir l'item seleccionat a la taula
 	 */
 	public void llegirDepartament() {
 		try {
@@ -331,6 +331,7 @@ public class DepartamentFilterForm extends JPanel{
 				deptEditForm.getChckbxInforme().setEnabled(false);
 				
 				deptEditForm.getOkButton().setVisible(false);
+				deptEditForm.getCancelButton().setText("Sortir");
 				// Un cop carregat el formulari el fem visible
 				deptEditForm.setVisible(true);				
 			}else {
@@ -343,4 +344,18 @@ public class DepartamentFilterForm extends JPanel{
 			deptEditForm.dispose();
 		}
 	}
+	
+	
+	/**
+	 * Metode per refrescar la taula despres de fer una operacio
+	 *
+	 */	
+	public void recarregarTaula(){
+		JTable table = getControllerView().getMainview().getDepartamentForm().getTable();
+		int filas =	table.getRowCount();
+	    for (int i = 0;filas>i; i++) {
+	    	getControllerView().getMainview().getDepartamentForm().getModel().removeRow(0);
+	    }
+		getControllerView().llistarDepartament();
+	}	
 }

@@ -25,11 +25,13 @@ import javax.swing.table.DefaultTableModel;
 import controller.ControllerView;
 import model.Servei;
 
+
+/**
+ * @author Jordi Subirana
+ *
+ */
 public class ServeiFilterForm extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final Short ALTA = 1;
 	private static final Short MODI = 2;
@@ -165,7 +167,6 @@ public class ServeiFilterForm extends JPanel {
 
 	}
 	
-	
 
 	/**
 	 * Getters i Setters
@@ -183,8 +184,6 @@ public class ServeiFilterForm extends JPanel {
 	public void setServeiEditForm(ServeiEditForm serveiEditForm) {
 		this.serveiEditForm = serveiEditForm;
 	}
-
-
 
 	public void setControllerView(ControllerView controllerView) {
 		this.controllerView = controllerView;
@@ -222,7 +221,6 @@ public class ServeiFilterForm extends JPanel {
 	}
 	
 	
-	
 	/**
 	 * Metode per donar d'alta un servei nou.
 	 */
@@ -239,12 +237,13 @@ public class ServeiFilterForm extends JPanel {
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
 			controllerView.baixaServei(idSelec);
-			controllerView.llistarServei();
+			recarregarTaula();
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per donar de baixa");
 		}
 	}
+	
 	
 	/**
 	 * Metode per modificar l'item seleccionat a la taula
@@ -276,6 +275,7 @@ public class ServeiFilterForm extends JPanel {
 		}
 	}
 	
+	
 	/**
 	 * Metode per llistar els diferents items a la taula en forma de fila.
 	 */
@@ -283,8 +283,9 @@ public class ServeiFilterForm extends JPanel {
 		controllerView.llistarServei();
 	}
 	
+	
 	/**
-	 * Metode per modificar l'item seleccionat a la taula
+	 * Metode per llegir l'item seleccionat a la taula
 	 */
 	public void llegirServei() {
 		try {
@@ -316,6 +317,7 @@ public class ServeiFilterForm extends JPanel {
 				
 				
 				serveiEditForm.getOkButton().setVisible(false);
+				serveiEditForm.getCancelButton().setText("Sortir");
 				// Un cop carregat el formulari el fem visible
 				serveiEditForm.setVisible(true);				
 			}else {
@@ -327,6 +329,20 @@ public class ServeiFilterForm extends JPanel {
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
 			//serveiEditForm.dispose();
 		}
+	}
+	
+	
+	/**
+	 * Metode per refrescar la taula despres de fer una operacio
+	 *
+	 */	
+	public void recarregarTaula(){
+		JTable table = getControllerView().getMainview().getServeiForm().getTable();
+		int filas =	table.getRowCount();
+	    for (int i = 0;filas>i; i++) {
+	    	getControllerView().getMainview().getServeiForm().getModel().removeRow(0);
+	    }
+		getControllerView().llistarServei();
 	}
 
 }

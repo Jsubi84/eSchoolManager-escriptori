@@ -18,8 +18,8 @@ public class TalkToServer {
 
 	
     private static final int PORT=8080;
-    private static final String IPADDRESS="10.2.55.226";
-    //private static final String IPADDRESS="localhost";
+    //private static final String IPADDRESS="10.2.55.226";
+    private static final String IPADDRESS="localhost";
 
 	/**
      * Enviar crida i esperar la resposta del servidor.
@@ -43,12 +43,12 @@ public class TalkToServer {
     	
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     	entrada = in.readLine();
+    	
+ 		// Resposta a la crida per consola per fer seguiment resposta.
+		System.out.println(entrada);    	
  	
         socket.close();           
-        
-		// Resposta a la crida per consola per fer seguiment resposta.
-		System.out.println(entrada); 
-       
+     
         return entrada;
     }		
  

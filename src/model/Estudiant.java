@@ -36,13 +36,13 @@ public class Estudiant extends Persona {
 	}
 	
 	
-	public String AltaJSon (String codiSessio) {
+	public String altaJSon (String codiSessio) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "ALTA ESTUDIANT");
 		json.put("codiSessio", codiSessio);		
 		JSONObject dades = new JSONObject();	
 		dades.put("dni",this.getDni());			
-		dades.put("nom", this.getNom());	
+		dades.put("nomEstudiant", this.getNom());	
 		dades.put("cognoms", this.getCognoms());			
 		dades.put("dataNaixement", this.getDataNaixament());	
 		dades.put("adreca", this.getAdreca());			
@@ -53,7 +53,7 @@ public class Estudiant extends Persona {
 	}
 	
 	
-	public static String BaixaJSon (String codiSessio, int codi) {
+	public static String baixaJSon (String codiSessio, int codi) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "BAIXA ESTUDIANT");
 		json.put("codiSessio", codiSessio);	
@@ -64,14 +64,14 @@ public class Estudiant extends Persona {
 	}
 	
 	
-	public String ModiJSon (String codiSessio, Usuari usuari) {
+	public String modiJSon (String codiSessio) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "MODI ESTUDIANT");
 		json.put("codiSessio", codiSessio);		
 		JSONObject dades = new JSONObject();
 		dades.put("codiEstudiant", this.getCodi());
 		dades.put("dni",this.getDni());			
-		dades.put("nom", this.getNom());	
+		dades.put("nomEstudiant", this.getNom());	
 		dades.put("cognoms", this.getCognoms());			
 		dades.put("dataNaixement", this.getDataNaixament());	
 		dades.put("adreca", this.getAdreca());			
@@ -83,7 +83,7 @@ public class Estudiant extends Persona {
 	}
 	
 	
-	public static String LlistatJSon (String codiSessio, String camp, String valor, String ordre) {
+	public static String llistatJSon (String codiSessio, String camp, String valor, String ordre) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "LLISTA ESTUDIANTS");
 		json.put("codiSessio", codiSessio);	

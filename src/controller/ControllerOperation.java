@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.Departament;
+import model.Escola;
 import model.Login;
 import model.Servei;
 import util.TalkToServer;
@@ -309,7 +310,7 @@ public class ControllerOperation {
 				  JSONObject o = arr.getJSONObject(i);
 				  serveis[i]= new Servei();
 				  serveis[i].setCodi(o.getInt("codiServei"));
-				  serveis[i].setNom(o.getString("nom"));
+				  serveis[i].setNom(o.getString("nomServei"));
 				  serveis[i].setDurada(o.getInt("durada"));
 				  serveis[i].setCost(o.getDouble("cost"));
 			}
@@ -342,7 +343,7 @@ public class ControllerOperation {
 			
 			JSONObject dades = jsonUsuari.getJSONObject("dades");
 			servei.setCodi(dades.getInt("codiServei"));
-			servei.setNom(dades.getString("nom"));
+			servei.setNom(dades.getString("nomServei"));
 			servei.setDurada(dades.getInt("durada"));
 			servei.setCost(dades.getDouble("cost"));
 			
@@ -354,4 +355,56 @@ public class ControllerOperation {
 			return null;
 		}	
 	}
+	
+	
+	/**
+	 * METODE ESCOLA
+	 */
+	
+	/**
+	 * Metode per actualitzar el formulari de l'escola confeccionant la crida i enviant-la
+	 * @param escola. Rep una escola el qual sera actualitzada al actual registre persistent.
+	 * @return Retorna resposta afirmativa si ha s'ha pogut actualitzar
+	 */
+	public Boolean actualitzarEscola(Escola escola) {
+		return enviarCridaSimple(escola.modiJSon(login.getCodiSessio()));	
+	}
+	
+	
+	/**
+	 * Metode per consultar escola confeccionant la crida i enviant-la
+	 * @param codi. Rep codi de l'escola a consultar
+	 * @return Retorna les dades de l'escola
+	 */
+	public Escola consultaIndEscola(int codi) {
+		
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(Escola.consultaJSon(login.getCodiSessio(), codi));
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		
+	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+
+		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+			Escola escola= new Escola();			
+			
+			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			escola.setCodi(1);
+			escola.setNom(dades.getString("nomEscola"));
+			escola.setAdreca(dades.getString("adreca"));
+			escola.setTelefon(dades.getString("telefon"));
+			
+			
+			return escola;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			return null;
+		}	
+	}
+	
 }

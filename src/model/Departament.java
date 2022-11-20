@@ -151,6 +151,8 @@ public class Departament {
 		dades.put("codiDepartament", this.getCodi());
 		dades.put("nomDepartament",this.getNomDepartament());
 		JSONObject permisos = new JSONObject();
+		permisos.put("escola", this.getEscola());	
+		permisos.put("departament", this.getDepartament());	
 		permisos.put("empleat", this.getEmpleat());	
 		permisos.put("estudiant", this.getEstudiant());	
 		permisos.put("servei", this.getServei());	

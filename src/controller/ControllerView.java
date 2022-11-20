@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import model.Departament;
+import model.Escola;
 import model.Login;
 import model.Servei;
 import view.LoginView;
@@ -260,7 +261,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist consulta individual que s'ha de buscar servei.
+	 * Metode controlar la part de la vist consulta individual que ha de buscar un servei.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Servei. Retorna la consulta
 	 */
@@ -271,6 +272,48 @@ public class ControllerView {
 			return null;
 		} else {
 			return ser;
+		}
+	}
+	
+	
+	
+	
+	
+	/**
+	 * 	METODES PER A ESCOLA
+	 */
+	
+	/**
+	 * Metode controlar la part de la vist actualitzar Escola.
+	 * @param codi. Codi del registre que s'ha de modificar.
+	 */
+	public void actualitzarEscola(int codi) {
+		Escola esc= new Escola();
+		esc.setCodi(codi);
+		esc.setNom(mainview.getEscolaForm().getTfNom().getText());
+		esc.setAdreca(mainview.getEscolaForm().getTfAdreca().getText());
+		esc.setTelefon(mainview.getEscolaForm().getTfTelefon().getText());
+
+		if (controlOper.actualitzarEscola(esc)) {
+			missatgeIncidencia(MODI_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist consulta individual carrega dades Escola.
+	 * @param codi. Codi del registre que s'ha de consultar.
+	 * @return Escola. Retorna la consulta
+	 */
+	public Escola consultaIndEscola(int codi) {
+		Escola esc = controlOper.consultaIndEscola(codi);
+		if (esc == null) {
+			missatgeErrorIncidencia(incidencia);
+			return null;
+		} else {
+			return esc;
 		}
 	}
 	
