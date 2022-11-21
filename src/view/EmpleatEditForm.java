@@ -44,9 +44,9 @@ public class EmpleatEditForm extends JDialog {
 	private JButton okButton, cancelButton;
 	private JCheckBox ckActiu;
 	private ControllerView controllerView;
-	private JLabel lblDataNx, lblCognoms, lblTelefon, lblAdreca,lblnom,lblCodidep,lblEmail,lblContrasenya,lblUsuari,lblCodi,lblDNI;
+	private JLabel lblDataNx, lblCognoms, lblTelefon, lblAdreca,lblnom,lblEmail,lblContrasenya,lblUsuari,lblCodi,lblDNI;
 	private JFormattedTextField ftfDNI, ftfDataNa;
-	private JTextField tfnom,tfCodi,tfCognoms,tfTelefon,tfAdreca,tfEmail,tfContrasenya,tfUsuari, tfCodiDep; 
+	private JTextField tfnom,tfCodi,tfCognoms,tfTelefon,tfAdreca,tfEmail,tfContrasenya,tfUsuari; 
 	
 
 	/**
@@ -56,6 +56,7 @@ public class EmpleatEditForm extends JDialog {
 		super(parent, modal);		
 		
 		setResizable(false);
+		setLocationRelativeTo(null);
 
 		setControllerView(controllerView);
 		setType(Type.UTILITY);
@@ -125,12 +126,10 @@ public class EmpleatEditForm extends JDialog {
 		tfnom.setColumns(10);
 
 		ckActiu = new JCheckBox("Actiu");
-		ckActiu.setVisible(false);
-		ckActiu.setBounds(200, 7, 51, 23);
+		ckActiu.setBounds(87, 7, 51, 23);
 		panel.add(ckActiu);
 		
 		tfCodi = new JTextField();
-		tfCodi.setVisible(false);
 		tfCodi.setEnabled(false);
 		tfCodi.setHorizontalAlignment(SwingConstants.CENTER);
 		tfCodi.setBounds(52, 8, 28, 20);
@@ -158,7 +157,7 @@ public class EmpleatEditForm extends JDialog {
 		panel.add(ftfDataNa);
 		
 		lblDataNx = new JLabel("Data Naixament");
-		lblDataNx.setBounds(144, 37, 84, 14);
+		lblDataNx.setBounds(144, 37, 107, 14);
 		panel.add(lblDataNx);
 		
 		MaskFormatter dni = null;
@@ -189,7 +188,7 @@ public class EmpleatEditForm extends JDialog {
 		panel.add(tfTelefon);
 		
 		lblTelefon = new JLabel("Telefon");
-		lblTelefon.setBounds(144, 80, 99, 14);
+		lblTelefon.setBounds(144, 80, 107, 14);
 		panel.add(lblTelefon);
 		
 		tfAdreca = new JTextField();
@@ -229,22 +228,11 @@ public class EmpleatEditForm extends JDialog {
 		panel.add(tfUsuari);
 		
 		lblCodi = new JLabel("Codi");
-		lblCodi.setVisible(false);
 		lblCodi.setBounds(23, 11, 28, 14);
 		panel.add(lblCodi);
 		
-		lblCodidep = new JLabel("CodiDep");
-		lblCodidep.setVisible(false);
-		lblCodidep.setBounds(87, 11, 43, 14);
-		panel.add(lblCodidep);
-		
-		tfCodiDep = new JTextField();
-		tfCodiDep.setHorizontalAlignment(SwingConstants.CENTER);
-		tfCodiDep.setBounds(144, 8, 37, 20);
-		panel.add(tfCodiDep);
-		
 		cbDepts = new JComboBox<String>();
-		cbDepts.setBounds(72, 307, 128, 22);
+		cbDepts.setBounds(144, 7, 107, 22);
 		panel.add(cbDepts);
 		
 		Departament departaments[] = controllerView.getControlOper().llistarDepartament("", "", "");
@@ -393,14 +381,6 @@ public class EmpleatEditForm extends JDialog {
 		this.tfUsuari = tfUsuari;
 	}
 
-	public JTextField getTfCodiDep() {
-		return tfCodiDep;
-	}
-
-	public void setTfCodiDep(JTextField tfCodiDep) {
-		this.tfCodiDep = tfCodiDep;
-	}
-
 	public ControllerView getControllerView() {
 		return controllerView;
 	}
@@ -416,6 +396,13 @@ public class EmpleatEditForm extends JDialog {
 	public void setCbDepts(JComboBox cbDepts) {
 		this.cbDepts = cbDepts;
 	}
-	
+
+	public JLabel getLblCodi() {
+		return lblCodi;
+	}
+
+	public void setLblCodi(JLabel lblCodi) {
+		this.lblCodi = lblCodi;
+	}
 	
 }

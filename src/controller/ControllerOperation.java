@@ -96,23 +96,23 @@ public class ControllerOperation {
 	private Boolean enviarCridaSimple(String crida) {
 		String resposta="";
 		try {
-			resposta = TalkToServer.connection(crida);
+			 resposta = TalkToServer.connection(crida);
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
-		
-	   	JSONObject jsonUsuari = new JSONObject(resposta);
+		}			 
+			 
+		JSONObject jsonUsuari = new JSONObject(resposta);
 		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
 			return true;
 		} else {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
 			return false;
-		}		
+		}				
+			
 	}
-	
 	
 	
 	/**
@@ -127,9 +127,9 @@ public class ControllerOperation {
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-		
+			e.printStackTrace();	
+		}
+			
 	   	JSONObject jsonUsuari = new JSONObject(resposta);	
 	   	JSONArray jsonArray = new JSONArray();
 
@@ -147,7 +147,7 @@ public class ControllerOperation {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
 			return null;
-		}		
+		}				
 	}
 	
 	
@@ -155,7 +155,6 @@ public class ControllerOperation {
 	/**
 	 * METODES DEPARTAMENTS
 	 */
-	
 	
 	/**
 	 * Metode per donar d'alta un Departament confeccionant la crida i enviant-la
@@ -227,7 +226,7 @@ public class ControllerOperation {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 		
 	   	JSONObject jsonUsuari = new JSONObject(resposta);	
 
@@ -253,7 +252,8 @@ public class ControllerOperation {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
 			return null;
-		}	
+		}				
+	
 	}
 	
 	
@@ -336,8 +336,8 @@ public class ControllerOperation {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
-		
+		}				
+			
 	   	JSONObject jsonUsuari = new JSONObject(resposta);	
 
 		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
@@ -349,14 +349,15 @@ public class ControllerOperation {
 			servei.setDurada(dades.getInt("durada"));
 			servei.setCost(dades.getDouble("cost"));
 			
-			
 			return servei;
 		} else {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
 			return null;
-		}	
+		}			
+			
 	}
+	
 	
 	
 	/**
@@ -379,7 +380,6 @@ public class ControllerOperation {
 	 * @return Retorna les dades de l'escola
 	 */
 	public Escola consultaIndEscola(int codi) {
-		
 		String resposta="";
 		try {
 			resposta = TalkToServer.connection(Escola.consultaJSon(login.getCodiSessio(), codi));
@@ -387,9 +387,9 @@ public class ControllerOperation {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
-		
-	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+		}			
+			
+		JSONObject jsonUsuari = new JSONObject(resposta);	
 
 		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
 			Escola escola= new Escola();			
@@ -400,13 +400,13 @@ public class ControllerOperation {
 			escola.setAdreca(dades.getString("adreca"));
 			escola.setTelefon(dades.getString("telefon"));
 			
-			
 			return escola;
 		} else {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
 			return null;
-		}	
+		}				
+		
 	}
 	
 	
@@ -482,7 +482,6 @@ public class ControllerOperation {
 	 * @return Retorna un empleat el qual volem consultar
 	 */
 	public Empleat consultaIndEmpleat(int codi) {
-		
 		String resposta="";
 		try {
 			resposta = TalkToServer.connection(Empleat.consultaJSon(login.getCodiSessio(), codi));
@@ -490,9 +489,9 @@ public class ControllerOperation {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
-		
-	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+		}				
+			
+		JSONObject jsonUsuari= new JSONObject(resposta);	
 
 		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
 			Empleat empleat= new Empleat();			
@@ -515,6 +514,7 @@ public class ControllerOperation {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
 			return null;
-		}	
+		}			
+			
 	}
 }

@@ -49,6 +49,7 @@ public class ServeiEditForm extends JDialog {
 		super(parent, modal);
 		
 		setResizable(false);
+		setLocationRelativeTo(null);
 
 		setControllerView(controllerView);
 		setType(Type.UTILITY);

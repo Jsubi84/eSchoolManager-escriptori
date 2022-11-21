@@ -7,6 +7,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import java.awt.Color;
@@ -213,6 +214,9 @@ public class EmpleatFilterForm extends JPanel {
 	public void altaEmpleat() {
 		empleatEditForm= new EmpleatEditForm(controllerView.getMainview(), true, controllerView, ALTA);
 		empleatEditForm.setLocationRelativeTo(null);
+		empleatEditForm.getLblCodi().setVisible(false);
+		empleatEditForm.getTfCodi().setVisible(false);
+		empleatEditForm.getCkActiu().setVisible(false);
 		empleatEditForm.setVisible(true);
 	}
 	
@@ -223,6 +227,7 @@ public class EmpleatFilterForm extends JPanel {
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
 			controllerView.baixaEmpleat(idSelec);
+			recarregarTaula();
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per donar de baixa");
@@ -234,10 +239,12 @@ public class EmpleatFilterForm extends JPanel {
 	 */
 	public void modificarEmpleat() {
 		try {
-			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);					
+			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
+			String nomDepartament = (String) getTable().getValueAt(getTable().getSelectedRow(), 4);
 			// {"codiEmpleat","dni","nom","cognoms","dataNeixement","adreca", "telefon","email","codiDepartament","contrasenya","actiu"}
 			// Fer la consulta individual per omplir les dades
-			empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true,controllerView, MODI);
+			empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true, controllerView, MODI);
+			empleatEditForm.setLocationRelativeTo(null);
 			Empleat emp = controllerView.consultaIndEmpleat(idSelec);
 			if (emp != null) {
 				empleatEditForm.getTfCodi().setText(String.valueOf(emp.getCodi()));
@@ -248,7 +255,8 @@ public class EmpleatFilterForm extends JPanel {
 				empleatEditForm.getTfAdreca().setText(emp.getAdreca());
 				empleatEditForm.getTfTelefon().setText(emp.getTelefon());
 				empleatEditForm.getTfEmail().setText(emp.getEmail());
-				empleatEditForm.getTfCodiDep().setText(String.valueOf(emp.getCodiDepartament()));
+				empleatEditForm.getCbDepts().setSelectedIndex(retIndexCombo(
+						emp.getCodiDepartament() +"-" + nomDepartament, empleatEditForm.getCbDepts()));
 				empleatEditForm.getTfUsuari().setText(emp.getUsuari());
 				empleatEditForm.getTfContrasenya().setText("");
 				empleatEditForm.getCkActiu().setText(String.valueOf(emp.getActiu()));
@@ -279,7 +287,8 @@ public class EmpleatFilterForm extends JPanel {
 	 */
 	public void llegirEmpleat() {
 		try {
-			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
+			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
+			String nomDepartament = (String) getTable().getValueAt(getTable().getSelectedRow(), 4);
 			//  { "Id","Nom","Durada","Cost" }
 			// Fer la consulta individual per omplir les dades
 			empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true ,controllerView, LLEGIR);
@@ -294,7 +303,8 @@ public class EmpleatFilterForm extends JPanel {
 				empleatEditForm.getTfAdreca().setText(emp.getAdreca());
 				empleatEditForm.getTfTelefon().setText(emp.getTelefon());
 				empleatEditForm.getTfEmail().setText(emp.getEmail());
-				empleatEditForm.getTfCodiDep().setText(String.valueOf(emp.getCodiDepartament()));
+				empleatEditForm.getCbDepts().setSelectedIndex(retIndexCombo(
+						emp.getCodiDepartament() +"-" + nomDepartament, empleatEditForm.getCbDepts()));
 				empleatEditForm.getTfUsuari().setText(emp.getUsuari());
 				empleatEditForm.getTfContrasenya().setText("*************");
 				empleatEditForm.getCkActiu().setText(String.valueOf(emp.getActiu()));
@@ -305,8 +315,9 @@ public class EmpleatFilterForm extends JPanel {
 				empleatEditForm.getFtfDataNa().setEnabled(false);
 				empleatEditForm.getTfAdreca().setEnabled(false);
 				empleatEditForm.getTfEmail().setEnabled(false);
-				empleatEditForm.getTfCodiDep().setEnabled(false);
+				empleatEditForm.getCbDepts().setEnabled(false);
 				empleatEditForm.getTfUsuari().setEnabled(false);
+				empleatEditForm.getTfTelefon().setEnabled(false);
 				empleatEditForm.getTfContrasenya().setEnabled(false);
 				empleatEditForm.getCkActiu().setEnabled(false);
 				
@@ -340,5 +351,16 @@ public class EmpleatFilterForm extends JPanel {
 		getControllerView().llistarEmpleat();
 	}
 	
+	
+	public int retIndexCombo(String valor, JComboBox<String> cB) {
+		int index = 0;
+        for(int i = 0; i < cB.getItemCount() ; i++ ){
+        	if(valor.equals(cB.getItemAt(i))) {
+        		index=i;
+        		break;
+        	}
+        }
+		return index;
+	}
 	
 }

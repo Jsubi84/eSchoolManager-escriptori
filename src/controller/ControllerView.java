@@ -8,6 +8,7 @@ import model.Empleat;
 import model.Escola;
 import model.Login;
 import model.Servei;
+import util.Convert;
 import view.LoginView;
 import view.MainView;
 
@@ -16,6 +17,10 @@ import view.MainView;
  * @author Jordi Subirana
  *
  * Classe per poder controlar les vistes
+ */
+/**
+ * @author Jorsu
+ *
  */
 public class ControllerView {
 	
@@ -332,7 +337,7 @@ public class ControllerView {
 	 */
 	public void altaEmpleat() {
 		Empleat emp= new Empleat();
-		
+	
 		emp.setDni(mainview.getEmpleatForm().getEmpleatEditForm().getFtfDNI().getText());
 		emp.setNom(mainview.getEmpleatForm().getEmpleatEditForm().getTfnom().getText());
 		emp.setCognoms(mainview.getEmpleatForm().getEmpleatEditForm().getTfCognoms().getText());
@@ -340,7 +345,7 @@ public class ControllerView {
 		emp.setAdreca(mainview.getEmpleatForm().getEmpleatEditForm().getTfAdreca().getText());
 		emp.setTelefon(mainview.getEmpleatForm().getEmpleatEditForm().getTfTelefon().getText());
 		emp.setEmail(mainview.getEmpleatForm().getEmpleatEditForm().getTfEmail().getText());
-		emp.setCodiDepartament(Integer.parseInt(mainview.getEmpleatForm().getEmpleatEditForm().getTfCodiDep().getText()));
+		emp.setCodiDepartament(Convert.splitCombo((String) mainview.getEmpleatForm().getEmpleatEditForm().getCbDepts().getSelectedItem()));
 		emp.setUsuari(mainview.getEmpleatForm().getEmpleatEditForm().getTfUsuari().getText());
 		emp.setContrasenya(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText());
 		
@@ -371,6 +376,7 @@ public class ControllerView {
 	 */
 	public void modiEmpleat(int codi) {
 		Empleat emp= new Empleat();
+		
 		emp.setCodi(codi);
 		emp.setDni(mainview.getEmpleatForm().getEmpleatEditForm().getFtfDNI().getText());
 		emp.setNom(mainview.getEmpleatForm().getEmpleatEditForm().getTfnom().getText());
@@ -379,7 +385,7 @@ public class ControllerView {
 		emp.setAdreca(mainview.getEmpleatForm().getEmpleatEditForm().getTfAdreca().getText());
 		emp.setTelefon(mainview.getEmpleatForm().getEmpleatEditForm().getTfTelefon().getText());
 		emp.setEmail(mainview.getEmpleatForm().getEmpleatEditForm().getTfEmail().getText());
-		emp.setCodiDepartament(Integer.parseInt(mainview.getEmpleatForm().getEmpleatEditForm().getTfCodiDep().getText()));
+		emp.setCodiDepartament(Convert.splitCombo((String) mainview.getEmpleatForm().getEmpleatEditForm().getCbDepts().getSelectedItem()));
 		emp.setUsuari(mainview.getEmpleatForm().getEmpleatEditForm().getTfUsuari().getText());
 		emp.setContrasenya(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText());
 		emp.setActiu(Boolean.parseBoolean(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText()));
@@ -421,5 +427,6 @@ public class ControllerView {
 			return emp;
 		}
 	}
-		
+	
+
 }

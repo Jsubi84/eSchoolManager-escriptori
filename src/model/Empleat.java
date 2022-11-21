@@ -87,8 +87,8 @@ public class Empleat extends Persona {
 		dades.put("telefon", this.getTelefon());	
 		dades.put("email",this.getEmail());			
 		dades.put("codiDepartament", this.getCodiDepartament());
-		dades.put("usuari", usuari);			
-		dades.put("contrasenya", this.getCodiDepartament());		
+		dades.put("usuari", this.getUsuari());			
+		dades.put("contrasenya", this.getContrasenya());		
 		json.put("dades", dades);
 		return json.toString();
 	}
