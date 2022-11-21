@@ -12,14 +12,16 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerView;
+import model.Departament;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 
 /**
@@ -33,11 +35,12 @@ public class EmpleatEditForm extends JDialog {
 	private static final Short ALTA = 1;
 	private static final Short MODIFICAR = 2;
 	private static final Short LLEGIR = 3;
-	private static final String NOM_DEPARTAMENT_ISBLACK = "El nom del empleat s'ha d'omplenar";
+	private static final String NOM_EMPLEAT_ISBLACK = "El nom del empleat s'ha d'omplenar";
 	
 	
 	private JPanel contentPanel = new JPanel();
 	private JPanel panel;
+	private JComboBox<String> cbDepts;
 	private JButton okButton, cancelButton;
 	private JCheckBox ckActiu;
 	private ControllerView controllerView;
@@ -49,14 +52,10 @@ public class EmpleatEditForm extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public EmpleatEditForm(MainView parent, boolean modal ,ControllerView controllerView, Short mode) {
-		super(parent, modal);
-		setVisible(true);
+	public EmpleatEditForm(MainView parent, boolean modal,ControllerView controllerView, Short mode) {
+		super(parent, modal);		
+		
 		setResizable(false);
-		getContentPane().setSize(new Dimension(240, 500));
-		getContentPane().setPreferredSize(new Dimension(280, 500));
-		setPreferredSize(new Dimension(280, 500));
-		setSize(new Dimension(280, 500));
 
 		setControllerView(controllerView);
 		setType(Type.UTILITY);
@@ -83,28 +82,23 @@ public class EmpleatEditForm extends JDialog {
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (mode == ALTA) {
-					if(getTfnomDep().getText().isBlank()){
-						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
-					}else {//Fem l'alta del departament borrem taula i refresquem
-						getControllerView().altaDepartament();
-						JTable table = getControllerView().getMainview().getDepartamentForm().getTable();
-			            int filas =	table.getRowCount();
-			            for (int i = 0;filas>i; i++) {
-			            	getControllerView().getMainview().getDepartamentForm().getModel().removeRow(0);
-			            }
-						getControllerView().llistarDepartament();
-						tancarAddForm();
+					if(getTfnom().getText().isBlank()){
+						controllerView.missatgeIncidencia(NOM_EMPLEAT_ISBLACK);
+					}else {//Fem l'alta del empleat borrem taula i refresquem
+						getControllerView().altaEmpleat();
+						getControllerView().getMainview().getEmpleatForm().recarregarTaula();
+						tancarForm();
 					}
 				}else if (mode == MODIFICAR){
-					if(getTfnomDep().getText().isBlank()){
-						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
+					if(getTfnom().getText().isBlank()){
+						controllerView.missatgeIncidencia(NOM_EMPLEAT_ISBLACK);
 					}else {
-						getControllerView().modiDepartament(Integer.parseInt(getTfCodi().getText()));
-						getControllerView().llistarDepartament();
-						tancarAddForm();
+						getControllerView().modiEmpleat(Integer.parseInt(getTfCodi().getText()));
+						getControllerView().getMainview().getEmpleatForm().recarregarTaula();
+						tancarForm();
 					}
 				}else if (mode == LLEGIR){ 
-					getControllerView().getMainview().getDepartamentForm().llegirDepartament();
+					getControllerView().getMainview().getEmpleatForm().llegirEmpleat();
 				}
 			}
 		});
@@ -115,7 +109,7 @@ public class EmpleatEditForm extends JDialog {
 		cancelButton.setBounds(144, 329, 107, 23);		
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tancarAddForm();
+				tancarForm();
 			}
 		});
 		panel.add(cancelButton);
@@ -139,19 +133,19 @@ public class EmpleatEditForm extends JDialog {
 		tfCodi.setVisible(false);
 		tfCodi.setEnabled(false);
 		tfCodi.setHorizontalAlignment(SwingConstants.CENTER);
-		tfCodi.setBounds(52, 8, 43, 20);
+		tfCodi.setBounds(52, 8, 28, 20);
 		panel.add(tfCodi);
 		tfCodi.setColumns(10);
 		
 		lblDNI = new JLabel("DNI");
-		lblDNI.setBounds(23, 37, 107, 14);
+		lblDNI.setBounds(23, 39, 107, 14);
 		panel.add(lblDNI);
 		
 		//https://docs.oracle.com/javase/1.5.0/docs/api/javax/swing/text/MaskFormatter.html
 		
 		MaskFormatter dataN = null;
 		try {
-			dataN = new MaskFormatter("####/##/##");
+			dataN = new MaskFormatter("####-##-##");
 			dataN.setPlaceholderCharacter('_');
 			dataN.setValidCharacters("0123456789");
 		} catch (ParseException e1) {
@@ -241,63 +235,44 @@ public class EmpleatEditForm extends JDialog {
 		
 		lblCodidep = new JLabel("CodiDep");
 		lblCodidep.setVisible(false);
-		lblCodidep.setBounds(105, 11, 43, 14);
+		lblCodidep.setBounds(87, 11, 43, 14);
 		panel.add(lblCodidep);
 		
 		tfCodiDep = new JTextField();
 		tfCodiDep.setHorizontalAlignment(SwingConstants.CENTER);
-		tfCodiDep.setBounds(149, 8, 37, 20);
+		tfCodiDep.setBounds(144, 8, 37, 20);
 		panel.add(tfCodiDep);
 		
+		cbDepts = new JComboBox<String>();
+		cbDepts.setBounds(72, 307, 128, 22);
+		panel.add(cbDepts);
+		
+		Departament departaments[] = controllerView.getControlOper().llistarDepartament("", "", "");
+		cbDepts.removeAllItems();
+
+        //Omplir el combo box
+        for(int i = 0; i < departaments.length ; i++ ){
+            cbDepts.addItem(String.valueOf(departaments[i].getCodi()) +"-" + departaments[i].getNomDepartament());
+        }
+ 
+        cbDepts.setSelectedIndex(departaments.length-1);
+		
 	}
-	
 	
 
 	/**
 	 *Metode per tancar formulari Edit
 	 */
-	public void tancarAddForm(){
+	public void tancarForm(){
 		this.dispose();
 	}
-	
-	
+
 
 	/**
 	 * Getters i Setters
 	 *
 	 */
-	public JTextField getTfnomDep() {
-		return tfnom;
-	}
-
-	public void setTfnomDep(JTextField jTextField) {
-		this.tfnom = jTextField;
-	}
-
-	public ControllerView getControllerView() {
-		return controllerView;
-	}
-
-	public void setControllerView(ControllerView controllerView) {
-		this.controllerView = controllerView;
-	}
-
-	public JCheckBox getChckbxEstudiant() {
-		return ckActiu;
-	}
-
-	public void setChckbxEstudiant(JCheckBox chckbxEstudiant) {
-		this.ckActiu = chckbxEstudiant;
-	}
-
-	public JTextField getTfCodi() {
-		return tfCodi;
-	}
-
-	public void setTfCodi(JTextField tfCodi) {
-		this.tfCodi = tfCodi;
-	}
-
+	
 	public JButton getOkButton() {
 		return okButton;
 	}
@@ -306,12 +281,68 @@ public class EmpleatEditForm extends JDialog {
 		this.okButton = okButton;
 	}
 
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	public void setCancelButton(JButton cancelButton) {
+		this.cancelButton = cancelButton;
+	}
+
+	public JCheckBox getCkActiu() {
+		return ckActiu;
+	}
+
+	public void setCkActiu(JCheckBox ckActiu) {
+		this.ckActiu = ckActiu;
+	}
+
+	public JLabel getLblContrasenya() {
+		return lblContrasenya;
+	}
+
+	public void setLblContrasenya(JLabel lblContrasenya) {
+		this.lblContrasenya = lblContrasenya;
+	}
+
+	public JLabel getLblUsuari() {
+		return lblUsuari;
+	}
+
+	public void setLblUsuari(JLabel lblUsuari) {
+		this.lblUsuari = lblUsuari;
+	}
+
+	public JFormattedTextField getFtfDNI() {
+		return ftfDNI;
+	}
+
+	public void setFtfDNI(JFormattedTextField ftfDNI) {
+		this.ftfDNI = ftfDNI;
+	}
+
+	public JFormattedTextField getFtfDataNa() {
+		return ftfDataNa;
+	}
+
+	public void setFtfDataNa(JFormattedTextField ftfDataNa) {
+		this.ftfDataNa = ftfDataNa;
+	}
+
 	public JTextField getTfnom() {
 		return tfnom;
 	}
 
 	public void setTfnom(JTextField tfnom) {
 		this.tfnom = tfnom;
+	}
+
+	public JTextField getTfCodi() {
+		return tfCodi;
+	}
+
+	public void setTfCodi(JTextField tfCodi) {
+		this.tfCodi = tfCodi;
 	}
 
 	public JTextField getTfCognoms() {
@@ -349,7 +380,7 @@ public class EmpleatEditForm extends JDialog {
 	public JTextField getTfContrasenya() {
 		return tfContrasenya;
 	}
-
+	
 	public void setTfContrasenya(JTextField tfContrasenya) {
 		this.tfContrasenya = tfContrasenya;
 	}
@@ -370,29 +401,21 @@ public class EmpleatEditForm extends JDialog {
 		this.tfCodiDep = tfCodiDep;
 	}
 
-	public JButton getCancelButton() {
-		return cancelButton;
+	public ControllerView getControllerView() {
+		return controllerView;
 	}
 
-	public void setCancelButton(JButton cancelButton) {
-		this.cancelButton = cancelButton;
+	public void setControllerView(ControllerView controllerView) {
+		this.controllerView = controllerView;
 	}
 
-	public JCheckBox getCkActiu() {
-		return ckActiu;
+	public JComboBox getCbDepts() {
+		return cbDepts;
 	}
 
-	public void setCkActiu(JCheckBox ckActiu) {
-		this.ckActiu = ckActiu;
+	public void setCbDepts(JComboBox cbDepts) {
+		this.cbDepts = cbDepts;
 	}
-
-	public JLabel getLblCodi() {
-		return lblCodi;
-	}
-
-	public void setLblCodi(JLabel lblCodi) {
-		this.lblCodi = lblCodi;
-	}
-
+	
 	
 }

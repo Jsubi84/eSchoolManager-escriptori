@@ -162,7 +162,7 @@ public class ServeiFilterForm extends JPanel {
 		btnSearch.setBorder(null);
 		btnSearch.setBackground(Color.WHITE);
 		btnSearch.setBounds(10, 130, 40, 40);
-		btnSearch.setIcon(setIcons("/pictures/search.png", btnDelete));		
+		btnSearch.setIcon(setIcons("/pictures/search.png", btnSearch));		
 		panel.add(btnSearch);
 
 	}

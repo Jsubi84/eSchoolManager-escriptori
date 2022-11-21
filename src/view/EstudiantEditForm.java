@@ -10,6 +10,10 @@ import javax.swing.border.EmptyBorder;
 
 public class EstudiantEditForm extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 
 	/**

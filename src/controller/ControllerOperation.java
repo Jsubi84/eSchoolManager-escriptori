@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.Departament;
+import model.Empleat;
 import model.Escola;
 import model.Login;
 import model.Servei;
@@ -28,6 +29,7 @@ public class ControllerOperation {
 	private ControllerView controlView;
 	private Departament depts[];
 	private Servei serveis[];
+	private Empleat empleats[];
 	
 	
 	/**
@@ -407,4 +409,112 @@ public class ControllerOperation {
 		}	
 	}
 	
+	
+	
+	
+	/**
+	 * METODES EMPLEAT
+	 */
+	
+	
+	/**
+	 * Metode per donar d'alta un empleat confeccionant la crida i enviant-la
+	 * @param empleat. Rep un empleat a donar d'alta.
+	 * @return Retorna resposta afirmativa si ha s'ha donat d'alta
+	 */
+	public Boolean altaEmpleat(Empleat empleat) {
+		return enviarCridaSimple(empleat.altaJSon(login.getCodiSessio()));
+	}
+	
+
+	/**
+	 * Metode per donar de baixa un empleat confeccionant la crida i enviant-la
+	 * @param codi. Rep un codi del quan es el id del registre a borrar.
+	 * @return Retorna resposta afirmativa si s'ha pogut borrar.
+	 */
+	public Boolean baixaEmpleat(int codi) {		
+		return enviarCridaSimple(Empleat.baixaJSon(login.getCodiSessio(), codi));	
+	}
+	
+	/**
+	 * Metode per modificar un empleat confeccionant la crida i enviant-la
+	 * @param empleat. Rep un empleat el qual sera modificara al actual registre persistent.
+	 * @return Retorna resposta afirmativa si ha s'ha pogut modificar
+	 */
+	public Boolean modiEmpleat(Empleat empleat) {
+		return enviarCridaSimple(empleat.modiJSon(login.getCodiSessio()));	
+	}
+	
+	
+	
+	/**
+	 * Metode per llistar servei confeccionant la crida i enviant-la
+	 * si no rebem els parametres buits retornem tots els registres
+	 * @param camp. Rep un parametre com camp on s'ha de buscar
+	 * @param valor. Rep un parametre com a valor a buscar
+	 * @param ordre. Rep un parametre per llistar en aquell ordre
+	 * @return Retorna en forma d'array de Empleats
+	 */
+	public Empleat[] llistarEmpleat(String camp, String valor, String ordre) {
+		JSONArray arr = enviarCridaRetornObjectes(Empleat.llistatJSon(login.getCodiSessio(), camp, valor, ordre));
+		if (arr == null) {
+			return null;
+		}else {
+			empleats = new Empleat[arr.length()];
+			for(int i=0; i<arr.length(); i++){   
+				  JSONObject o = arr.getJSONObject(i);
+				  empleats[i]= new Empleat();
+				  empleats[i].setCodi(o.getInt("codiEmpleat"));
+				  empleats[i].setNom(o.getString("nomEmpleat"));
+				  empleats[i].setCognoms(o.getString("cognomsEmpleat"));
+				  empleats[i].setCodiDepartament(o.getInt("codiDepartament"));
+				  empleats[i].setNomDep(o.getString("nomDepartament"));
+			}
+			return empleats;			
+		}
+	}
+	
+	
+	
+	/**
+	 * Metode per consultar un empleat confeccionant la crida i enviant-la
+	 * @param codi. Rep codi del qual es el codi del empleat a consultar
+	 * @return Retorna un empleat el qual volem consultar
+	 */
+	public Empleat consultaIndEmpleat(int codi) {
+		
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(Empleat.consultaJSon(login.getCodiSessio(), codi));
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		
+	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+
+		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+			Empleat empleat= new Empleat();			
+			
+			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			empleat.setCodi(dades.getInt("codiEmpleat"));
+			empleat.setDni(dades.getString("dni"));
+			empleat.setNom(dades.getString("nom"));
+			empleat.setCognoms(dades.getString("cognoms"));
+			empleat.setDataNaixament(dades.getString("dataNaixement"));
+			empleat.setAdreca(dades.getString("adreca"));
+			empleat.setTelefon(dades.getString("telefon"));
+			empleat.setEmail(dades.getString("email"));
+			empleat.setCodiDepartament(dades.getInt("codiDepartament"));
+			empleat.setUsuari(dades.getString("usuari"));
+			empleat.setActiu(dades.getBoolean("actiu"));
+			
+			return empleat;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			return null;
+		}	
+	}
 }

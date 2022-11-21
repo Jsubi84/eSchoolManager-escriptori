@@ -6,6 +6,7 @@ public class Empleat extends Persona {
 	
 	private int codi, codiDepartament;	
 	private Boolean actiu;
+	private String nomDep, contrasenya, usuari;
 
 	
 	public Empleat() {
@@ -13,11 +14,14 @@ public class Empleat extends Persona {
 	}
 	
 	
-	public Empleat(int codi, int codiDepartament, Boolean actiu) {
+	public Empleat(int codi, int codiDepartament, Boolean actiu, String nomDep, String contrasenya, String usuari) {
 		super();
 		this.codi = codi;
 		this.codiDepartament = codiDepartament;
 		this.actiu = actiu;
+		this.nomDep = nomDep;
+		this.contrasenya= contrasenya;
+		this.usuari = usuari;
 	}
 
 
@@ -25,33 +29,52 @@ public class Empleat extends Persona {
 		return codi;
 	}
 
-
 	public void setCodi(int codi) {
 		this.codi = codi;
 	}
-
 
 	public Boolean getActiu() {
 		return actiu;
 	}
 
-
 	public void setActiu(Boolean actiu) {
 		this.actiu = actiu;
 	}
-
 
 	public int getCodiDepartament() {
 		return codiDepartament;
 	}
 
-
 	public void setCodiDepartament(int codiDepartament) {
 		this.codiDepartament = codiDepartament;
 	}
 	
+	public String getNomDep() {
+		return nomDep;
+	}
+
+	public void setNomDep(String nomDep) {
+		this.nomDep = nomDep;
+	}
+
+	public String getContrasenya() {
+		return contrasenya;
+	}
+
+	public void setContrasenya(String contrasenya) {
+		this.contrasenya = contrasenya;
+	}
 	
-	public String altaJSon (String codiSessio, Usuari usuari) {
+	public String getUsuari() {
+		return usuari;
+	}
+	
+	public void setUsuari(String usuari) {
+		this.usuari = usuari;
+	}
+
+
+	public String altaJSon (String codiSessio) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "ALTA EMPLEAT");
 		json.put("codiSessio", codiSessio);		
@@ -82,7 +105,7 @@ public class Empleat extends Persona {
 	}
 	
 	
-	public String modiJSon (String codiSessio,  Usuari usuari) {
+	public String modiJSon (String codiSessio) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "MODI EMPLEAT");
 		json.put("codiSessio", codiSessio);		
@@ -96,14 +119,15 @@ public class Empleat extends Persona {
 		dades.put("telefon", this.getTelefon());	
 		dades.put("email",this.getEmail());			
 		dades.put("codiDepartament", this.getCodiDepartament());			
-		dades.put("contrasenya", usuari.getContrasenya());		
+		dades.put("contrasenya", this.getContrasenya());
+		dades.put("usuari", this.getUsuari());
 		dades.put("actiu", this.getActiu());	
 		json.put("dades", dades);
 		return json.toString();
 	}
 	
 	
-	public static String LlistatJSon (String codiSessio, String camp, String valor, String ordre) {
+	public static String llistatJSon (String codiSessio, String camp, String valor, String ordre) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "LLISTA EMPLEATS");
 		json.put("codiSessio", codiSessio);	
@@ -116,7 +140,7 @@ public class Empleat extends Persona {
 	}	
 
 	
-	public static String ConsultaJSon (String codiSessio, int codi) {
+	public static String consultaJSon (String codiSessio, int codi) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "CONSULTA EMPLEAT");
 		json.put("codiSessio", codiSessio);	
@@ -126,4 +150,8 @@ public class Empleat extends Persona {
 		return json.toString();
 	}
 	
+	// { "ID","Nom","Cognoms", "Codi Departament","Nom Departament"}
+	public Object[] getRow(){
+		return new Object[] {this.codi, super.getNom(), super.getCognoms(), this.codiDepartament, this.nomDep};
+	}
 }

@@ -22,16 +22,22 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerView;
-import model.Departament;
+import model.Empleat;
 
+
+
+
+/**
+ * @author Jordi Subirana
+ *
+ */
 public class EmpleatFilterForm extends JPanel {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private static final Short ALTA = 1;
 	private static final Short MODI = 2;
+	private static final Short LLEGIR = 3;
 	
 	private JTable table;
 	EmpleatEditForm empleatEditForm;
@@ -70,8 +76,8 @@ public class EmpleatFilterForm extends JPanel {
 		
 		// Posar header i dades buides i fa que no siguin editables
 		model = new DefaultTableModel(new Object[][] {}, 
-				new String[] { "Id","DNI","Nom", "Cognoms"}) {
-			
+				new String[] { "ID","Nom","Cognoms", "Codi Departament","Nom Departament"}) {
+	
 			private static final long serialVersionUID = 1L;
 				@Override
 				public boolean isCellEditable(int row, int column) {
@@ -88,7 +94,7 @@ public class EmpleatFilterForm extends JPanel {
 		JButton btnAdd = new JButton("");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				altaDepartament();
+				altaEmpleat();
 			}
 		});
 		btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -104,7 +110,7 @@ public class EmpleatFilterForm extends JPanel {
 		JButton btnEdit = new JButton("");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//modificarDepartament();
+				modificarEmpleat();
 			}
 		});
 		btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -120,7 +126,7 @@ public class EmpleatFilterForm extends JPanel {
 		JButton btnDelete = new JButton("");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				baixaDepartament();
+				baixaEmpleat();
 			}
 		});
 		
@@ -133,6 +139,23 @@ public class EmpleatFilterForm extends JPanel {
 		btnDelete.setBounds(768, 130, 40, 40);
 		panel.add(btnDelete);
 		btnDelete.setIcon(setIcons("/pictures/remove.png", btnDelete));
+		
+		
+		JButton btnSearch = new JButton("");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 llegirEmpleat();
+			}
+		});
+		
+		btnSearch.setSize(new Dimension(40, 40));
+		btnSearch.setPreferredSize(new Dimension(40, 40));
+		btnSearch.setFocusable(false);
+		btnSearch.setBorder(null);
+		btnSearch.setBackground(Color.WHITE);
+		btnSearch.setBounds(10, 130, 40, 40);
+		btnSearch.setIcon(setIcons("/pictures/search.png", btnSearch));		
+		panel.add(btnSearch);
 	}
 
 	
@@ -160,7 +183,13 @@ public class EmpleatFilterForm extends JPanel {
 		this.model = model;
 	}
 	
-	
+	public EmpleatEditForm getEmpleatEditForm() {
+		return empleatEditForm;
+	}
+
+	public void setEmpleatEditForm(EmpleatEditForm empleatEditForm) {
+		this.empleatEditForm = empleatEditForm;
+	}
 
 
 	/**
@@ -179,10 +208,10 @@ public class EmpleatFilterForm extends JPanel {
 	
 	
 	/**
-	 * Metode per donar d'alta un departament nou.
+	 * Metode per donar d'alta un empleat nou.
 	 */
-	public void altaDepartament() {
-		empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true, controllerView, ALTA);
+	public void altaEmpleat() {
+		empleatEditForm= new EmpleatEditForm(controllerView.getMainview(), true, controllerView, ALTA);
 		empleatEditForm.setLocationRelativeTo(null);
 		empleatEditForm.setVisible(true);
 	}
@@ -190,56 +219,125 @@ public class EmpleatFilterForm extends JPanel {
 	/**
 	 * Metode per donar de baixa l'item seleccionat a la taula.
 	 */
-	public void baixaDepartament() {
+	public void baixaEmpleat() {
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
-			controllerView.baixaDepartament(idSelec);
+			controllerView.baixaEmpleat(idSelec);
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per donar de baixa");
 		}
 	}
 	
-//	/**
-//	 * Metode per modificar l'item seleccionat a la taula
-//	 */
-//	public void modificarDepartament() {
-//		try {
-//			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
-//			// Ordre de la taula			
-//			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
-//			// Fer la consulta individual per omplir les dades
-//			deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true,controllerView, MODI);
-//			Departament dept = controllerView.consultaIndDepartament(idSelec);
-//			if (dept != null) {
-//				deptEditForm.getTfCodi().setText(String.valueOf(dept.getCodi()));
-//				deptEditForm.getTfnomDep().setText(dept.getNomDepartament());
-//				deptEditForm.getChckbxBeca().setSelected(dept.getBeca());     
-//				deptEditForm.getChckbxEscola().setSelected(dept.getEscola());
-//				deptEditForm.getChckbxDep().setSelected(dept.getDepartament());
-//				deptEditForm.getChckbxEmpleat().setSelected(dept.getEmpleat());
-//				deptEditForm.getChckbxEstudiant().setSelected(dept.getEstudiant());
-//				deptEditForm.getChckbxServei().setSelected(dept.getServei());
-//				deptEditForm.getChckbxSessio().setSelected(dept.getSessio());
-//				deptEditForm.getChckbxInforme().setSelected(dept.getInforme());
-//				// Un cop carregat el formulari el fem visible
-//				deptEditForm.setVisible(true);				
-//			}else {
-//				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest departament");
-//				deptEditForm.dispose();
-//			}
-//		} catch (Exception e) {
-//			e.getMessage();
-//			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
-//			deptEditForm.dispose();
-//		}
-//	}
+	/**
+	 * Metode per modificar l'item seleccionat a la taula
+	 */
+	public void modificarEmpleat() {
+		try {
+			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);					
+			// {"codiEmpleat","dni","nom","cognoms","dataNeixement","adreca", "telefon","email","codiDepartament","contrasenya","actiu"}
+			// Fer la consulta individual per omplir les dades
+			empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true,controllerView, MODI);
+			Empleat emp = controllerView.consultaIndEmpleat(idSelec);
+			if (emp != null) {
+				empleatEditForm.getTfCodi().setText(String.valueOf(emp.getCodi()));
+				empleatEditForm.getFtfDNI().setText(emp.getDni());
+				empleatEditForm.getTfnom().setText(emp.getNom());
+				empleatEditForm.getTfCognoms().setText(emp.getCognoms());
+				empleatEditForm.getFtfDataNa().setText(emp.getDataNaixament());
+				empleatEditForm.getTfAdreca().setText(emp.getAdreca());
+				empleatEditForm.getTfTelefon().setText(emp.getTelefon());
+				empleatEditForm.getTfEmail().setText(emp.getEmail());
+				empleatEditForm.getTfCodiDep().setText(String.valueOf(emp.getCodiDepartament()));
+				empleatEditForm.getTfUsuari().setText(emp.getUsuari());
+				empleatEditForm.getTfContrasenya().setText("");
+				empleatEditForm.getCkActiu().setText(String.valueOf(emp.getActiu()));
+				
+				// Un cop carregat el formulari el fem visible
+				empleatEditForm.setVisible(true);				
+			}else {
+				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest Empleat");
+				empleatEditForm.dispose();
+			}
+		} catch (Exception e) {
+			e.getMessage();
+			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
+			empleatEditForm.dispose();
+		}
+	}
 	
 	/**
 	 * Metode per llistar els diferents items a la taula en forma de fila.
 	 */
-	public void llistarDepartament() {
-		controllerView.llistarDepartament();
+	public void llistarEmpleat() {
+		controllerView.llistarEmpleat();
+	}
+	
+	
+	/**
+	 * Metode per llegir l'item seleccionat a la taula
+	 */
+	public void llegirEmpleat() {
+		try {
+			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
+			//  { "Id","Nom","Durada","Cost" }
+			// Fer la consulta individual per omplir les dades
+			empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true ,controllerView, LLEGIR);
+			empleatEditForm.setLocationRelativeTo(null);
+			Empleat emp = controllerView.consultaIndEmpleat(idSelec);
+			if (emp != null) {
+				empleatEditForm.getTfCodi().setText(String.valueOf(emp.getCodi()));
+				empleatEditForm.getFtfDNI().setText(emp.getDni());
+				empleatEditForm.getTfnom().setText(emp.getNom());
+				empleatEditForm.getTfCognoms().setText(emp.getCognoms());
+				empleatEditForm.getFtfDataNa().setText(emp.getDataNaixament());
+				empleatEditForm.getTfAdreca().setText(emp.getAdreca());
+				empleatEditForm.getTfTelefon().setText(emp.getTelefon());
+				empleatEditForm.getTfEmail().setText(emp.getEmail());
+				empleatEditForm.getTfCodiDep().setText(String.valueOf(emp.getCodiDepartament()));
+				empleatEditForm.getTfUsuari().setText(emp.getUsuari());
+				empleatEditForm.getTfContrasenya().setText("*************");
+				empleatEditForm.getCkActiu().setText(String.valueOf(emp.getActiu()));
+				empleatEditForm.getTfCodi().setEnabled(false);
+				empleatEditForm.getFtfDNI().setEnabled(false);
+				empleatEditForm.getTfnom().setEnabled(false);
+				empleatEditForm.getTfCognoms().setEnabled(false);
+				empleatEditForm.getFtfDataNa().setEnabled(false);
+				empleatEditForm.getTfAdreca().setEnabled(false);
+				empleatEditForm.getTfEmail().setEnabled(false);
+				empleatEditForm.getTfCodiDep().setEnabled(false);
+				empleatEditForm.getTfUsuari().setEnabled(false);
+				empleatEditForm.getTfContrasenya().setEnabled(false);
+				empleatEditForm.getCkActiu().setEnabled(false);
+				
+				empleatEditForm.getOkButton().setVisible(false);
+				empleatEditForm.getCancelButton().setText("Sortir");
+				// Un cop carregat el formulari el fem visible
+				empleatEditForm.setVisible(true);				
+			}else {
+				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest empleat");
+				empleatEditForm.dispose();
+			}
+		} catch (Exception e) {
+			e.getMessage();
+			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
+			empleatEditForm.dispose();
+		}
+	}
+	
+	
+	
+	/**
+	 * Metode per refrescar la taula despres de fer una operació
+	 *
+	 */	
+	public void recarregarTaula(){
+		JTable table = getControllerView().getMainview().getEmpleatForm().getTable();
+		int filas =	table.getRowCount();
+	    for (int i = 0;filas>i; i++) {
+	    	getControllerView().getMainview().getEmpleatForm().getModel().removeRow(0);
+	    }
+		getControllerView().llistarEmpleat();
 	}
 	
 	

@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import model.Departament;
+import model.Empleat;
 import model.Escola;
 import model.Login;
 import model.Servei;
@@ -192,12 +193,13 @@ public class ControllerView {
 	
 	
 	
+	
 	/**
 	 * 	METODES PER A SERVEI
 	 */
 	
 	/**
-	 * Metode controlar la part de la vist d'alta departament.
+	 * Metode controlar la part de la vist d'alta servei.
 	 */
 	public void altaServei() {
 		Servei ser= new Servei();
@@ -228,7 +230,7 @@ public class ControllerView {
 
 	
 	/**
-	 * Metode controlar la part de la vist modificar departament.
+	 * Metode controlar la part de la vist modificar Servei.
 	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
 	public void modiServei(int codi) {
@@ -317,4 +319,107 @@ public class ControllerView {
 		}
 	}
 	
+	
+	
+	
+	
+	/**
+	 * 	METODES PER A EMPLEAT
+	 */
+	
+	/**
+	 * Metode controlar la part de la vist d'alta Empleat.
+	 */
+	public void altaEmpleat() {
+		Empleat emp= new Empleat();
+		
+		emp.setDni(mainview.getEmpleatForm().getEmpleatEditForm().getFtfDNI().getText());
+		emp.setNom(mainview.getEmpleatForm().getEmpleatEditForm().getTfnom().getText());
+		emp.setCognoms(mainview.getEmpleatForm().getEmpleatEditForm().getTfCognoms().getText());
+		emp.setDataNaixament(mainview.getEmpleatForm().getEmpleatEditForm().getFtfDataNa().getText());
+		emp.setAdreca(mainview.getEmpleatForm().getEmpleatEditForm().getTfAdreca().getText());
+		emp.setTelefon(mainview.getEmpleatForm().getEmpleatEditForm().getTfTelefon().getText());
+		emp.setEmail(mainview.getEmpleatForm().getEmpleatEditForm().getTfEmail().getText());
+		emp.setCodiDepartament(Integer.parseInt(mainview.getEmpleatForm().getEmpleatEditForm().getTfCodiDep().getText()));
+		emp.setUsuari(mainview.getEmpleatForm().getEmpleatEditForm().getTfUsuari().getText());
+		emp.setContrasenya(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText());
+		
+		if (controlOper.altaEmpleat(emp)) {
+			missatgeIncidencia(ALTA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist baixa d'un empleat.
+	 * @param codi. Codi del registre que s'ha de borrar.
+	 */
+	public void baixaEmpleat(int codi) {
+		if (controlOper.baixaEmpleat(codi)) {
+			missatgeIncidencia(BAIXA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist modificar empleat.
+	 * @param codi. Codi del registre que s'ha de modificar.
+	 */
+	public void modiEmpleat(int codi) {
+		Empleat emp= new Empleat();
+		emp.setCodi(codi);
+		emp.setDni(mainview.getEmpleatForm().getEmpleatEditForm().getFtfDNI().getText());
+		emp.setNom(mainview.getEmpleatForm().getEmpleatEditForm().getTfnom().getText());
+		emp.setCognoms(mainview.getEmpleatForm().getEmpleatEditForm().getTfCognoms().getText());
+		emp.setDataNaixament(mainview.getEmpleatForm().getEmpleatEditForm().getFtfDataNa().getText());
+		emp.setAdreca(mainview.getEmpleatForm().getEmpleatEditForm().getTfAdreca().getText());
+		emp.setTelefon(mainview.getEmpleatForm().getEmpleatEditForm().getTfTelefon().getText());
+		emp.setEmail(mainview.getEmpleatForm().getEmpleatEditForm().getTfEmail().getText());
+		emp.setCodiDepartament(Integer.parseInt(mainview.getEmpleatForm().getEmpleatEditForm().getTfCodiDep().getText()));
+		emp.setUsuari(mainview.getEmpleatForm().getEmpleatEditForm().getTfUsuari().getText());
+		emp.setContrasenya(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText());
+		emp.setActiu(Boolean.parseBoolean(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText()));
+		
+		if (controlOper.modiEmpleat(emp)) {
+			missatgeIncidencia(MODI_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist de llistar empleat.
+	 */
+	public void llistarEmpleat() {						
+		Empleat empleats[] = controlOper.llistarEmpleat("", "", "");
+		if (empleats == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<empleats.length; i++){
+				mainview.getEmpleatForm().getModel().insertRow(0, empleats[i].getRow());
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist consulta individual que ha de buscar un empleat.
+	 * @param codi. Codi del registre que s'ha de consultar.
+	 * @return Empleat. Retorna la consulta
+	 */
+	public Empleat consultaIndEmpleat(int codi) {
+		Empleat emp = controlOper.consultaIndEmpleat(codi);
+		if (emp == null) {
+			missatgeErrorIncidencia(incidencia);
+			return null;
+		} else {
+			return emp;
+		}
+	}
+		
 }

@@ -520,7 +520,15 @@ public class MainView extends JFrame {
 		this.lblNomDepartament.setText(lblNomDepartament);
 	}
 	
-	
+	public EmpleatFilterForm getEmpleatForm() {
+		return empleatForm;
+	}
+
+	public void setEmpleatForm(EmpleatFilterForm empleatForm) {
+		this.empleatForm = empleatForm;
+	}
+
+
 	/**
 	 * Escalat dels icones dels botons de selecció
 	 * @param url
@@ -608,6 +616,7 @@ public class MainView extends JFrame {
 		
 		empleatForm = new EmpleatFilterForm(getControllerView());
 		carregarPanel(empleatForm);
+		empleatForm.llistarEmpleat();
 	}
 	
 	public void opcioEstudiant() {
@@ -653,4 +662,5 @@ public class MainView extends JFrame {
 		dades.revalidate();
 		dades.repaint();
 	}
+
 }
