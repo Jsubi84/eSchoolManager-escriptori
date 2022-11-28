@@ -77,7 +77,7 @@ public class Estudiant extends Persona {
 		dades.put("adreca", this.getAdreca());			
 		dades.put("telefon", this.getTelefon());	
 		dades.put("email",this.getEmail());			
-		dades.put("registrart", this.matriculat);				
+		dades.put("registrat", this.matriculat);				
 		json.put("dades", dades);
 		return json.toString();
 	}
@@ -96,7 +96,7 @@ public class Estudiant extends Persona {
 	}	
 
 	
-	public static String ConsultaJSon (String codiSessio, int codi) {
+	public static String consultaJSon (String codiSessio, int codi) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "CONSULTA ESTUDIANT");
 		json.put("codiSessio", codiSessio);	
@@ -104,6 +104,12 @@ public class Estudiant extends Persona {
 		dades.put("codiEstudiant", codi);				
 		json.put("dades", dades);
 		return json.toString();
+	}
+	
+	
+	// { "ID","Nom","Cognoms"}
+	public Object[] getRow(){
+		return new Object[] {this.codi, super.getNom(), super.getCognoms()};
 	}
 	
 }

@@ -624,8 +624,9 @@ public class MainView extends JFrame {
 		isEstudiant = true;
 		btnEstudiant.setBackground(Color.lightGray);
 		
-		estudiantForm = new EstudiantFilterForm();
+		estudiantForm = new EstudiantFilterForm(getControllerView());
 		carregarPanel(estudiantForm);
+		estudiantForm.llistarEstudiant();
 	}
 	
 	public void opcioServei() {

@@ -18,6 +18,7 @@ public class Escola {
 		this.nom = nom;
 		this.adreca = adreca;
 		this.telefon = telefon;
+		this.codi = codi;
 	}
 
 

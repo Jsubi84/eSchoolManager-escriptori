@@ -36,6 +36,7 @@ public class EmpleatEditForm extends JDialog {
 	private static final Short MODIFICAR = 2;
 	private static final Short LLEGIR = 3;
 	private static final String NOM_EMPLEAT_ISBLACK = "El nom del empleat s'ha d'omplenar";
+	private static final String DATA_N_EMPLEAT_ISBLACK = "La data de neixament s'ha d'omplenar";
 	
 	
 	private JPanel contentPanel = new JPanel();
@@ -85,6 +86,8 @@ public class EmpleatEditForm extends JDialog {
 				if (mode == ALTA) {
 					if(getTfnom().getText().isBlank()){
 						controllerView.missatgeIncidencia(NOM_EMPLEAT_ISBLACK);
+					}else if(getFtfDNI().getText().isBlank()) {
+						controllerView.missatgeIncidencia(DATA_N_EMPLEAT_ISBLACK);
 					}else {//Fem l'alta del empleat borrem taula i refresquem
 						getControllerView().altaEmpleat();
 						getControllerView().getMainview().getEmpleatForm().recarregarTaula();
@@ -93,6 +96,8 @@ public class EmpleatEditForm extends JDialog {
 				}else if (mode == MODIFICAR){
 					if(getTfnom().getText().isBlank()){
 						controllerView.missatgeIncidencia(NOM_EMPLEAT_ISBLACK);
+					}else if(getFtfDNI().getText().isBlank()) {
+						controllerView.missatgeIncidencia(DATA_N_EMPLEAT_ISBLACK);
 					}else {
 						getControllerView().modiEmpleat(Integer.parseInt(getTfCodi().getText()));
 						getControllerView().getMainview().getEmpleatForm().recarregarTaula();
@@ -145,7 +150,7 @@ public class EmpleatEditForm extends JDialog {
 		MaskFormatter dataN = null;
 		try {
 			dataN = new MaskFormatter("####-##-##");
-			dataN.setPlaceholderCharacter('_');
+			dataN.setPlaceholder("yyyy-DD-mm");
 			dataN.setValidCharacters("0123456789");
 		} catch (ParseException e1) {
 			e1.printStackTrace();	
@@ -389,11 +394,11 @@ public class EmpleatEditForm extends JDialog {
 		this.controllerView = controllerView;
 	}
 
-	public JComboBox getCbDepts() {
+	public JComboBox<String> getCbDepts() {
 		return cbDepts;
 	}
 
-	public void setCbDepts(JComboBox cbDepts) {
+	public void setCbDepts(JComboBox<String> cbDepts) {
 		this.cbDepts = cbDepts;
 	}
 

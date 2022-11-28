@@ -13,10 +13,9 @@ public class Departament {
 	
 	public Departament() {}
 	
-	public Departament(int codi, String nomDepartament, Boolean empleat, Boolean estudiant, Boolean servei, Boolean beca,
+	public Departament(String nomDepartament, Boolean departament, Boolean escola, Boolean empleat, Boolean estudiant, Boolean servei, Boolean beca,
 			Boolean sessio, Boolean informe) {
-		super();
-		this.codi = codi;		
+		super();		
 		this.nomDepartament = nomDepartament;
 		this.empleat = empleat;
 		this.estudiant = estudiant;

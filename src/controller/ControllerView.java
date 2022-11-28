@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import model.Departament;
 import model.Empleat;
 import model.Escola;
+import model.Estudiant;
 import model.Login;
 import model.Servei;
 import util.Convert;
@@ -17,10 +18,6 @@ import view.MainView;
  * @author Jordi Subirana
  *
  * Classe per poder controlar les vistes
- */
-/**
- * @author Jorsu
- *
  */
 public class ControllerView {
 	
@@ -388,7 +385,7 @@ public class ControllerView {
 		emp.setCodiDepartament(Convert.splitCombo((String) mainview.getEmpleatForm().getEmpleatEditForm().getCbDepts().getSelectedItem()));
 		emp.setUsuari(mainview.getEmpleatForm().getEmpleatEditForm().getTfUsuari().getText());
 		emp.setContrasenya(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText());
-		emp.setActiu(Boolean.parseBoolean(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText()));
+		emp.setActiu(mainview.getEmpleatForm().getEmpleatEditForm().getCkActiu().isSelected());
 		
 		if (controlOper.modiEmpleat(emp)) {
 			missatgeIncidencia(MODI_OK);
@@ -429,4 +426,100 @@ public class ControllerView {
 	}
 	
 
+	
+	
+	/**
+	 * 	METODES PER A ESTUDIANT
+	 */
+	
+	/**
+	 * Metode controlar la part de la vist d'alta Estudiant.
+	 */
+	public void altaEstudiant() {
+		Estudiant est= new Estudiant();
+		// {"codiEstudiant","dni","nom","cognoms","dataNeixement","adreca", "telefon","email","matriculat"}
+		est.setDni(mainview.getEstudiantForm().getEstudiantEditForm().getFtfDNI().getText());
+		est.setNom(mainview.getEstudiantForm().getEstudiantEditForm().getTfnom().getText());
+		est.setCognoms(mainview.getEstudiantForm().getEstudiantEditForm().getTfCognoms().getText());
+		est.setDataNaixament(mainview.getEstudiantForm().getEstudiantEditForm().getFtfDataNa().getText());
+		est.setAdreca(mainview.getEstudiantForm().getEstudiantEditForm().getTfAdreca().getText());
+		est.setTelefon(mainview.getEstudiantForm().getEstudiantEditForm().getTfTelefon().getText());
+		est.setEmail(mainview.getEstudiantForm().getEstudiantEditForm().getTfEmail().getText());
+		est.setMatriculat(mainview.getEstudiantForm().getEstudiantEditForm().getCkMatriculat().isSelected());
+		
+		if (controlOper.altaEstudiant(est)) {
+			missatgeIncidencia(ALTA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist baixa d'un estudiant.
+	 * @param codi. Codi del registre que s'ha de borrar.
+	 */
+	public void baixaEstudiant(int codi) {
+		if (controlOper.baixaEstudiant(codi)) {
+			missatgeIncidencia(BAIXA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist modificar estudiant.
+	 * @param codi. Codi del registre que s'ha de modificar.
+	 */
+	public void modiEstudiant(int codi) {
+		Estudiant est= new Estudiant();
+		
+		est.setCodi(codi);
+		est.setDni(mainview.getEstudiantForm().getEstudiantEditForm().getFtfDNI().getText());
+		est.setNom(mainview.getEstudiantForm().getEstudiantEditForm().getTfnom().getText());
+		est.setCognoms(mainview.getEstudiantForm().getEstudiantEditForm().getTfCognoms().getText());
+		est.setDataNaixament(mainview.getEstudiantForm().getEstudiantEditForm().getFtfDataNa().getText());
+		est.setAdreca(mainview.getEstudiantForm().getEstudiantEditForm().getTfAdreca().getText());
+		est.setTelefon(mainview.getEstudiantForm().getEstudiantEditForm().getTfTelefon().getText());
+		est.setEmail(mainview.getEstudiantForm().getEstudiantEditForm().getTfEmail().getText());
+		est.setMatriculat(mainview.getEstudiantForm().getEstudiantEditForm().getCkMatriculat().isSelected());
+		
+		if (controlOper.modiEstudiant(est)) {
+			missatgeIncidencia(MODI_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist de llistar estudiant.
+	 */
+	public void llistarEstudiant() {						
+		Estudiant estudiants[] = controlOper.llistarEstudiant("", "", "");
+		if (estudiants == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<estudiants.length; i++){
+				mainview.getEstudiantForm().getModel().insertRow(0, estudiants[i].getRow());
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist consulta individual que ha de buscar un estudiant.
+	 * @param codi. Codi del registre que s'ha de consultar.
+	 * @return Estudiant. Retorna la consulta
+	 */
+	public Estudiant consultaIndEstudiant(int codi) {
+		Estudiant est = controlOper.consultaIndEstudiant(codi);
+		if (est == null) {
+			missatgeErrorIncidencia(incidencia);
+			return null;
+		} else {
+			return est;
+		}
+	}
 }

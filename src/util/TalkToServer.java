@@ -8,7 +8,6 @@ import java.net.ConnectException;
 import java.net.Socket;
 
 
-
 /**
  * @author Jordi Subirana
  *
@@ -18,7 +17,8 @@ public class TalkToServer {
 
 	
     private static final int PORT=8080;
-    private static final String IPADDRESS="10.2.55.226";
+    private static final String IPADDRESS="192.168.18.128";
+    //private static final String IPADDRESS="10.2.55.226";
     //private static final String IPADDRESS="localhost";
 
 	/**

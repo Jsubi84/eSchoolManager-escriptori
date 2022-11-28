@@ -16,7 +16,7 @@ public class LoginTest {
 	 */
 	@Test
 	public void credencialsCorrectes() {
-		Login login = new Login ("jordi","jordi");	// Modificar per valors correctes de la BD
+		Login login = new Login ("p.gomez","passtest1");
 		Assertions.assertTrue(login.CheckLogin());
 	}
 
@@ -26,7 +26,7 @@ public class LoginTest {
 	 */	
 	@Test
 	public void credencialsIncorrectes() {
-		Login login = new Login ("jordi","noemi");		
+		Login login = new Login ("p.gomez","passssss");		
 		Assertions.assertFalse(login.CheckLogin());
 	}
 

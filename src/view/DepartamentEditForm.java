@@ -74,7 +74,7 @@ public class DepartamentEditForm extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				if (mode == ALTA) {
 					if(getTfnomDep().getText().isBlank()){
-						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);
+						controllerView.missatgeIncidencia(NOM_DEPARTAMENT_ISBLACK);			
 					}else {//Fem l'alta del departament borrem taula i refresquem
 						getControllerView().altaDepartament();
 						getControllerView().getMainview().getDepartamentForm().recarregarTaula();

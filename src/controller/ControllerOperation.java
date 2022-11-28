@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import model.Departament;
 import model.Empleat;
 import model.Escola;
+import model.Estudiant;
 import model.Login;
 import model.Servei;
 import util.TalkToServer;
@@ -24,18 +25,25 @@ public class ControllerOperation {
 	
 	private static final String RESPOSTA_OK= "OK";
 	
-	
 	private Login login;
 	private ControllerView controlView;
 	private Departament depts[];
 	private Servei serveis[];
 	private Empleat empleats[];
+	private Estudiant estudiants[];
 	
 	
 	/**
 	 * Constructor per defecte
 	 */
 	public ControllerOperation() {
+	}
+	
+	/**
+	 * Constructor per test
+	 */	
+	public ControllerOperation(ControllerView controlView) {
+		this.controlView = controlView;
 	}
 
 	
@@ -292,8 +300,6 @@ public class ControllerOperation {
 		return enviarCridaSimple(servei.modiJSon(login.getCodiSessio()));	
 	}
 	
-	
-	
 	/**
 	 * Metode per llistar servei confeccionant la crida i enviant-la
 	 * si no rebem els parametres buits retornem tots els registres
@@ -319,8 +325,6 @@ public class ControllerOperation {
 			return serveis;			
 		}
 	}
-	
-	
 	
 	/**
 	 * Metode per consultar un servei confeccionant la crida i enviant-la
@@ -360,8 +364,9 @@ public class ControllerOperation {
 	
 	
 	
+	
 	/**
-	 * METODE ESCOLA
+	 * METODES ESCOLA
 	 */
 	
 	/**
@@ -426,7 +431,6 @@ public class ControllerOperation {
 		return enviarCridaSimple(empleat.altaJSon(login.getCodiSessio()));
 	}
 	
-
 	/**
 	 * Metode per donar de baixa un empleat confeccionant la crida i enviant-la
 	 * @param codi. Rep un codi del quan es el id del registre a borrar.
@@ -445,10 +449,8 @@ public class ControllerOperation {
 		return enviarCridaSimple(empleat.modiJSon(login.getCodiSessio()));	
 	}
 	
-	
-	
 	/**
-	 * Metode per llistar servei confeccionant la crida i enviant-la
+	 * Metode per llistar empleats confeccionant la crida i enviant-la
 	 * si no rebem els parametres buits retornem tots els registres
 	 * @param camp. Rep un parametre com camp on s'ha de buscar
 	 * @param valor. Rep un parametre com a valor a buscar
@@ -473,8 +475,6 @@ public class ControllerOperation {
 			return empleats;			
 		}
 	}
-	
-	
 	
 	/**
 	 * Metode per consultar un empleat confeccionant la crida i enviant-la
@@ -510,6 +510,105 @@ public class ControllerOperation {
 			empleat.setActiu(dades.getBoolean("actiu"));
 			
 			return empleat;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			return null;
+		}			
+			
+	}
+	
+	
+	
+	/**
+	 * METODES ESTUDIANT
+	 */
+	
+	
+	/**
+	 * Metode per donar d'alta un estudiant confeccionant la crida i enviant-la
+	 * @param estudiant. Rep un estudiant a donar d'alta.
+	 * @return Retorna resposta afirmativa si ha s'ha donat d'alta
+	 */
+	public Boolean altaEstudiant(Estudiant estudiant) {
+		return enviarCridaSimple(estudiant.altaJSon(login.getCodiSessio()));
+	}
+	
+	/**
+	 * Metode per donar de baixa un estudiant confeccionant la crida i enviant-la
+	 * @param codi. Rep un codi del quan es el id del registre a borrar.
+	 * @return Retorna resposta afirmativa si s'ha pogut borrar.
+	 */
+	public Boolean baixaEstudiant(int codi) {		
+		return enviarCridaSimple(Estudiant.baixaJSon(login.getCodiSessio(), codi));	
+	}
+	
+	/**
+	 * Metode per modificar un estudiant confeccionant la crida i enviant-la
+	 * @param estudiant. Rep un estudiant el qual sera modificat al actual registre persistent.
+	 * @return Retorna resposta afirmativa si ha s'ha pogut modificar
+	 */
+	public Boolean modiEstudiant(Estudiant estudiant) {
+		return enviarCridaSimple(estudiant.modiJSon(login.getCodiSessio()));	
+	}
+	
+	/**
+	 * Metode per llistar estudiants confeccionant la crida i enviant-la
+	 * si no rebem els parametres buits retornem tots els registres
+	 * @param camp. Rep un parametre com camp on s'ha de buscar
+	 * @param valor. Rep un parametre com a valor a buscar
+	 * @param ordre. Rep un parametre per llistar en aquell ordre
+	 * @return Retorna en forma d'array de Estudiants
+	 */
+	public Estudiant[] llistarEstudiant(String camp, String valor, String ordre) {
+		JSONArray arr = enviarCridaRetornObjectes(Estudiant.llistatJSon(login.getCodiSessio(), camp, valor, ordre));
+		if (arr == null) {
+			return null;
+		}else {
+			estudiants = new Estudiant[arr.length()];
+			for(int i=0; i<arr.length(); i++){   
+				  JSONObject o = arr.getJSONObject(i);
+				  estudiants[i]= new Estudiant();
+				  estudiants[i].setCodi(o.getInt("codiEstudiant"));
+				  estudiants[i].setNom(o.getString("nomEstudiant"));
+				  estudiants[i].setCognoms(o.getString("cognoms"));
+			}
+			return estudiants;			
+		}
+	}
+	
+	/**
+	 * Metode per consultar un estudiant confeccionant la crida i enviant-la
+	 * @param codi. Rep codi del qual es el codi del estudiant a consultar
+	 * @return Retorna un estudiant el qual volem consultar
+	 */
+	public Estudiant consultaIndEstudiant(int codi) {
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(Estudiant.consultaJSon(login.getCodiSessio(), codi));
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}				
+			
+		JSONObject jsonUsuari= new JSONObject(resposta);	
+
+		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+			Estudiant estudiant= new Estudiant();			
+			
+			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			estudiant.setCodi(dades.getInt("codiEstudiant"));
+			estudiant.setDni(dades.getString("dni"));
+			estudiant.setNom(dades.getString("nomEstudiant"));
+			estudiant.setCognoms(dades.getString("cognoms"));
+			estudiant.setDataNaixament(dades.getString("dataNaixement"));
+			estudiant.setAdreca(dades.getString("adreca"));
+			estudiant.setTelefon(dades.getString("telefon"));
+			estudiant.setEmail(dades.getString("email"));
+			estudiant.setMatriculat(dades.getBoolean("registrat"));
+			
+			return estudiant;
 		} else {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));

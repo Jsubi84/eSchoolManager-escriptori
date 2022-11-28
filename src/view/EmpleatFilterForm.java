@@ -259,7 +259,7 @@ public class EmpleatFilterForm extends JPanel {
 						emp.getCodiDepartament() +"-" + nomDepartament, empleatEditForm.getCbDepts()));
 				empleatEditForm.getTfUsuari().setText(emp.getUsuari());
 				empleatEditForm.getTfContrasenya().setText("");
-				empleatEditForm.getCkActiu().setText(String.valueOf(emp.getActiu()));
+				empleatEditForm.getCkActiu().setSelected(emp.getActiu());
 				
 				// Un cop carregat el formulari el fem visible
 				empleatEditForm.setVisible(true);				
@@ -289,7 +289,7 @@ public class EmpleatFilterForm extends JPanel {
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
 			String nomDepartament = (String) getTable().getValueAt(getTable().getSelectedRow(), 4);
-			//  { "Id","Nom","Durada","Cost" }
+			// {"codiEmpleat","dni","nom","cognoms","dataNeixement","adreca", "telefon","email","codiDepartament","contrasenya","actiu"}
 			// Fer la consulta individual per omplir les dades
 			empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true ,controllerView, LLEGIR);
 			empleatEditForm.setLocationRelativeTo(null);
@@ -307,7 +307,7 @@ public class EmpleatFilterForm extends JPanel {
 						emp.getCodiDepartament() +"-" + nomDepartament, empleatEditForm.getCbDepts()));
 				empleatEditForm.getTfUsuari().setText(emp.getUsuari());
 				empleatEditForm.getTfContrasenya().setText("*************");
-				empleatEditForm.getCkActiu().setText(String.valueOf(emp.getActiu()));
+				empleatEditForm.getCkActiu().setSelected(emp.getActiu());
 				empleatEditForm.getTfCodi().setEnabled(false);
 				empleatEditForm.getFtfDNI().setEnabled(false);
 				empleatEditForm.getTfnom().setEnabled(false);
@@ -352,6 +352,10 @@ public class EmpleatFilterForm extends JPanel {
 	}
 	
 	
+	/**
+	 * Metode per recuperar l'index del valor escollit del combobox
+	 *
+	 */	
 	public int retIndexCombo(String valor, JComboBox<String> cB) {
 		int index = 0;
         for(int i = 0; i < cB.getItemCount() ; i++ ){
