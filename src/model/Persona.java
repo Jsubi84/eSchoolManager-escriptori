@@ -8,7 +8,7 @@ public class Persona {
 	public Persona() {}
 	
 	public Persona(String dni, String nom, String cognoms, String dataNaixament, String adreca, String telefon,
-			String email, String usuari, String contrasenya, int codiDepartament) {
+			String email) {
 		super();
 		this.dni = dni;
 		this.nom = nom;

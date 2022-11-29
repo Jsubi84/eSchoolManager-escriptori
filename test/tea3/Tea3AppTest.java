@@ -16,14 +16,14 @@ import model.Login;
 /**
  * @author Jordi Subirana
  */
-public class AppTest {
+public class Tea3AppTest {
 	
 	//Variables necesaries per al controllerOperation
-	protected ControllerView controlView = new ControllerView() ;
-	protected ControllerOperation cO = new ControllerOperation(controlView); 
+	private ControllerView controlView = new ControllerView() ;
+	private ControllerOperation cO = new ControllerOperation(controlView); 
 	private Login login;
-	protected Escola escola1;
-	protected Departament dept;
+	private Escola escola1;
+	private Departament dept;
 	
 	/**
 	 * Test
@@ -65,7 +65,7 @@ public class AppTest {
 	
 	/**
 	 * Test
-	 * Alta d'un departament a la BD
+	 * Baixa d'un departament a la BD
 	 */	
 	@Test 
 	public void baixaDepartament() {		

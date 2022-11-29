@@ -6,19 +6,19 @@ public class Estudiant extends Persona {
 	
 	private int codi;
 	private Boolean matriculat;
-	
+
 	
 	public Estudiant() {
 		super();
-	}
+	}	
 	
-	public Estudiant(int codi, Boolean matriculat) {
-		super();
-		this.codi = codi;
+	public Estudiant(String dni, String nom, String cognoms, String dataNaixament, String adreca, String telefon,
+			String email, Boolean matriculat) {
+		super(dni, nom, cognoms, dataNaixament, adreca,telefon, email);
 		this.matriculat = matriculat;
 	}
-
 	
+
 	public int getCodi() {
 		return codi;
 	}
