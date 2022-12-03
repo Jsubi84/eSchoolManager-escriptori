@@ -3,6 +3,7 @@ package controller;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import model.Beca;
 import model.Departament;
 import model.Empleat;
 import model.Escola;
@@ -34,8 +35,11 @@ public class ControllerView {
 	private String incidencia;
 	
 	
+	
 	public ControllerView() {
 	}
+	
+	
 
 	/**
 	 * Setters i Getters
@@ -522,4 +526,100 @@ public class ControllerView {
 			return est;
 		}
 	}
+	
+	
+	
+
+	/**
+	 * 	METODES PER A BECA
+	 */
+	
+	/**
+	 * Metode controlar la part de la vist d'alta Beca.
+	 */
+	public void altaBeca() {
+		
+		Beca beca= new Beca();
+		
+		beca.setAdjudicant(mainview.getBecaForm().getBecaEditForm().getTfAdj().getText());
+		beca.setImportInicial(Integer.parseInt(mainview.getBecaForm().getBecaEditForm().getTfImportIni().getText()));		
+		beca.setCodiEstudiant(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbEstudiant().getSelectedItem()));
+		beca.setCodiServei(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbServei().getSelectedItem()));
+		
+		if (controlOper.altaBeca(beca)) {
+			missatgeIncidencia(ALTA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist baixa d'un beca.
+	 * @param codi. Codi del registre que s'ha de borrar.
+	 */
+	public void baixaBeca(int codi) {
+		if (controlOper.baixaBeca(codi)) {
+			missatgeIncidencia(BAIXA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist modificar beca.
+	 * @param codi. Codi del registre que s'ha de modificar.
+	 */
+	public void modiBeca(int codi) {
+		
+		Beca beca= new Beca();
+		
+		beca.setCodi(codi);
+		beca.setAdjudicant(mainview.getBecaForm().getBecaEditForm().getTfAdj().getText());
+		beca.setImportInicial(Integer.parseInt(mainview.getBecaForm().getBecaEditForm().getTfImportIni().getText()));	
+		beca.setImportRestant(Integer.parseInt(mainview.getBecaForm().getBecaEditForm().getTfImportRest().getText()));
+		beca.setCodiEstudiant(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbEstudiant().getSelectedItem()));
+		beca.setCodiServei(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbServei().getSelectedItem()));
+		beca.setFinalitzada(mainview.getBecaForm().getBecaEditForm().getCkFinal().isSelected());
+		
+		if (controlOper.modiBeca(beca)) {
+			missatgeIncidencia(MODI_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist de llistar beca.
+	 */
+	public void llistarBeca() {						
+		Beca beques[] = controlOper.llistarBeca("", "", "");
+		if (beques == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<beques.length; i++){
+				mainview.getBecaForm().getModel().insertRow(0, beques[i].getRow(beques[i].getNomCognomsEstudiant(), beques[i].getNomServei()));
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vist consulta individual que ha de buscar un beca.
+	 * @param codi. Codi del registre que s'ha de consultar.
+	 * @return Beca. Retorna la consulta
+	 */
+	public Beca consultaIndBeca(int codi) {
+		Beca beca = controlOper.consultaIndBeca(codi);
+		if (beca == null) {
+			missatgeErrorIncidencia(incidencia);
+			return null;
+		} else {
+			return beca;
+		}
+	}
+	
+
 }

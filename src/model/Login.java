@@ -18,6 +18,7 @@ public class Login {
 
 	private String usuari, contrasenya, codiSessio, nom, nomDepartament, incidencia;
 	private Boolean pEscola, pDepartament, pEmpleat, pEstudiant, pServei, pBeca, pSessio, pInforme;
+	private int codiEmpleat;
 	
 	
 	/**
@@ -93,79 +94,72 @@ public class Login {
 		return pEscola;
 	}
 
-
 	public void setpEscola(Boolean pEscola) {
 		this.pEscola = pEscola;
 	}
-
 
 	public Boolean getpDepartament() {
 		return pDepartament;
 	}
 
-
 	public void setpDepartament(Boolean pDepartament) {
 		this.pDepartament = pDepartament;
 	}
-
 
 	public Boolean getpEmpleat() {
 		return pEmpleat;
 	}
 
-
 	public void setpEmpleat(Boolean pEmpleat) {
 		this.pEmpleat = pEmpleat;
 	}
-
 
 	public Boolean getpEstudiant() {
 		return pEstudiant;
 	}
 
-
 	public void setpEstudiant(Boolean pEstudiant) {
 		this.pEstudiant = pEstudiant;
 	}
-
 
 	public Boolean getpServei() {
 		return pServei;
 	}
 
-
 	public void setpServei(Boolean pServei) {
 		this.pServei = pServei;
 	}
-
 
 	public Boolean getpBeca() {
 		return pBeca;
 	}
 
-
 	public void setpBeca(Boolean pBeca) {
 		this.pBeca = pBeca;
 	}
-
 
 	public Boolean getpSessio() {
 		return pSessio;
 	}
 
-
 	public void setpSessio(Boolean pSessio) {
 		this.pSessio = pSessio;
 	}
-
 
 	public Boolean getpInforme() {
 		return pInforme;
 	}
 
-
 	public void setpInforme(Boolean pInforme) {
 		this.pInforme = pInforme;
+	}
+
+	public int getCodiEmpleat() {
+		return codiEmpleat;
+	}
+
+	public void setCodiEmpleat(int codiEmpleat) {
+		this.codiEmpleat = codiEmpleat;
 	}
 
 
@@ -201,6 +195,8 @@ public Boolean CheckLogin(){
 					setCodiSessio((String) dades.get("codiSessio"));
 					setNomDepartament((String)dades.get("nomDepartament"));
 					setNom((String) dades.get("nom"));
+					setCodiEmpleat((int) dades.get("codiEmpleat"));
+					
 					
 					JSONObject permisos = (JSONObject) dades.get("permisos");
 					

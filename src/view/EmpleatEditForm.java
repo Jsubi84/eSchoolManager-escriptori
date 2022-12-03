@@ -35,8 +35,10 @@ public class EmpleatEditForm extends JDialog {
 	private static final Short ALTA = 1;
 	private static final Short MODIFICAR = 2;
 	private static final Short LLEGIR = 3;
+	private static final Short MODIUSER = 4;
 	private static final String NOM_EMPLEAT_ISBLACK = "El nom del empleat s'ha d'omplenar";
 	private static final String DATA_N_EMPLEAT_ISBLACK = "La data de neixament s'ha d'omplenar";
+	private static final String DEPARTAMENT_ISBLACK = "L'empleat ha de pertanyer a un departament";
 	
 	
 	private JPanel contentPanel = new JPanel();
@@ -62,7 +64,7 @@ public class EmpleatEditForm extends JDialog {
 		setControllerView(controllerView);
 		setType(Type.UTILITY);
 		setTitle("Empleat");
-		setBounds(100, 100, 280, 400);
+		setBounds(100, 100, 333, 377);
 		getContentPane().setLayout(new CardLayout(0, 0));
 		contentPanel.setSize(new Dimension(280, 500));
 		contentPanel.setPreferredSize(new Dimension(280, 500));
@@ -74,33 +76,37 @@ public class EmpleatEditForm extends JDialog {
 		panel.setSize(new Dimension(240, 500));
 		panel.setPreferredSize(new Dimension(240, 500));
 		panel.setBorder(null);
-		panel.setBounds(0, 0, 266, 363);
+		panel.setBounds(0, 0, 319, 340);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
 
 		okButton = new JButton("GUARDAR");
-		okButton.setBounds(23, 329, 107, 23);		
+		okButton.setBounds(24, 307, 138, 23);		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (mode == ALTA) {
 					if(getTfnom().getText().isBlank()){
 						controllerView.missatgeIncidencia(NOM_EMPLEAT_ISBLACK);
-					}else if(getFtfDNI().getText().isBlank()) {
+					}else if(getFtfDataNa().getText().isBlank()) {
 						controllerView.missatgeIncidencia(DATA_N_EMPLEAT_ISBLACK);
+					}else if(cbDepts.getSelectedIndex() == 0) {
+						controllerView.missatgeIncidencia(DEPARTAMENT_ISBLACK);
 					}else {//Fem l'alta del empleat borrem taula i refresquem
 						getControllerView().altaEmpleat();
 						getControllerView().getMainview().getEmpleatForm().recarregarTaula();
 						tancarForm();
 					}
-				}else if (mode == MODIFICAR){
+				}else if (mode == MODIFICAR || mode == MODIUSER){
 					if(getTfnom().getText().isBlank()){
 						controllerView.missatgeIncidencia(NOM_EMPLEAT_ISBLACK);
-					}else if(getFtfDNI().getText().isBlank()) {
+					}else if(getFtfDataNa().getText().isBlank()) {
 						controllerView.missatgeIncidencia(DATA_N_EMPLEAT_ISBLACK);
-					}else {
-						getControllerView().modiEmpleat(Integer.parseInt(getTfCodi().getText()));
-						getControllerView().getMainview().getEmpleatForm().recarregarTaula();
+					}else if(cbDepts.getSelectedIndex() == 0) {
+						controllerView.missatgeIncidencia(DEPARTAMENT_ISBLACK);						
+					}else {//Fem modificacio del empleat
+						getControllerView().modiEmpleat(Integer.parseInt(tfCodi.getText()));						
+						getControllerView().getMainview().getEmpleatForm().recarregarTaula();							
 						tancarForm();
 					}
 				}else if (mode == LLEGIR){ 
@@ -112,7 +118,7 @@ public class EmpleatEditForm extends JDialog {
 
 		
 		cancelButton = new JButton("CANCELAR");
-		cancelButton.setBounds(144, 329, 107, 23);		
+		cancelButton.setBounds(172, 307, 138, 23);		
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tancarForm();
@@ -122,27 +128,29 @@ public class EmpleatEditForm extends JDialog {
 		
 
 		lblnom = new JLabel("Nom");
-		lblnom.setBounds(23, 80, 107, 14);
+		lblnom.setBounds(23, 80, 138, 14);
 		panel.add(lblnom);
 
 		tfnom = new JTextField();
-		tfnom.setBounds(23, 95, 107, 20);
+		tfnom.setBorder(null);
+		tfnom.setBounds(23, 97, 138, 20);
 		panel.add(tfnom);
 		tfnom.setColumns(10);
 
 		ckActiu = new JCheckBox("Actiu");
-		ckActiu.setBounds(87, 7, 51, 23);
+		ckActiu.setBounds(23, 9, 59, 23);
 		panel.add(ckActiu);
 		
 		tfCodi = new JTextField();
-		tfCodi.setEnabled(false);
+		tfCodi.setBorder(null);
+		tfCodi.setEditable(false);
 		tfCodi.setHorizontalAlignment(SwingConstants.CENTER);
-		tfCodi.setBounds(52, 8, 28, 20);
+		tfCodi.setBounds(133, 7, 28, 22);
 		panel.add(tfCodi);
 		tfCodi.setColumns(10);
 		
 		lblDNI = new JLabel("DNI");
-		lblDNI.setBounds(23, 39, 107, 14);
+		lblDNI.setBounds(23, 39, 138, 14);
 		panel.add(lblDNI);
 		
 		//https://docs.oracle.com/javase/1.5.0/docs/api/javax/swing/text/MaskFormatter.html
@@ -157,12 +165,13 @@ public class EmpleatEditForm extends JDialog {
 		}
 		
 		ftfDataNa = new JFormattedTextField();
-		ftfDataNa.setHorizontalAlignment(SwingConstants.CENTER);
-		ftfDataNa.setBounds(144, 52, 107, 20);
+		ftfDataNa.setBorder(null);
+		ftfDataNa.setHorizontalAlignment(SwingConstants.LEFT);
+		ftfDataNa.setBounds(172, 54, 138, 20);
 		panel.add(ftfDataNa);
 		
 		lblDataNx = new JLabel("Data Naixament");
-		lblDataNx.setBounds(144, 37, 107, 14);
+		lblDataNx.setBounds(172, 39, 137, 14);
 		panel.add(lblDataNx);
 		
 		MaskFormatter dni = null;
@@ -174,13 +183,15 @@ public class EmpleatEditForm extends JDialog {
 		}		
 		
 		ftfDNI = new JFormattedTextField(dni);
-		ftfDNI.setHorizontalAlignment(SwingConstants.CENTER);
-		ftfDNI.setBounds(23, 52, 107, 20);
+		ftfDNI.setBorder(null);
+		ftfDNI.setHorizontalAlignment(SwingConstants.LEFT);
+		ftfDNI.setBounds(23, 54, 138, 20);
 		panel.add(ftfDNI);
 		
 		tfCognoms = new JTextField();
+		tfCognoms.setBorder(null);
 		tfCognoms.setColumns(10);
-		tfCognoms.setBounds(23, 140, 228, 20);
+		tfCognoms.setBounds(23, 140, 286, 20);
 		panel.add(tfCognoms);
 		
 		lblCognoms = new JLabel("Cognoms");
@@ -188,17 +199,19 @@ public class EmpleatEditForm extends JDialog {
 		panel.add(lblCognoms);
 		
 		tfTelefon = new JTextField();
+		tfTelefon.setBorder(null);
 		tfTelefon.setColumns(10);
-		tfTelefon.setBounds(144, 95, 107, 20);
+		tfTelefon.setBounds(172, 97, 138, 20);
 		panel.add(tfTelefon);
 		
 		lblTelefon = new JLabel("Telefon");
-		lblTelefon.setBounds(144, 80, 107, 14);
+		lblTelefon.setBounds(172, 82, 137, 14);
 		panel.add(lblTelefon);
 		
 		tfAdreca = new JTextField();
+		tfAdreca.setBorder(null);
 		tfAdreca.setColumns(10);
-		tfAdreca.setBounds(23, 185, 228, 20);
+		tfAdreca.setBounds(23, 185, 286, 20);
 		panel.add(tfAdreca);
 		
 		lblAdreca = new JLabel("Adreça");
@@ -210,17 +223,19 @@ public class EmpleatEditForm extends JDialog {
 		panel.add(lblEmail);
 		
 		tfEmail = new JTextField();
+		tfEmail.setBorder(null);
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(23, 230, 228, 20);
+		tfEmail.setBounds(23, 230, 286, 20);
 		panel.add(tfEmail);
 		
 		tfContrasenya = new JTextField();
+		tfContrasenya.setBorder(null);
 		tfContrasenya.setColumns(10);
-		tfContrasenya.setBounds(144, 276, 107, 20);
+		tfContrasenya.setBounds(172, 276, 138, 20);
 		panel.add(tfContrasenya);
 		
 		lblContrasenya = new JLabel("Contrasenya");
-		lblContrasenya.setBounds(144, 261, 99, 14);
+		lblContrasenya.setBounds(172, 261, 137, 14);
 		panel.add(lblContrasenya);
 		
 		lblUsuari = new JLabel("Usuari");
@@ -228,27 +243,32 @@ public class EmpleatEditForm extends JDialog {
 		panel.add(lblUsuari);
 		
 		tfUsuari = new JTextField();
+		tfUsuari.setBorder(null);
 		tfUsuari.setColumns(10);
-		tfUsuari.setBounds(23, 276, 107, 20);
+		tfUsuari.setBounds(23, 276, 138, 20);
 		panel.add(tfUsuari);
 		
-		lblCodi = new JLabel("Codi");
-		lblCodi.setBounds(23, 11, 28, 14);
+		lblCodi = new JLabel("Codi :");
+		lblCodi.setBounds(95, 10, 35, 21);
 		panel.add(lblCodi);
 		
 		cbDepts = new JComboBox<String>();
-		cbDepts.setBounds(144, 7, 107, 22);
+		cbDepts.setBounds(172, 7, 137, 22);
 		panel.add(cbDepts);
 		
 		Departament departaments[] = controllerView.getControlOper().llistarDepartament("", "", "");
 		cbDepts.removeAllItems();
 
         //Omplir el combo box
+		cbDepts.addItem("<--DEPARTAMENT-->");
         for(int i = 0; i < departaments.length ; i++ ){
             cbDepts.addItem(String.valueOf(departaments[i].getCodi()) +"-" + departaments[i].getNomDepartament());
         }
- 
-        cbDepts.setSelectedIndex(departaments.length-1);
+        cbDepts.setSelectedIndex(0);
+        
+        if(mode == MODIUSER) {
+        	setTitle("Gestio dades usuari");
+        }
 		
 	}
 	

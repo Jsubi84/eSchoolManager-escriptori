@@ -111,11 +111,18 @@ public class MainView extends JFrame {
 		capçalera.add(panelConfigOut, BorderLayout.EAST);
 		
 		btnConfigUsuari = new JButton("");
+		btnConfigUsuari.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnConfigUsuari.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				empleatForm = new EmpleatFilterForm(getControllerView()); 
+				empleatForm.modificarEmpleatPropi(controllerView.getControlOper().getLogin().getCodiEmpleat());
+			}
+		});
 		btnConfigUsuari.setFocusable(false);
 		btnConfigUsuari.setSize(new Dimension(25, 25));
 		btnConfigUsuari.setBorder(null);
 		btnConfigUsuari.setPreferredSize(new Dimension(25, 25));
-		btnConfigUsuari.setIcon(setIcons("/pictures/settings.png", btnConfigUsuari));
+		btnConfigUsuari.setIcon(setIcons("/pictures/user.png", btnConfigUsuari));
 		btnConfigUsuari.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnConfigUsuari.setForeground(Color.WHITE);
 		btnConfigUsuari.setFont(new Font("Dubai", Font.PLAIN, 14));
@@ -124,6 +131,7 @@ public class MainView extends JFrame {
 		panelConfigOut.add(btnConfigUsuari);
 		
 		btnSortirSessio = new JButton("");
+		btnSortirSessio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSortirSessio.setFocusable(false);
 		panelConfigOut.add(btnSortirSessio);
 		btnSortirSessio.setPreferredSize(new Dimension(25, 25));
@@ -563,6 +571,7 @@ public class MainView extends JFrame {
 		controllerView.getControlOper().sortirSessio();
 		controllerView.getMainview().setVisible(false);		
 		controllerView.getLoginview().setVisible(true);
+		dades.removeAll();
 	}
 	
 	
@@ -644,7 +653,7 @@ public class MainView extends JFrame {
 		isBeca = true;
 		btnBeca.setBackground(Color.lightGray);
 		
-		becaForm = new BecaFilterForm();
+		becaForm = new BecaFilterForm(getControllerView());
 		carregarPanel(becaForm);
 	}
 	

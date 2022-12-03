@@ -40,7 +40,7 @@ public class Tea4AppTest {
 	 * Test
 	 * Generació de classes necesaries per els test
 	 */
-	@BeforeClass
+	@BeforeEach
 	public void setUp(){		
 		generaDades();
 	}

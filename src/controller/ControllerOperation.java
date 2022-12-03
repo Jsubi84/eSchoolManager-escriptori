@@ -7,6 +7,7 @@ import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import model.Beca;
 import model.Departament;
 import model.Empleat;
 import model.Escola;
@@ -31,6 +32,7 @@ public class ControllerOperation {
 	private Servei serveis[];
 	private Empleat empleats[];
 	private Estudiant estudiants[];
+	private Beca beques[];
 	
 	
 	/**
@@ -506,6 +508,7 @@ public class ControllerOperation {
 			empleat.setTelefon(dades.getString("telefon"));
 			empleat.setEmail(dades.getString("email"));
 			empleat.setCodiDepartament(dades.getInt("codiDepartament"));
+			empleat.setNomDep(dades.getString("nomDepartament"));
 			empleat.setUsuari(dades.getString("usuari"));
 			empleat.setActiu(dades.getBoolean("actiu"));
 			
@@ -609,6 +612,107 @@ public class ControllerOperation {
 			estudiant.setMatriculat(dades.getBoolean("registrat"));
 			
 			return estudiant;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			return null;
+		}			
+			
+	}
+	
+	
+
+	
+	/**
+	 * METODES BECA
+	 */
+	
+	
+	/**
+	 * Metode per donar d'alta una beca confeccionant la crida i enviant-la
+	 * @param beca. Rep una beca a donar d'alta.
+	 * @return Retorna resposta afirmativa si ha s'ha donat d'alta
+	 */
+	public Boolean altaBeca(Beca beca) {
+		return enviarCridaSimple(beca.altaJSon(login.getCodiSessio()));
+	}
+	
+	/**
+	 * Metode per donar de baixa una beca confeccionant la crida i enviant-la
+	 * @param codi. Rep un codi del quan es el id del registre a borrar.
+	 * @return Retorna resposta afirmativa si s'ha pogut borrar.
+	 */
+	public Boolean baixaBeca(int codi) {		
+		return enviarCridaSimple(Beca.baixaJSon(login.getCodiSessio(), codi));	
+	}
+	
+	/**
+	 * Metode per modificar un beca confeccionant la crida i enviant-la
+	 * @param beca. Rep un beca el qual sera modificara al actual registre persistent.
+	 * @return Retorna resposta afirmativa si ha s'ha pogut modificar
+	 */
+	public Boolean modiBeca(Beca beca) {
+		return enviarCridaSimple(beca.modiJSon(login.getCodiSessio()));	
+	}
+	
+	/**
+	 * Metode per llistar beques confeccionant la crida i enviant-la
+	 * si no rebem els parametres buits retornem tots els registres
+	 * @param camp. Rep un parametre com camp on s'ha de buscar
+	 * @param valor. Rep un parametre com a valor a buscar
+	 * @param ordre. Rep un parametre per llistar en aquell ordre
+	 * @return Retorna en forma d'array de Beques
+	 */
+	public Beca[] llistarBeca(String camp, String valor, String ordre) {
+		JSONArray arr = enviarCridaRetornObjectes(Beca.llistatJSon(login.getCodiSessio(), camp, valor, ordre));
+		if (arr == null) {
+			return null;
+		}else {
+			beques = new Beca[arr.length()];
+			for(int i=0; i<arr.length(); i++){   
+				  JSONObject o = arr.getJSONObject(i);
+				  beques[i]= new Beca();
+				  beques[i].setCodi(o.getInt("codiBeca"));
+				  beques[i].setImportInicial(o.getDouble("importInicial"));
+				  beques[i].setNomCognomsEstudiant(o.getString("nomEstudiant") + " " + o.getString("cognomsEstudiant"));
+				  beques[i].setNomServei(o.getString("nomServei"));
+			}
+			return beques;			
+		}
+	}
+	
+	/**
+	 * Metode per consultar un beca confeccionant la crida i enviant-la
+	 * @param codi. Rep codi del qual es el codi del beca a consultar
+	 * @return Retorna un beca el qual volem consultar
+	 */
+	public Beca consultaIndBeca(int codi) {
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(Beca.consultaJSon(login.getCodiSessio(), codi));
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}				
+			
+		JSONObject jsonUsuari= new JSONObject(resposta);	
+
+		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+			Beca beca= new Beca();			
+			
+			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			beca.setCodi(dades.getInt("codiBeca"));
+			beca.setAdjudicant(dades.getString("adjudicant"));
+			beca.setImportInicial(dades.getDouble("importInicial"));
+			beca.setImportRestant(dades.getDouble("importRestant"));
+			beca.setCodiEstudiant(dades.getInt("codiEstudiant"));
+			beca.setCodiServei(dades.getInt("codiServei"));
+			beca.setFinalitzada(dades.getBoolean("finalitzada"));
+			beca.setNomCognomsEstudiant(dades.getString("nomEstudiant") + " " + dades.getString("cognomsEstudiant"));
+			beca.setNomServei(dades.getString("nomServei"));
+		        	
+			return beca;
 		} else {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));

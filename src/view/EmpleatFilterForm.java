@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerView;
 import model.Empleat;
+import util.Convert;
 
 
 
@@ -39,6 +41,7 @@ public class EmpleatFilterForm extends JPanel {
 	private static final Short ALTA = 1;
 	private static final Short MODI = 2;
 	private static final Short LLEGIR = 3;
+	private static final Short MODIUSER = 4;
 	
 	private JTable table;
 	EmpleatEditForm empleatEditForm;
@@ -225,9 +228,21 @@ public class EmpleatFilterForm extends JPanel {
 	 */
 	public void baixaEmpleat() {
 		try {
-			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
-			controllerView.baixaEmpleat(idSelec);
-			recarregarTaula();
+			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);			
+			int seleccion = JOptionPane.showOptionDialog(
+					   this,
+					   "Estar segur que vols borrar el registre d'Emaleat amb codi " + idSelec + "  ",
+					   "Borrar Registre",
+					   JOptionPane.YES_NO_OPTION,
+					   JOptionPane.QUESTION_MESSAGE,
+					   new Convert().returIcon("/pictures/alert.png"), // icon d'advertencia
+					   new Object[] { "Acceptar", "Cancelar"},
+					   "Acceptar");
+
+			if (seleccion == 0) {
+				controllerView.baixaEmpleat(idSelec);
+				recarregarTaula();				
+			}
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per donar de baixa");
@@ -274,6 +289,43 @@ public class EmpleatFilterForm extends JPanel {
 		}
 	}
 	
+	
+	/**
+	 * Metode per llistar els diferents items a la taula en forma de fila.
+	 */	
+	public void modificarEmpleatPropi(int codiEmpleatPropi) {
+		// {"codiEmpleat","dni","nom","cognoms","dataNeixement","adreca", "telefon","email","codiDepartament","contrasenya","actiu"}
+		// Fer la consulta individual per omplir les dades
+		empleatEditForm= new EmpleatEditForm(controllerView.getMainview(),true, controllerView, MODIUSER);
+		empleatEditForm.setLocationRelativeTo(null);
+		Empleat emp = controllerView.consultaIndEmpleat(codiEmpleatPropi);
+		if (emp != null) {
+			empleatEditForm.getTfCodi().setText(String.valueOf(emp.getCodi()));
+			empleatEditForm.getTfCodi().setEditable(false);
+			empleatEditForm.getFtfDNI().setText(emp.getDni());
+			empleatEditForm.getTfnom().setText(emp.getNom());
+			empleatEditForm.getTfCognoms().setText(emp.getCognoms());
+			empleatEditForm.getFtfDataNa().setText(emp.getDataNaixament());
+			empleatEditForm.getTfAdreca().setText(emp.getAdreca());
+			empleatEditForm.getTfTelefon().setText(emp.getTelefon());
+			empleatEditForm.getTfEmail().setText(emp.getEmail());
+			empleatEditForm.getCbDepts().setSelectedIndex(retIndexCombo(
+					emp.getCodiDepartament() +"-" + emp.getNomDep(), empleatEditForm.getCbDepts()));
+			empleatEditForm.getCbDepts().setEnabled(false);			
+			empleatEditForm.getTfUsuari().setText(emp.getUsuari());
+			empleatEditForm.getTfContrasenya().setText("");
+			empleatEditForm.getCkActiu().setSelected(emp.getActiu());
+			empleatEditForm.getCkActiu().setEnabled(false);
+			
+			// Un cop carregat el formulari el fem visible
+			empleatEditForm.setVisible(true);				
+		}else {
+			controllerView.missatgeErrorIncidencia("No s'ha trobat aquest Empleat");
+			empleatEditForm.dispose();
+		}		
+	}
+	
+	
 	/**
 	 * Metode per llistar els diferents items a la taula en forma de fila.
 	 */
@@ -308,19 +360,20 @@ public class EmpleatFilterForm extends JPanel {
 				empleatEditForm.getTfUsuari().setText(emp.getUsuari());
 				empleatEditForm.getTfContrasenya().setText("*************");
 				empleatEditForm.getCkActiu().setSelected(emp.getActiu());
-				empleatEditForm.getTfCodi().setEnabled(false);
-				empleatEditForm.getFtfDNI().setEnabled(false);
-				empleatEditForm.getTfnom().setEnabled(false);
-				empleatEditForm.getTfCognoms().setEnabled(false);
-				empleatEditForm.getFtfDataNa().setEnabled(false);
-				empleatEditForm.getTfAdreca().setEnabled(false);
-				empleatEditForm.getTfEmail().setEnabled(false);
+				empleatEditForm.getTfCodi().setEditable(false);
+				empleatEditForm.getFtfDNI().setEditable(false);
+				empleatEditForm.getTfnom().setEditable(false);
+				empleatEditForm.getTfCognoms().setEditable(false);
+				empleatEditForm.getFtfDataNa().setEditable(false);
+				empleatEditForm.getTfAdreca().setEditable(false);
+				empleatEditForm.getTfEmail().setEditable(false);
 				empleatEditForm.getCbDepts().setEnabled(false);
-				empleatEditForm.getTfUsuari().setEnabled(false);
-				empleatEditForm.getTfTelefon().setEnabled(false);
-				empleatEditForm.getTfContrasenya().setEnabled(false);
+				empleatEditForm.getTfUsuari().setEditable(false);
+				empleatEditForm.getTfTelefon().setEditable(false);
+				empleatEditForm.getTfContrasenya().setEditable(false);
 				empleatEditForm.getCkActiu().setEnabled(false);
 				
+					
 				empleatEditForm.getOkButton().setVisible(false);
 				empleatEditForm.getCancelButton().setText("Sortir");
 				// Un cop carregat el formulari el fem visible
@@ -332,10 +385,9 @@ public class EmpleatFilterForm extends JPanel {
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
-			empleatEditForm.dispose();
+			//empleatEditForm.dispose();
 		}
 	}
-	
 	
 	
 	/**

@@ -8,25 +8,28 @@ public class Beca {
 	private String adjudicant;
 	private double importInicial = 0, importRestant = 0;
 	private boolean finalitzada = false;
+	//Guardar dades per llistar
+	private String nomCognomsEstudiant, nomServei;
 	
 	
 	public Beca() {
-		super();
 	}
 
-	public Beca(int codi, int codiEstudiant, int codiServei, String adjudicat, double importInicial,
-			double importRestant, boolean finalitzada) {
+
+	public Beca(int codi, int codiEstudiant, int codiServei, String adjudicant, double importInicial,
+			double importRestant, boolean finalitzada, String nomCognomsEstudiant, String nomServei) {
 		super();
 		this.codi = codi;
 		this.codiEstudiant = codiEstudiant;
 		this.codiServei = codiServei;
-		this.adjudicant = adjudicat;
+		this.adjudicant = adjudicant;
 		this.importInicial = importInicial;
 		this.importRestant = importRestant;
 		this.finalitzada = finalitzada;
+		this.nomCognomsEstudiant = nomCognomsEstudiant;
+		this.nomServei = nomServei;
 	}
-	
-	
+
 
 	public int getCodi() {
 		return codi;
@@ -83,8 +86,25 @@ public class Beca {
 	public void setFinalitzada(boolean finalitzada) {
 		this.finalitzada = finalitzada;
 	}
+	
+	public String getNomCognomsEstudiant() {
+		return nomCognomsEstudiant;
+	}
+
+	public void setNomCognomsEstudiant(String nomCognomsEstudiant) {
+		this.nomCognomsEstudiant = nomCognomsEstudiant;
+	}
+
+	public String getNomServei() {
+		return nomServei;
+	}
+
+	public void setNomServei(String nomServei) {
+		this.nomServei = nomServei;
+	}
 
 
+	
 	public String altaJSon (String codiSessio) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "ALTA BECA");
@@ -149,13 +169,9 @@ public class Beca {
 		json.put("dades", dades);
 		return json.toString();
 	}
-	
 
-	// { "Id","codiEstudiant","codiServei","Adjudicant", "importInicial", "importRestant", "finalizada" }
-	public Object[] getRow(){
-		return new Object[] {this.codi, this.codiEstudiant, this.codiServei, this.adjudicant, 
-				this.importInicial, this.importRestant, this.finalitzada};
+	// { "codiBeca","ImportInicial","nomEstudiant","cognomsEstudiant", "nomServei"}
+	public Object[] getRow(String nomEstudiantComplet, String nomServei){
+		return new Object[] {this.codi, this.importInicial, nomEstudiantComplet, nomServei};
 	}
-	
-
 }

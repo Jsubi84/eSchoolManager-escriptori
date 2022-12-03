@@ -279,7 +279,7 @@ public class DepartamentFilterForm extends JPanel{
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
-			deptEditForm.dispose();
+			//deptEditForm.dispose();
 		}
 	}
 	
@@ -341,7 +341,7 @@ public class DepartamentFilterForm extends JPanel{
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per poder actualitzar");
-			deptEditForm.dispose();
+			//deptEditForm.dispose();
 		}
 	}
 	
