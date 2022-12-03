@@ -10,14 +10,13 @@ public class Servei {
 
 	
 	public Servei() {
-		super();
+		
 	}
 
 
-	public Servei(String nom, int codi, int durada, double cost) {
+	public Servei(String nom, int durada, double cost) {
 		super();
 		this.nom = nom;
-		this.codi = codi;
 		this.durada = durada;
 		this.cost = cost;
 	}

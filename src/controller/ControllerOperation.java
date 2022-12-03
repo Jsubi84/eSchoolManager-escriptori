@@ -569,7 +569,7 @@ public class ControllerOperation {
 			return null;
 		}else {
 			estudiants = new Estudiant[arr.length()];
-			for(int i=0; i<arr.length(); i++){   
+			for(int i=0; i < arr.length(); i++){   
 				  JSONObject o = arr.getJSONObject(i);
 				  estudiants[i]= new Estudiant();
 				  estudiants[i].setCodi(o.getInt("codiEstudiant"));

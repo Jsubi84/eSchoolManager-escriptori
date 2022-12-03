@@ -13,21 +13,15 @@ public class Beca {
 	
 	
 	public Beca() {
+		
 	}
 
 
-	public Beca(int codi, int codiEstudiant, int codiServei, String adjudicant, double importInicial,
-			double importRestant, boolean finalitzada, String nomCognomsEstudiant, String nomServei) {
-		super();
-		this.codi = codi;
+	public Beca(int codiEstudiant, int codiServei, String adjudicant, double importInicial) {
 		this.codiEstudiant = codiEstudiant;
 		this.codiServei = codiServei;
 		this.adjudicant = adjudicant;
 		this.importInicial = importInicial;
-		this.importRestant = importRestant;
-		this.finalitzada = finalitzada;
-		this.nomCognomsEstudiant = nomCognomsEstudiant;
-		this.nomServei = nomServei;
 	}
 
 
