@@ -231,7 +231,7 @@ public class EmpleatFilterForm extends JPanel {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);			
 			int seleccion = JOptionPane.showOptionDialog(
 					   this,
-					   "Estar segur que vols borrar el registre d'Emaleat amb codi " + idSelec + "  ",
+					   "Estar segur que vols borrar el registre d'Empleat amb codi " + idSelec + "  ",
 					   "Borrar Registre",
 					   JOptionPane.YES_NO_OPTION,
 					   JOptionPane.QUESTION_MESSAGE,

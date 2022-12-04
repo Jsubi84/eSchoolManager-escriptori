@@ -655,6 +655,7 @@ public class MainView extends JFrame {
 		
 		becaForm = new BecaFilterForm(getControllerView());
 		carregarPanel(becaForm);
+		becaForm.llistarBeca();
 	}
 	
 	public void opcioSessio() {

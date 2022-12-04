@@ -674,8 +674,11 @@ public class ControllerOperation {
 				  beques[i]= new Beca();
 				  beques[i].setCodi(o.getInt("codiBeca"));
 				  beques[i].setImportInicial(o.getDouble("importInicial"));
-				  beques[i].setNomCognomsEstudiant(o.getString("nomEstudiant") + " " + o.getString("cognomsEstudiant"));
+				  beques[i].setNomCognomsEstudiant(o.getString("nomEstudiant") + " " + o.getString("cognoms"));
 				  beques[i].setNomServei(o.getString("nomServei"));
+				  beques[i].setAdjudicant(o.getString("adjudicant"));
+				  beques[i].setImportRestant(o.getDouble("importRestant"));
+				  beques[i].setFinalitzada(o.getBoolean("finalitzada"));
 			}
 			return beques;			
 		}
@@ -709,7 +712,7 @@ public class ControllerOperation {
 			beca.setCodiEstudiant(dades.getInt("codiEstudiant"));
 			beca.setCodiServei(dades.getInt("codiServei"));
 			beca.setFinalitzada(dades.getBoolean("finalitzada"));
-			beca.setNomCognomsEstudiant(dades.getString("nomEstudiant") + " " + dades.getString("cognomsEstudiant"));
+			beca.setNomCognomsEstudiant(dades.getString("nomEstudiant") + " " + dades.getString("cognoms"));
 			beca.setNomServei(dades.getString("nomServei"));
 		        	
 			return beca;

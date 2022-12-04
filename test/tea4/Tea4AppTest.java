@@ -75,9 +75,6 @@ public class Tea4AppTest {
 	public void modificarEstudiant() {	
 		
 		Estudiant[] estudiants = cO.llistarEstudiant("", "", "");
-		while (estudiants.length == 0){
-			System.out.println("Buggg");
-		}
 		Estudiant estudiantPerModi = cO.consultaIndEstudiant(estudiants[1].getCodi());
 		
 		estudiantPerModi.setNom("Josep");		

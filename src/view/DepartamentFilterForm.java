@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -18,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerView;
 import model.Departament;
+import util.Convert;
 
 import javax.swing.JButton;
 import javax.swing.Icon;
@@ -239,8 +241,22 @@ public class DepartamentFilterForm extends JPanel{
 	public void baixaDepartament() {
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
-			controllerView.baixaDepartament(idSelec);
-			recarregarTaula();
+			int seleccion = JOptionPane.showOptionDialog(
+					   this,
+					   "Estar segur que vols borrar el registre del departament amb codi " + idSelec + "  ",
+					   "Borrar Registre",
+					   JOptionPane.YES_NO_OPTION,
+					   JOptionPane.QUESTION_MESSAGE,
+					   new Convert().returIcon("/pictures/alert.png"), // icon d'advertencia
+					   new Object[] { "Acceptar", "Cancelar"},
+					   "Acceptar");
+
+			if (seleccion == 0) {
+				controllerView.baixaDepartament(idSelec);
+				recarregarTaula();				
+			}
+			
+
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per donar de baixa");
@@ -304,15 +320,11 @@ public class DepartamentFilterForm extends JPanel{
 			Departament dept = controllerView.consultaIndDepartament(idSelec);
 			if (dept != null) {
 				deptEditForm.getTfCodi().setText(String.valueOf(dept.getCodi()));
-				deptEditForm.getTfCodi().setEnabled(false);
+				deptEditForm.getTfCodi().setEditable(false);
 				deptEditForm.getTfCodi().setVisible(true);
-				deptEditForm.getTfCodi().setForeground(Color.BLACK);
-				deptEditForm.getTfCodi().setBackground(Color.WHITE);
 				deptEditForm.getTfCodi().setHorizontalAlignment(JTextField.CENTER);
 				deptEditForm.getTfnomDep().setText(dept.getNomDepartament());
-				deptEditForm.getTfnomDep().setEnabled(false);
-				deptEditForm.getTfnomDep().setForeground(Color.BLACK);
-				deptEditForm.getTfnomDep().setBackground(Color.WHITE);
+				deptEditForm.getTfnomDep().setEditable(false);
 				deptEditForm.getChckbxBeca().setSelected(dept.getBeca());    
 				deptEditForm.getChckbxBeca().setEnabled(false);
 				deptEditForm.getChckbxEscola().setSelected(dept.getEscola());

@@ -542,7 +542,7 @@ public class ControllerView {
 		Beca beca= new Beca();
 		
 		beca.setAdjudicant(mainview.getBecaForm().getBecaEditForm().getTfAdj().getText());
-		beca.setImportInicial(Integer.parseInt(mainview.getBecaForm().getBecaEditForm().getTfImportIni().getText()));		
+		beca.setImportInicial(Double.parseDouble(mainview.getBecaForm().getBecaEditForm().getTfImportIni().getText()));		
 		beca.setCodiEstudiant(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbEstudiant().getSelectedItem()));
 		beca.setCodiServei(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbServei().getSelectedItem()));
 		
@@ -577,8 +577,8 @@ public class ControllerView {
 		
 		beca.setCodi(codi);
 		beca.setAdjudicant(mainview.getBecaForm().getBecaEditForm().getTfAdj().getText());
-		beca.setImportInicial(Integer.parseInt(mainview.getBecaForm().getBecaEditForm().getTfImportIni().getText()));	
-		beca.setImportRestant(Integer.parseInt(mainview.getBecaForm().getBecaEditForm().getTfImportRest().getText()));
+		beca.setImportInicial(Double.parseDouble(mainview.getBecaForm().getBecaEditForm().getTfImportIni().getText()));	
+		beca.setImportRestant(Double.parseDouble(mainview.getBecaForm().getBecaEditForm().getTfImportRest().getText()));
 		beca.setCodiEstudiant(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbEstudiant().getSelectedItem()));
 		beca.setCodiServei(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbServei().getSelectedItem()));
 		beca.setFinalitzada(mainview.getBecaForm().getBecaEditForm().getCkFinal().isSelected());

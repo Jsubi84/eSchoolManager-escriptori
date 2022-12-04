@@ -120,6 +120,7 @@ public class ServeiEditForm extends JDialog {
 		panel.add(lblnomServei);
 
 		tfnomServei = new JTextField();
+		tfnomServei.setBorder(null);
 		tfnomServei.setBounds(66, 64, 149, 20);
 		panel.add(tfnomServei);
 		tfnomServei.setColumns(10);
@@ -129,12 +130,14 @@ public class ServeiEditForm extends JDialog {
 		panel.add(lblDurarda);
 		
 		tfCodi = new JTextField();
+		tfCodi.setBorder(null);
 		tfCodi.setVisible(false);
-		tfCodi.setBounds(215, 11, 36, 20);
+		tfCodi.setBounds(66, 11, 36, 20);
 		panel.add(tfCodi);
 		tfCodi.setColumns(10);
 		
 		tfDurada = new JTextField();
+		tfDurada.setBorder(null);
 		tfDurada.setColumns(10);
 		tfDurada.setBounds(66, 116, 149, 20);
 		panel.add(tfDurada);
@@ -144,6 +147,7 @@ public class ServeiEditForm extends JDialog {
 		panel.add(lblCost);
 		
 		tfCost = new JTextField();
+		tfCost.setBorder(null);
 		tfCost.setColumns(10);
 		tfCost.setBounds(66, 172, 149, 20);
 		panel.add(tfCost);

@@ -12,6 +12,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerView;
 import model.Servei;
+import util.Convert;
 
 
 /**
@@ -236,8 +238,20 @@ public class ServeiFilterForm extends JPanel {
 	public void baixaServei() {
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
-			controllerView.baixaServei(idSelec);
-			recarregarTaula();
+			int seleccion = JOptionPane.showOptionDialog(
+					   this,
+					   "Estar segur que vols borrar el registre del servei amb codi " + idSelec + "  ",
+					   "Borrar Registre",
+					   JOptionPane.YES_NO_OPTION,
+					   JOptionPane.QUESTION_MESSAGE,
+					   new Convert().returIcon("/pictures/alert.png"), // icon d'advertencia
+					   new Object[] { "Acceptar", "Cancelar"},
+					   "Acceptar");
+
+			if (seleccion == 0) {
+				controllerView.baixaServei(idSelec);
+				recarregarTaula();			
+			}
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia("No hi ha registre seleccionat per donar de baixa");
@@ -297,25 +311,16 @@ public class ServeiFilterForm extends JPanel {
 			Servei ser = controllerView.consultaIndServei(idSelec);
 			if (ser != null) {
 				serveiEditForm.getTfCodi().setText(String.valueOf(ser.getCodi()));
-				serveiEditForm.getTfCodi().setEnabled(false);
+				serveiEditForm.getTfCodi().setEditable(false);
 				serveiEditForm.getTfCodi().setVisible(true);
-				serveiEditForm.getTfCodi().setForeground(Color.BLACK);
-				serveiEditForm.getTfCodi().setBackground(Color.WHITE);
 				serveiEditForm.getTfCodi().setHorizontalAlignment(JTextField.CENTER);
 				serveiEditForm.getTfnomServei().setText(ser.getNom());
-				serveiEditForm.getTfnomServei().setEnabled(false);
-				serveiEditForm.getTfnomServei().setForeground(Color.BLACK);
-				serveiEditForm.getTfnomServei().setBackground(Color.WHITE);
+				serveiEditForm.getTfnomServei().setEditable(false);
 				serveiEditForm.getTfDurada().setText(String.valueOf(ser.getDurada()));
-				serveiEditForm.getTfDurada().setEnabled(false);
-				serveiEditForm.getTfDurada().setForeground(Color.BLACK);
-				serveiEditForm.getTfDurada().setBackground(Color.WHITE);
+				serveiEditForm.getTfDurada().setEditable(false);
 				serveiEditForm.getTfCost().setText(String.valueOf(ser.getCost()));
-				serveiEditForm.getTfCost().setEnabled(false);
-				serveiEditForm.getTfCost().setForeground(Color.BLACK);
-				serveiEditForm.getTfCost().setBackground(Color.WHITE);
-				
-				
+				serveiEditForm.getTfCost().setEditable(false);
+
 				serveiEditForm.getOkButton().setVisible(false);
 				serveiEditForm.getCancelButton().setText("Sortir");
 				// Un cop carregat el formulari el fem visible

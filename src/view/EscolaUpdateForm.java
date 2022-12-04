@@ -81,6 +81,7 @@ public class EscolaUpdateForm extends JPanel {
 		panel.add(lblNom);
 		
 		tfNom = new JTextField();
+		tfNom.setBorder(null);
 		tfNom.setColumns(10);
 		tfNom.setBounds(284, 119, 250, 20);
 		panel.add(tfNom);
@@ -90,6 +91,7 @@ public class EscolaUpdateForm extends JPanel {
 		panel.add(lblAdreça);
 		
 		tfAdreca = new JTextField();
+		tfAdreca.setBorder(null);
 		tfAdreca.setColumns(10);
 		tfAdreca.setBounds(284, 171, 250, 20);
 		panel.add(tfAdreca);
@@ -99,11 +101,13 @@ public class EscolaUpdateForm extends JPanel {
 		panel.add(lblTelefon);
 		
 		tfTelefon = new JTextField();
+		tfTelefon.setBorder(null);
 		tfTelefon.setColumns(10);
 		tfTelefon.setBounds(284, 227, 250, 20);
 		panel.add(tfTelefon);
 		
 		tfCodi = new JTextField();
+		tfCodi.setBorder(null);
 		tfCodi.setVisible(false);
 		tfCodi.setBounds(284, 66, 52, 20);
 		panel.add(tfCodi);

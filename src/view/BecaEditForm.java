@@ -121,6 +121,7 @@ public class BecaEditForm extends JDialog {
 		panel.add(cancelButton);
 		
 		tfCodi = new JTextField();
+		tfCodi.setBorder(null);
 		tfCodi.setVisible(false);
 		tfCodi.setEnabled(false);
 		tfCodi.setHorizontalAlignment(SwingConstants.CENTER);
@@ -129,17 +130,20 @@ public class BecaEditForm extends JDialog {
 		tfCodi.setColumns(10);
 		
 		tfAdj = new JTextField();
+		tfAdj.setBorder(null);
 		tfAdj.setColumns(10);
 		tfAdj.setBounds(21, 120, 228, 20);
 		panel.add(tfAdj);
 		
         tfImportIni = new JTextField();
+        tfImportIni.setBorder(null);
         tfImportIni.setHorizontalAlignment(SwingConstants.CENTER);
         tfImportIni.setColumns(10);
         tfImportIni.setBounds(21, 166, 112, 20);
         panel.add(tfImportIni);		
         
         tfImportRest = new JTextField();
+        tfImportRest.setBorder(null);
         tfImportRest.setVisible(false);
         tfImportRest.setHorizontalAlignment(SwingConstants.CENTER);
         tfImportRest.setColumns(10);
@@ -176,6 +180,7 @@ public class BecaEditForm extends JDialog {
         panel.add(lblImportRestant);
         
         ckFinal = new JCheckBox("Finalitzada");
+        ckFinal.setBorder(null);
         ckFinal.setVisible(false);
         ckFinal.setBounds(137, 207, 112, 23);
         panel.add(ckFinal);
@@ -186,6 +191,7 @@ public class BecaEditForm extends JDialog {
         panel.add(cbServei);        
         
 		cbEstudiant = new JComboBox<String>();
+		cbEstudiant.setBorder(null);
 		cbServei.setSelectedIndex(-1);
 		cbEstudiant.setBounds(21, 25, 228, 22);
 		panel.add(cbEstudiant);

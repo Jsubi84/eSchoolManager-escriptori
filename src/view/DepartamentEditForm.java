@@ -111,6 +111,7 @@ public class DepartamentEditForm extends JDialog{
 		panel.add(lblnomDep);
 
 		tfnomDep = new JTextField();
+		tfnomDep.setBorder(null);
 		tfnomDep.setBounds(23, 55, 228, 20);
 		panel.add(tfnomDep);
 		tfnomDep.setColumns(10);
@@ -152,6 +153,7 @@ public class DepartamentEditForm extends JDialog{
 		panel.add(lblPermisos);
 		
 		tfCodi = new JTextField();
+		tfCodi.setBorder(null);
 		tfCodi.setVisible(false);
 		tfCodi.setBounds(215, 11, 36, 20);
 		panel.add(tfCodi);

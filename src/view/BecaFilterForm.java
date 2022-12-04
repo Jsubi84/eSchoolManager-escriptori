@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerView;
 import model.Beca;
+import util.Convert;
 
 public class BecaFilterForm extends JPanel {
 	
@@ -70,9 +72,10 @@ public class BecaFilterForm extends JPanel {
 		scrollPane.setBounds(0, 181, 818, 343);
 		panel.add(scrollPane);
 		
+		
 		// Posar header i dades buides i fa que no siguin editables
 		model = new DefaultTableModel(new Object[][] {}, 
-				new String[] { "Id","Estudiant", "Servei", "Adjudicant", "Import inicial"}) {
+				new String[] { "Id","Adjudicant", "Import inicial","Import restant","Estudiant", "Servei", "finalitzada" }) {
 			
 			private static final long serialVersionUID = 1L;
 				@Override
@@ -234,8 +237,20 @@ public class BecaFilterForm extends JPanel {
 	public void baixaBeca() {
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
-			controllerView.baixaBeca(idSelec);
-			recarregarTaula();
+			int seleccion = JOptionPane.showOptionDialog(
+					   this,
+					   "Estar segur que vols borrar el registre de la beca amb codi " + idSelec + "  ",
+					   "Borrar Registre",
+					   JOptionPane.YES_NO_OPTION,
+					   JOptionPane.QUESTION_MESSAGE,
+					   new Convert().returIcon("/pictures/alert.png"), // icon d'advertencia
+					   new Object[] { "Acceptar", "Cancelar"},
+					   "Acceptar");
+
+			if (seleccion == 0) {
+				controllerView.baixaBeca(idSelec);
+				recarregarTaula();			
+			}
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia(NO_REGISTRE_BAIXA);
@@ -262,6 +277,7 @@ public class BecaFilterForm extends JPanel {
 						beca.getCodi(), becaEditForm.getCbEstudiant()));
 				becaEditForm.getTfAdj().setText(String.valueOf(beca.getAdjudicant()));
 				becaEditForm.getTfImportIni().setText(String.valueOf(beca.getImportInicial()));
+			
 				
 				// Un cop carregat el formulari el fem visible
 				becaEditForm.setVisible(true);				
@@ -281,7 +297,7 @@ public class BecaFilterForm extends JPanel {
 	 * Metode per llistar els diferents items a la taula en forma de fila.
 	 */
 	public void llistarBeca() {
-		controllerView.llistarServei();
+		controllerView.llistarBeca();
 	}
 	
 	
@@ -299,16 +315,16 @@ public class BecaFilterForm extends JPanel {
 			Beca beca = controllerView.consultaIndBeca(idSelec);
 			if (beca != null) {
 				becaEditForm.getTfCodi().setText(String.valueOf(beca.getCodi()));
-				becaEditForm.getTfCodi().setEnabled(false);
+				becaEditForm.getTfCodi().setEditable(false);
 				becaEditForm.getTfCodi().setVisible(true);	
 				becaEditForm.getLblCodi().setVisible(true);
 				becaEditForm.getTfAdj().setText(String.valueOf(beca.getAdjudicant()));
-				becaEditForm.getTfAdj().setEnabled(false);
+				becaEditForm.getTfAdj().setEditable(false);
 				becaEditForm.getTfAdj().setVisible(true);				
 				becaEditForm.getTfImportIni().setText(String.valueOf(beca.getImportInicial()));
-				becaEditForm.getTfImportIni().setEnabled(false);	
+				becaEditForm.getTfImportIni().setEditable(false);	
 				becaEditForm.getTfImportRest().setText(String.valueOf(beca.getImportRestant()));
-				becaEditForm.getTfImportRest().setEnabled(false);
+				becaEditForm.getTfImportRest().setEditable(false);
 				becaEditForm.getTfImportRest().setVisible(true);
 				becaEditForm.getLblImportRestant().setVisible(true);
 				becaEditForm.getCkFinal().setSelected(beca.isFinalitzada());

@@ -117,6 +117,7 @@ public class EstudiantEditForm extends JDialog {
 		panel.add(lblnom);
 
 		tfnom = new JTextField();
+		tfnom.setBorder(null);
 		tfnom.setBounds(23, 95, 107, 20);
 		panel.add(tfnom);
 		tfnom.setColumns(10);
@@ -126,6 +127,7 @@ public class EstudiantEditForm extends JDialog {
 		panel.add(ckMatriculat);
 		
 		tfCodi = new JTextField();
+		tfCodi.setBorder(null);
 		tfCodi.setEnabled(false);
 		tfCodi.setHorizontalAlignment(SwingConstants.CENTER);
 		tfCodi.setBounds(52, 8, 78, 20);
@@ -148,6 +150,7 @@ public class EstudiantEditForm extends JDialog {
 		}
 		
 		ftfDataNa = new JFormattedTextField();
+		ftfDataNa.setBorder(null);
 		ftfDataNa.setHorizontalAlignment(SwingConstants.CENTER);
 		ftfDataNa.setBounds(144, 52, 107, 20);
 		panel.add(ftfDataNa);
@@ -165,11 +168,13 @@ public class EstudiantEditForm extends JDialog {
 		}		
 		
 		ftfDNI = new JFormattedTextField(dni);
+		ftfDNI.setBorder(null);
 		ftfDNI.setHorizontalAlignment(SwingConstants.CENTER);
 		ftfDNI.setBounds(23, 52, 107, 20);
 		panel.add(ftfDNI);
 		
 		tfCognoms = new JTextField();
+		tfCognoms.setBorder(null);
 		tfCognoms.setColumns(10);
 		tfCognoms.setBounds(23, 140, 228, 20);
 		panel.add(tfCognoms);
@@ -179,6 +184,7 @@ public class EstudiantEditForm extends JDialog {
 		panel.add(lblCognoms);
 		
 		tfTelefon = new JTextField();
+		tfTelefon.setBorder(null);
 		tfTelefon.setColumns(10);
 		tfTelefon.setBounds(144, 95, 107, 20);
 		panel.add(tfTelefon);
@@ -188,6 +194,7 @@ public class EstudiantEditForm extends JDialog {
 		panel.add(lblTelefon);
 		
 		tfAdreca = new JTextField();
+		tfAdreca.setBorder(null);
 		tfAdreca.setColumns(10);
 		tfAdreca.setBounds(23, 185, 228, 20);
 		panel.add(tfAdreca);
@@ -201,6 +208,7 @@ public class EstudiantEditForm extends JDialog {
 		panel.add(lblEmail);
 		
 		tfEmail = new JTextField();
+		tfEmail.setBorder(null);
 		tfEmail.setColumns(10);
 		tfEmail.setBounds(23, 230, 228, 20);
 		panel.add(tfEmail);

@@ -143,7 +143,7 @@ public class Beca {
 	
 	public static String llistatJSon (String codiSessio, String camp, String valor, String ordre) {
 		JSONObject json = new JSONObject();		
-		json.put("crida", "LLISTA BECA");
+		json.put("crida", "LLISTA BEQUES");
 		json.put("codiSessio", codiSessio);	
 		JSONObject dades = new JSONObject();	
 		dades.put("camp", camp);
@@ -164,8 +164,9 @@ public class Beca {
 		return json.toString();
 	}
 
-	// { "codiBeca","ImportInicial","nomEstudiant","cognomsEstudiant", "nomServei"}
+
+	// {id, adjudicant, importInicial, nomEstudiantComplet, nomServei, finalitzada}
 	public Object[] getRow(String nomEstudiantComplet, String nomServei){
-		return new Object[] {this.codi, this.importInicial, nomEstudiantComplet, nomServei};
+		return new Object[] {this.codi, this.adjudicant, this.importInicial, nomEstudiantComplet, nomServei, this.finalitzada};
 	}
 }

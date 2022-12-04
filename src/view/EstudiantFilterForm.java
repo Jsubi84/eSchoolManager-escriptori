@@ -12,6 +12,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerView;
 import model.Estudiant;
+import util.Convert;
 
 public class EstudiantFilterForm extends JPanel {
 
@@ -222,8 +224,20 @@ public class EstudiantFilterForm extends JPanel {
 	public void baixaEstudiant() {
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);
-			controllerView.baixaEstudiant(idSelec);
-			recarregarTaula();
+			int seleccion = JOptionPane.showOptionDialog(
+					   this,
+					   "Estar segur que vols borrar el registre del estudiant amb codi " + idSelec + "  ",
+					   "Borrar Registre",
+					   JOptionPane.YES_NO_OPTION,
+					   JOptionPane.QUESTION_MESSAGE,
+					   new Convert().returIcon("/pictures/alert.png"), // icon d'advertencia
+					   new Object[] { "Acceptar", "Cancelar"},
+					   "Acceptar");
+
+			if (seleccion == 0) {
+				controllerView.baixaEstudiant(idSelec);
+				recarregarTaula();					
+			}
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia(NO_REGISTRE_BAIXA);
@@ -294,14 +308,14 @@ public class EstudiantFilterForm extends JPanel {
 				estudiantEditForm.getTfTelefon().setText(est.getTelefon());
 				estudiantEditForm.getTfEmail().setText(est.getEmail());
 				estudiantEditForm.getCkMatriculat().setSelected(est.getMatriculat());
-				estudiantEditForm.getTfCodi().setEnabled(false);
-				estudiantEditForm.getFtfDNI().setEnabled(false);
-				estudiantEditForm.getTfnom().setEnabled(false);
-				estudiantEditForm.getTfCognoms().setEnabled(false);
-				estudiantEditForm.getFtfDataNa().setEnabled(false);
-				estudiantEditForm.getTfAdreca().setEnabled(false);
-				estudiantEditForm.getTfEmail().setEnabled(false);
-				estudiantEditForm.getTfTelefon().setEnabled(false);
+				estudiantEditForm.getTfCodi().setEditable(false);
+				estudiantEditForm.getFtfDNI().setEditable(false);
+				estudiantEditForm.getTfnom().setEditable(false);
+				estudiantEditForm.getTfCognoms().setEditable(false);
+				estudiantEditForm.getFtfDataNa().setEditable(false);
+				estudiantEditForm.getTfAdreca().setEditable(false);
+				estudiantEditForm.getTfEmail().setEditable(false);
+				estudiantEditForm.getTfTelefon().setEditable(false);
 				estudiantEditForm.getCkMatriculat().setEnabled(false);
 				estudiantEditForm.getOkButton().setVisible(false);
 				estudiantEditForm.getCancelButton().setText("Sortir");
