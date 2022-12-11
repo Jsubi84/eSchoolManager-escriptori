@@ -20,7 +20,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerView;
@@ -88,14 +87,7 @@ public class BecaFilterForm extends JPanel {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		table.setBounds(0, 181, 818, 343);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-		tcr.setHorizontalAlignment(SwingConstants.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(tcr);
-		table.getColumnModel().getColumn(1).setCellRenderer(tcr);
-		table.getColumnModel().getColumn(2).setCellRenderer(tcr);
-		table.getColumnModel().getColumn(3).setCellRenderer(tcr);
-		
+
 		scrollPane.setViewportView(table);
 		
 		JButton btnAdd = new JButton("");
@@ -288,7 +280,7 @@ public class BecaFilterForm extends JPanel {
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia(NO_REGISTRE_PER_ACTUALITZAR);
-			//serveiEditForm.dispose();
+			//becaEditForm.dispose();
 		}
 	}
 	
@@ -338,10 +330,9 @@ public class BecaFilterForm extends JPanel {
 						beca.getCodi(), becaEditForm.getCbEstudiant()));
 				becaEditForm.getCbEstudiant().setEnabled(false);
 				
-				
+				// Un cop carregat el formulari el fem visible				
 				becaEditForm.getOkButton().setVisible(false);
 				becaEditForm.getCancelButton().setText("Sortir");
-				// Un cop carregat el formulari el fem visible
 				becaEditForm.setVisible(true);				
 			}else {
 				controllerView.missatgeErrorIncidencia(NO_TROBAT);
@@ -350,7 +341,7 @@ public class BecaFilterForm extends JPanel {
 		} catch (Exception e) {
 			e.getMessage();
 			controllerView.missatgeErrorIncidencia(NO_REGISTRE_PER_ACTUALITZAR);
-			//serveiEditForm.dispose();
+			//becaEditForm.dispose();
 		}
 	}
 	

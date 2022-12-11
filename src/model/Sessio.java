@@ -1,21 +1,25 @@
 package model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
 
 public class Sessio {
 	
 	private int codi, codiEmpleat, codiEstudiant, codiServei;
-	private LocalDate dataIHora;
+	private String nomEmpleat, cognomEmpleat, nomEstudiant, cognomsEstudiant, nomServei;
+	private LocalDateTime dataIHora;
+	DateTimeFormatter isoDate = DateTimeFormatter.ISO_LOCAL_DATE;
+	DateTimeFormatter isoTime = DateTimeFormatter.ISO_LOCAL_TIME;
+	
 	
 	public Sessio() {
 		super();
 	}
 
-	public Sessio(int codi, int codiEmpleat, int codiEstudiant, int codiServei, LocalDate dataIHora) {
+	public Sessio(int codiEmpleat, int codiEstudiant, int codiServei, LocalDateTime dataIHora) {
 		super();
-		this.codi = codi;
 		this.codiEmpleat = codiEmpleat;
 		this.codiEstudiant = codiEstudiant;
 		this.codiServei = codiServei;
@@ -55,25 +59,64 @@ public class Sessio {
 		this.codiServei = codiServei;
 	}
 
-	public LocalDate getDataIHora() {
+	public LocalDateTime getDataIHora() {
 		return dataIHora;
 	}
 
-	public void setDataIHora(LocalDate dataIHora) {
+	public void setDataIHora(LocalDateTime dataIHora) {
 		this.dataIHora = dataIHora;
 	}
 	
+	public String getNomEmpleat() {
+		return nomEmpleat;
+	}
+
+	public void setNomEmpleat(String nomEmpleat) {
+		this.nomEmpleat = nomEmpleat;
+	}
+
+	public String getCognomEmpleat() {
+		return cognomEmpleat;
+	}
+
+	public void setCognomEmpleat(String cognomEmpleat) {
+		this.cognomEmpleat = cognomEmpleat;
+	}
+
+	public String getNomEstudiant() {
+		return nomEstudiant;
+	}
+
+	public void setNomEstudiant(String nomEstudiant) {
+		this.nomEstudiant = nomEstudiant;
+	}
+
+	public String getCognomsEstudiant() {
+		return cognomsEstudiant;
+	}
+
+	public void setCognomsEstudiant(String cognomsEstudiant) {
+		this.cognomsEstudiant = cognomsEstudiant;
+	}
+
+	public String getNomServei() {
+		return nomServei;
+	}
+
+	public void setNomServei(String nomServei) {
+		this.nomServei = nomServei;
+	}
 	
-	
+
 	public String altaJSon (String codiSessio) {
 		JSONObject json = new JSONObject();		
 		json.put("crida", "ALTA SESSIO");
 		json.put("codiSessio", codiSessio);
 		JSONObject dades = new JSONObject();
-		dades.put("codiProfessor",this.getCodiEmpleat());	
+		dades.put("codiEmpleat",this.getCodiEmpleat());	
 		dades.put("codiEstudiant",this.getCodiEstudiant());
-		dades.put("codiServei",this.getCodiServei());
-		dades.put("dataIHora",this.dataIHora);
+		dades.put("codiServei",this.getCodiServei());		
+		dades.put("dataIHora", this.dataIHora.format(isoDate) + " " + this.dataIHora.format(isoTime));		
 		json.put("dades", dades);
 		return json.toString();
 	}
@@ -99,7 +142,7 @@ public class Sessio {
 		dades.put("codiProfessor",this.getCodiEmpleat());	
 		dades.put("codiEstudiant",this.getCodiEstudiant());
 		dades.put("codiServei",this.getCodiServei());
-		dades.put("dataIHora",this.dataIHora);
+		dades.put("dataIHora", this.dataIHora.format(isoDate) + " " + this.dataIHora.format(isoTime));
 		json.put("dades", dades);
 		return json.toString();
 	}
@@ -107,7 +150,7 @@ public class Sessio {
 	
 	public static String llistatJSon (String codiSessio, String camp, String valor, String ordre) {
 		JSONObject json = new JSONObject();		
-		json.put("crida", "LLISTA SESSIO");
+		json.put("crida", "LLISTA SESSIONS");
 		json.put("codiSessio", codiSessio);	
 		JSONObject dades = new JSONObject();	
 		dades.put("camp", camp);
@@ -128,10 +171,10 @@ public class Sessio {
 		return json.toString();
 	}
 	
-	
-	// { "Id","idEmpleat","idEstudiant","codiServei", "dataIHora" }
+	// { "Id","nomCognomEmpleat","nomCognomEstudiant","nomServei", "dataIHora" }
 	public Object[] getRow(){
-		return new Object[] {this.codi, this.codiEmpleat, this.codiEstudiant, this.codiServei, this.dataIHora.toString()};
+		return new Object[] {this.codi, this.nomEmpleat + " " + this.cognomEmpleat,
+				this.nomEstudiant + " " + this.cognomsEstudiant, this.nomServei, this.dataIHora.format(isoDate), this.dataIHora.format(isoTime)};
 	}
 	
 }

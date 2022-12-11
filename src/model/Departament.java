@@ -8,13 +8,13 @@ public class Departament {
 
 	private int codi;
 	private String nomDepartament;
-	private Boolean empleat, departament, escola, estudiant, servei, beca, sessio, informe;
+	private Boolean empleat, departament, escola, estudiant, servei, beca, sessio, factura;
 	
 	
 	public Departament() {}
 	
 	public Departament(String nomDepartament, Boolean departament, Boolean escola, Boolean empleat, Boolean estudiant, Boolean servei, Boolean beca,
-			Boolean sessio, Boolean informe) {
+			Boolean sessio, Boolean factura) {
 		super();		
 		this.nomDepartament = nomDepartament;
 		this.empleat = empleat;
@@ -22,7 +22,7 @@ public class Departament {
 		this.servei = servei;
 		this.beca = beca;
 		this.sessio = sessio;
-		this.informe = informe;
+		this.factura = factura;
 	}
 
 	
@@ -99,14 +99,14 @@ public class Departament {
 		this.sessio = sessio;
 	}
 
-	public Boolean getInforme() {
-		return informe;
+	public Boolean getFactura() {
+		return factura;
 	}
 
-	public void setInforme(Boolean informe) {
-		this.informe = informe;
+	public void setFactura(Boolean factura) {
+		this.factura = factura;
 	}
-	
+
 
 	
 	
@@ -124,7 +124,7 @@ public class Departament {
 		permisos.put("servei", this.getServei());	
 		permisos.put("beca", this.getBeca());	
 		permisos.put("sessio", this.getSessio());	
-		permisos.put("informe", this.getInforme());	
+		permisos.put("factura", this.getFactura());	
 		dades.put("permisos", permisos);
 		json.put("dades", dades);
 		return json.toString();
@@ -157,7 +157,7 @@ public class Departament {
 		permisos.put("servei", this.getServei());	
 		permisos.put("beca", this.getBeca());	
 		permisos.put("sessio", this.getSessio());	
-		permisos.put("informe", this.getInforme());	
+		permisos.put("factura", this.getFactura());	
 		dades.put("permisos", permisos);
 		json.put("dades", dades);
 		return json.toString();
@@ -188,7 +188,7 @@ public class Departament {
 	}
 	
 	
-	// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
+	// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Factura" }
 	public Object[] getRow(){
 		return new Object[] {this.codi, this.nomDepartament};
 	}

@@ -373,10 +373,9 @@ public class EmpleatFilterForm extends JPanel {
 				empleatEditForm.getTfContrasenya().setEditable(false);
 				empleatEditForm.getCkActiu().setEnabled(false);
 				
-					
+				// Un cop carregat el formulari el fem visible					
 				empleatEditForm.getOkButton().setVisible(false);
 				empleatEditForm.getCancelButton().setText("Sortir");
-				// Un cop carregat el formulari el fem visible
 				empleatEditForm.setVisible(true);				
 			}else {
 				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest empleat");

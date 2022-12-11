@@ -1,5 +1,7 @@
 package controller;
 
+import java.time.LocalDateTime;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -10,6 +12,7 @@ import model.Escola;
 import model.Estudiant;
 import model.Login;
 import model.Servei;
+import model.Sessio;
 import util.Convert;
 import view.LoginView;
 import view.MainView;
@@ -106,7 +109,7 @@ public class ControllerView {
 	 */
 	
 	/**
-	 * Metode controlar la part de la vist d'alta departament.
+	 * Metode controlar la part de la vista d'alta departament.
 	 */
 	public void altaDepartament() {
 		Departament dept= new Departament();
@@ -118,7 +121,7 @@ public class ControllerView {
 		dept.setSessio(mainview.getDepartamentForm().getDeptEditForm().getChckbxSessio().isSelected());
 		dept.setEstudiant(mainview.getDepartamentForm().getDeptEditForm().getChckbxEstudiant().isSelected());
 		dept.setEscola(mainview.getDepartamentForm().getDeptEditForm().getChckbxEscola().isSelected());
-		dept.setInforme(mainview.getDepartamentForm().getDeptEditForm().getChckbxInforme().isSelected());
+		dept.setFactura(mainview.getDepartamentForm().getDeptEditForm().getChckbxFactura().isSelected());
 		
 		if (controlOper.altaDepartament(dept)) {
 			missatgeIncidencia(ALTA_OK);
@@ -129,7 +132,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist baixa departament.
+	 * Metode controlar la part de la vista baixa departament.
 	 * @param codi. Codi del registre que s'ha de borrar.
 	 */
 	public void baixaDepartament(int codi) {
@@ -144,7 +147,7 @@ public class ControllerView {
 
 	
 	/**
-	 * Metode controlar la part de la vist modificar departament.
+	 * Metode controlar la part de la vista modificar departament.
 	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
 	public void modiDepartament(int codi) {
@@ -158,7 +161,7 @@ public class ControllerView {
 		dept.setSessio(mainview.getDepartamentForm().getDeptEditForm().getChckbxSessio().isSelected());
 		dept.setEstudiant(mainview.getDepartamentForm().getDeptEditForm().getChckbxEstudiant().isSelected());
 		dept.setEscola(mainview.getDepartamentForm().getDeptEditForm().getChckbxEscola().isSelected());
-		dept.setInforme(mainview.getDepartamentForm().getDeptEditForm().getChckbxInforme().isSelected());
+		dept.setFactura(mainview.getDepartamentForm().getDeptEditForm().getChckbxFactura().isSelected());
 		if (controlOper.modiDepartament(dept)) {
 			missatgeIncidencia(MODI_OK);
 		}else{
@@ -168,7 +171,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist de llistar departament.
+	 * Metode controlar la part de la vista de llistar departament.
 	 */
 	public void llistarDepartament() {						
 		Departament depts[] = controlOper.llistarDepartament("", "", "");
@@ -183,7 +186,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist consulta individual que s'ha de buscar departament.
+	 * Metode controlar la part de la vista consulta individual que s'ha de buscar departament.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Departament. Retorna la consulta
 	 */
@@ -205,7 +208,7 @@ public class ControllerView {
 	 */
 	
 	/**
-	 * Metode controlar la part de la vist d'alta servei.
+	 * Metode controlar la part de la vista d'alta servei.
 	 */
 	public void altaServei() {
 		Servei ser= new Servei();
@@ -221,7 +224,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist baixa d'un servei.
+	 * Metode controlar la part de la vista baixa d'un servei.
 	 * @param codi. Codi del registre que s'ha de borrar.
 	 */
 	public void baixaServei(int codi) {
@@ -236,7 +239,7 @@ public class ControllerView {
 
 	
 	/**
-	 * Metode controlar la part de la vist modificar Servei.
+	 * Metode controlar la part de la vista modificar Servei.
 	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
 	public void modiServei(int codi) {
@@ -254,7 +257,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist de llistar servei.
+	 * Metode controlar la part de la vista de llistar servei.
 	 */
 	public void llistarServei() {						
 		Servei serveis[] = controlOper.llistarServei("", "", "");
@@ -269,7 +272,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist consulta individual que ha de buscar un servei.
+	 * Metode controlar la part de la vista consulta individual que ha de buscar un servei.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Servei. Retorna la consulta
 	 */
@@ -292,7 +295,7 @@ public class ControllerView {
 	 */
 	
 	/**
-	 * Metode controlar la part de la vist actualitzar Escola.
+	 * Metode controlar la part de la vista actualitzar Escola.
 	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
 	public void actualitzarEscola(int codi) {
@@ -311,7 +314,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist consulta individual carrega dades Escola.
+	 * Metode controlar la part de la vista consulta individual carrega dades Escola.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Escola. Retorna la consulta
 	 */
@@ -334,7 +337,7 @@ public class ControllerView {
 	 */
 	
 	/**
-	 * Metode controlar la part de la vist d'alta Empleat.
+	 * Metode controlar la part de la vista d'alta Empleat.
 	 */
 	public void altaEmpleat() {
 		Empleat emp= new Empleat();
@@ -359,7 +362,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist baixa d'un empleat.
+	 * Metode controlar la part de la vista baixa d'un empleat.
 	 * @param codi. Codi del registre que s'ha de borrar.
 	 */
 	public void baixaEmpleat(int codi) {
@@ -372,7 +375,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist modificar empleat.
+	 * Metode controlar la part de la vista modificar empleat.
 	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
 	public void modiEmpleat(int codi) {
@@ -400,7 +403,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist de llistar empleat.
+	 * Metode controlar la part de la vista de llistar empleat.
 	 */
 	public void llistarEmpleat() {						
 		Empleat empleats[] = controlOper.llistarEmpleat("", "", "");
@@ -415,7 +418,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist consulta individual que ha de buscar un empleat.
+	 * Metode controlar la part de la vista consulta individual que ha de buscar un empleat.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Empleat. Retorna la consulta
 	 */
@@ -437,7 +440,7 @@ public class ControllerView {
 	 */
 	
 	/**
-	 * Metode controlar la part de la vist d'alta Estudiant.
+	 * Metode controlar la part de la vista d'alta Estudiant.
 	 */
 	public void altaEstudiant() {
 		Estudiant est= new Estudiant();
@@ -460,7 +463,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist baixa d'un estudiant.
+	 * Metode controlar la part de la vista baixa d'un estudiant.
 	 * @param codi. Codi del registre que s'ha de borrar.
 	 */
 	public void baixaEstudiant(int codi) {
@@ -473,7 +476,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist modificar estudiant.
+	 * Metode controlar la part de la vista modificar estudiant.
 	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
 	public void modiEstudiant(int codi) {
@@ -498,7 +501,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist de llistar estudiant.
+	 * Metode controlar la part de la vista de llistar estudiant.
 	 */
 	public void llistarEstudiant() {						
 		Estudiant estudiants[] = controlOper.llistarEstudiant("", "", "");
@@ -513,7 +516,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist consulta individual que ha de buscar un estudiant.
+	 * Metode controlar la part de la vista consulta individual que ha de buscar un estudiant.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Estudiant. Retorna la consulta
 	 */
@@ -535,7 +538,7 @@ public class ControllerView {
 	 */
 	
 	/**
-	 * Metode controlar la part de la vist d'alta Beca.
+	 * Metode controlar la part de la vista d'alta Beca.
 	 */
 	public void altaBeca() {
 		
@@ -555,7 +558,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist baixa d'un beca.
+	 * Metode controlar la part de la vista baixa d'un beca.
 	 * @param codi. Codi del registre que s'ha de borrar.
 	 */
 	public void baixaBeca(int codi) {
@@ -568,7 +571,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist modificar beca.
+	 * Metode controlar la part de la vista modificar beca.
 	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
 	public void modiBeca(int codi) {
@@ -578,7 +581,7 @@ public class ControllerView {
 		beca.setCodi(codi);
 		beca.setAdjudicant(mainview.getBecaForm().getBecaEditForm().getTfAdj().getText());
 		beca.setImportInicial(Double.parseDouble(mainview.getBecaForm().getBecaEditForm().getTfImportIni().getText()));	
-		beca.setImportRestant(Double.parseDouble(mainview.getBecaForm().getBecaEditForm().getTfImportRest().getText()));
+		//beca.setImportRestant(Double.parseDouble(mainview.getBecaForm().getBecaEditForm().getTfImportRest().getText()));
 		beca.setCodiEstudiant(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbEstudiant().getSelectedItem()));
 		beca.setCodiServei(Convert.splitCombo((String) mainview.getBecaForm().getBecaEditForm().getCbServei().getSelectedItem()));
 		beca.setFinalitzada(mainview.getBecaForm().getBecaEditForm().getCkFinal().isSelected());
@@ -592,7 +595,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist de llistar beca.
+	 * Metode controlar la part de la vista de llistar beca.
 	 */
 	public void llistarBeca() {						
 		Beca beques[] = controlOper.llistarBeca("", "", "");
@@ -607,7 +610,7 @@ public class ControllerView {
 	
 	
 	/**
-	 * Metode controlar la part de la vist consulta individual que ha de buscar un beca.
+	 * Metode controlar la part de la vista consulta individual que ha de buscar un beca.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Beca. Retorna la consulta
 	 */
@@ -621,5 +624,112 @@ public class ControllerView {
 		}
 	}
 	
+	
+	
+	
+	
 
+	/**
+	 * 	METODES PER A SESSIO
+	 */
+	
+	/**
+	 * Metode controlar la part de la vista d'una sessio.
+	 */
+	public void altaSessio() {
+		
+		Sessio sessio= new Sessio();
+		
+		sessio.setCodiEmpleat(Convert.splitCombo((String) mainview.getSessioForm().getSessioEditForm().getCbProfe().getSelectedItem()));
+		sessio.setCodiEstudiant(Convert.splitCombo((String) mainview.getSessioForm().getSessioEditForm().getCbEstudiant().getSelectedItem()));
+		sessio.setCodiServei(Convert.splitCombo((String) mainview.getSessioForm().getSessioEditForm().getCbServei().getSelectedItem()));
+		
+		String time = mainview.getSessioForm().getSessioEditForm().getTfHora().getText();
+		String date = mainview.getSessioForm().getSessioEditForm().getTfData().getText();
+		String[] t = time.split(":");
+		String[] d = date.split("-");
+		LocalDateTime ldt = LocalDateTime.of(Convert.toInt(d[0]), Convert.toInt(d[1]), Convert.toInt(d[2]),
+				Convert.toInt(t[0]), Convert.toInt(t[1]));
+		sessio.setDataIHora(ldt);
+		
+		if (controlOper.altaSessio(sessio)) {
+			missatgeIncidencia(ALTA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vista baixa d'una sessio.
+	 * @param codi. Codi del registre que s'ha de borrar.
+	 */
+	public void baixaSessio(int codi) {
+		if (controlOper.baixaSessio(codi)) {
+			missatgeIncidencia(BAIXA_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vista modificar sessio.
+	 * @param codi. Codi del registre que s'ha de modificar.
+	 */
+	public void modiSessio(int codi) {
+		
+		Sessio sessio= new Sessio();
+		
+		sessio.setCodi(codi);
+		sessio.setCodiEmpleat(Convert.splitCombo((String) mainview.getSessioForm().getSessioEditForm().getCbProfe().getSelectedItem()));
+		sessio.setCodiEstudiant(Convert.splitCombo((String) mainview.getSessioForm().getSessioEditForm().getCbEstudiant().getSelectedItem()));
+		sessio.setCodiServei(Convert.splitCombo((String) mainview.getSessioForm().getSessioEditForm().getCbServei().getSelectedItem()));
+		
+		String time = mainview.getSessioForm().getSessioEditForm().getTfHora().getText();
+		String date = mainview.getSessioForm().getSessioEditForm().getTfData().getText();
+		String[] t = time.split(":");
+		String[] d = date.split("-");
+		LocalDateTime ldt = LocalDateTime.of(Convert.toInt(d[0]), Convert.toInt(d[1]), Convert.toInt(d[2]),
+				Convert.toInt(t[0]), Convert.toInt(t[1]));
+		sessio.setDataIHora(ldt);
+		
+		if (controlOper.modiSessio(sessio)) {
+			missatgeIncidencia(MODI_OK);
+		}else{
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vista de llistar sessions.
+	 */
+	public void llistarSessio() {						
+		Sessio sessions[] = controlOper.llistarSessio("", "", "");
+		if (sessions == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<sessions.length; i++){
+				mainview.getSessioForm().getModel().insertRow(0, sessions[i].getRow());
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vista consulta individual que ha de buscar una sessio.
+	 * @param codi. Codi del registre que s'ha de consultar.
+	 * @return Sessio. Retorna la consulta
+	 */
+	public Sessio consultaIndSessio(int codi) {
+		Sessio sessio = controlOper.consultaIndSessio(codi);
+		if (sessio == null) {
+			missatgeErrorIncidencia(incidencia);
+			return null;
+		} else {
+			return sessio;
+		}
+	}
+	
 }

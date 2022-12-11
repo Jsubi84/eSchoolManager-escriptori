@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -14,6 +15,8 @@ import model.Escola;
 import model.Estudiant;
 import model.Login;
 import model.Servei;
+import model.Sessio;
+import util.Convert;
 import util.TalkToServer;
 
 /**
@@ -33,6 +36,7 @@ public class ControllerOperation {
 	private Empleat empleats[];
 	private Estudiant estudiants[];
 	private Beca beques[];
+	private Sessio sessions[];
 	
 	
 	/**
@@ -255,7 +259,7 @@ public class ControllerOperation {
 			dept.setServei(permisos.getBoolean("servei"));
 			dept.setBeca(permisos.getBoolean("beca"));
 			dept.setSessio(permisos.getBoolean("sessio"));
-			dept.setInforme(permisos.getBoolean("informe"));
+			dept.setFactura(permisos.getBoolean("factura"));
 					
 			return dept;
 		} else {
@@ -674,7 +678,7 @@ public class ControllerOperation {
 				  beques[i]= new Beca();
 				  beques[i].setCodi(o.getInt("codiBeca"));
 				  beques[i].setImportInicial(o.getDouble("importInicial"));
-				  beques[i].setNomCognomsEstudiant(o.getString("nomEstudiant") + " " + o.getString("cognoms"));
+				  beques[i].setNomCognomsEstudiant(o.getString("nomEstudiant") + " " + o.getString("cognomsEstudiant"));
 				  beques[i].setNomServei(o.getString("nomServei"));
 				  beques[i].setAdjudicant(o.getString("adjudicant"));
 				  beques[i].setImportRestant(o.getDouble("importRestant"));
@@ -712,10 +716,132 @@ public class ControllerOperation {
 			beca.setCodiEstudiant(dades.getInt("codiEstudiant"));
 			beca.setCodiServei(dades.getInt("codiServei"));
 			beca.setFinalitzada(dades.getBoolean("finalitzada"));
-			beca.setNomCognomsEstudiant(dades.getString("nomEstudiant") + " " + dades.getString("cognoms"));
+			beca.setNomCognomsEstudiant(dades.getString("nomEstudiant") + " " + dades.getString("cognomsEstudiant"));
 			beca.setNomServei(dades.getString("nomServei"));
 		        	
 			return beca;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			return null;
+		}			
+			
+	}
+	
+	
+	
+	
+	
+	/**
+	 * METODES SESSIO
+	 */
+	
+	
+	/**
+	 * Metode per donar d'alta una sessio confeccionant la crida i enviant-la
+	 * @param sessio. Rep una sessio a donar d'alta.
+	 * @return Retorna resposta afirmativa si ha s'ha donat d'alta
+	 */
+	public Boolean altaSessio(Sessio sessio) {
+		return enviarCridaSimple(sessio.altaJSon(login.getCodiSessio()));
+	}
+
+	/**
+	 * Metode per donar de baixa una sessio confeccionant la crida i enviant-la
+	 * @param codi. Rep un codi del quan es el id del registre a borrar.
+	 * @return Retorna resposta afirmativa si s'ha pogut borrar.
+	 */
+	public Boolean baixaSessio(int codi) {		
+		return enviarCridaSimple(Sessio.baixaJSon(login.getCodiSessio(), codi));	
+	}
+	
+	/**
+	 * Metode per modificar un beca confeccionant la crida i enviant-la
+	 * @param sessio. Rep una sessio el qual sera modificara al actual registre persistent.
+	 * @return Retorna resposta afirmativa si ha s'ha pogut modificar
+	 */
+	public Boolean modiSessio(Sessio sessio) {
+		return enviarCridaSimple(sessio.modiJSon(login.getCodiSessio()));	
+	}
+	
+	/**
+	 * Metode per llistar sessions confeccionant la crida i enviant-la
+	 * si no rebem els parametres buits retornem tots els registres
+	 * @param camp. Rep un parametre com camp on s'ha de buscar
+	 * @param valor. Rep un parametre com a valor a buscar
+	 * @param ordre. Rep un parametre per llistar en aquell ordre
+	 * @return Retorna en forma d'array de sessions
+	 */
+	public Sessio[] llistarSessio(String camp, String valor, String ordre) {
+		JSONArray arr = enviarCridaRetornObjectes(Sessio.llistatJSon(login.getCodiSessio(), camp, valor, ordre));
+		if (arr == null) {
+			return null;
+		}else {
+			sessions = new Sessio[arr.length()];
+			for(int i=0; i<arr.length(); i++){   
+				  JSONObject o = arr.getJSONObject(i);
+				  sessions[i]= new Sessio();
+				  sessions[i].setCodi(o.getInt("codiSessio"));
+				  sessions[i].setNomEmpleat(o.getString("nomProfessor"));
+				  sessions[i].setCognomEmpleat(o.getString("cognomsProfessor"));
+				  sessions[i].setNomEstudiant(o.getString("nomEstudiant"));
+				  sessions[i].setCognomsEstudiant(o.getString("cognomsEstudiant"));
+				  sessions[i].setNomServei(o.getString("nomServei"));
+				  
+				  String dataIHora = o.getString("dataIHora");
+				  String[] dataHora = dataIHora.split(" ");  	//[0]data [1]hora
+				  String [] d =dataHora[0].split("-");  		//[0]any [1]mes [2]dia
+				  String [] t =dataHora[1].split(":");		//[0]hora [1]min [2]seg
+				  
+				  LocalDateTime ldt = LocalDateTime.of(Convert.toInt(d[0]), Convert.toInt(d[1]), 
+						  Convert.toInt(d[2]) , Convert.toInt(t[0]), Convert.toInt(t[1]));
+				  sessions[i].setDataIHora( ldt );
+			}
+			return sessions;			
+		}
+	}
+	
+	/**
+	 * Metode per consultar un sessio confeccionant la crida i enviant-la
+	 * @param codi. Rep codi del qual es el codi de la sessio a consultar
+	 * @return Retorna un sessio el qual volem consultar
+	 */
+	public Sessio consultaIndSessio(int codi) {
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(Sessio.consultaJSon(login.getCodiSessio(), codi));
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}				
+			
+		JSONObject jsonUsuari= new JSONObject(resposta);	
+
+		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+			Sessio sessio= new Sessio();			
+			
+			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			sessio.setCodi(dades.getInt("codiSessio"));
+			sessio.setCodiEmpleat(dades.getInt("codiProfessor"));
+			sessio.setNomEmpleat(dades.getString("nomProfessor"));
+			sessio.setCognomEmpleat(dades.getString("cognomsProfessor"));
+			sessio.setCodiEstudiant(dades.getInt("codiEstudiant"));
+			sessio.setNomEstudiant(dades.getString("nomEstudiant"));
+			sessio.setCognomsEstudiant(dades.getString("cognomsEstudiant"));
+			sessio.setCodiServei(dades.getInt("codiServei"));
+			sessio.setNomServei(dades.getString("nomServei"));
+			  
+			String dataIHora = dades.getString("dataIHora");
+			String[] dataHora = dataIHora.split(" ");  	//[0]data [1]hora
+			String [] d =dataHora[0].split("-");  		//[0]any [1]mes [2]dia
+			String [] t =dataHora[1].split(":");		//[0]hora [1]min [2]seg
+			  
+			LocalDateTime ldt = LocalDateTime.of(Convert.toInt(d[0]), Convert.toInt(d[1]), 
+				Convert.toInt(d[2]) , Convert.toInt(t[0]), Convert.toInt(t[1]));
+			sessio.setDataIHora( ldt );
+		        	
+			return sessio;
 		} else {
 			//Missatge d'error en la part del servidor
 			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));

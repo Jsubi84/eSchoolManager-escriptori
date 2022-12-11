@@ -16,6 +16,19 @@ public class Beca {
 		
 	}
 
+	public Beca(int codi, int codiEstudiant, int codiServei, String adjudicant, double importInicial,
+			double importRestant, boolean finalitzada, String nomCognomsEstudiant, String nomServei) {
+		this.codi = codi;
+		this.codiEstudiant = codiEstudiant;
+		this.codiServei = codiServei;
+		this.adjudicant = adjudicant;
+		this.importInicial = importInicial;
+		this.importRestant = importRestant;
+		this.finalitzada = finalitzada;
+		this.nomCognomsEstudiant = nomCognomsEstudiant;
+		this.nomServei = nomServei;
+	}
+
 
 	public Beca(int codiEstudiant, int codiServei, String adjudicant, double importInicial) {
 		this.codiEstudiant = codiEstudiant;
@@ -132,10 +145,9 @@ public class Beca {
 		dades.put("codiBeca",this.getCodi());			
 		dades.put("adjudicant",this.getAdjudicant());	
 		dades.put("importInicial",this.getImportInicial());
-		dades.put("importRestant",this.getImportRestant());
 		dades.put("codiEstudiant",this.getCodiEstudiant());
 		dades.put("codiServei",this.getCodiServei());
-		dades.put("finalizada",this.isFinalitzada());
+		dades.put("finalitzada",this.isFinalitzada());
 		json.put("dades", dades);
 		return json.toString();
 	}
@@ -165,8 +177,8 @@ public class Beca {
 	}
 
 
-	// {id, adjudicant, importInicial, nomEstudiantComplet, nomServei, finalitzada}
+	// {id, adjudicant, importInicial, importRestant, nomEstudiantComplet, nomServei, finalitzada}
 	public Object[] getRow(String nomEstudiantComplet, String nomServei){
-		return new Object[] {this.codi, this.adjudicant, this.importInicial, nomEstudiantComplet, nomServei, this.finalitzada};
+		return new Object[] {this.codi, this.adjudicant, this.importInicial, this.importRestant, nomEstudiantComplet, nomServei, this.finalitzada};
 	}
 }

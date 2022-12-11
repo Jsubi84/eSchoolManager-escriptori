@@ -17,7 +17,7 @@ public class Login {
 	private static final String CONNECTION_MISSING= "No s'ha pogut establir la connexió";
 
 	private String usuari, contrasenya, codiSessio, nom, nomDepartament, incidencia;
-	private Boolean pEscola, pDepartament, pEmpleat, pEstudiant, pServei, pBeca, pSessio, pInforme;
+	private Boolean pEscola, pDepartament, pEmpleat, pEstudiant, pServei, pBeca, pSessio, pFactura;
 	private int codiEmpleat;
 	
 	
@@ -146,12 +146,12 @@ public class Login {
 		this.pSessio = pSessio;
 	}
 
-	public Boolean getpInforme() {
-		return pInforme;
+	public Boolean getpFactura() {
+		return pFactura;
 	}
 
-	public void setpInforme(Boolean pInforme) {
-		this.pInforme = pInforme;
+	public void setpFactura(Boolean pFactura) {
+		this.pFactura = pFactura;
 	}
 
 	public int getCodiEmpleat() {
@@ -207,7 +207,7 @@ public Boolean CheckLogin(){
 					setpServei((Boolean) permisos.get("servei"));
 					setpBeca((Boolean) permisos.get("beca"));
 					setpSessio((Boolean) permisos.get("sessio"));
-					setpInforme((Boolean) permisos.get("informe"));								
+					setpFactura((Boolean) permisos.get("factura"));								
 					return true;
 					
 				} else {

@@ -270,7 +270,7 @@ public class DepartamentFilterForm extends JPanel{
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
 			// Ordre de la taula			
-			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
+			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Factura" }
 			// Fer la consulta individual per omplir les dades
 			deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true ,controllerView, MODI);
 			deptEditForm.setLocationRelativeTo(null);
@@ -285,7 +285,7 @@ public class DepartamentFilterForm extends JPanel{
 				deptEditForm.getChckbxEstudiant().setSelected(dept.getEstudiant());
 				deptEditForm.getChckbxServei().setSelected(dept.getServei());
 				deptEditForm.getChckbxSessio().setSelected(dept.getSessio());
-				deptEditForm.getChckbxInforme().setSelected(dept.getInforme());
+				deptEditForm.getChckbxFactura().setSelected(dept.getFactura());
 				// Un cop carregat el formulari el fem visible
 				deptEditForm.setVisible(true);				
 			}else {
@@ -313,7 +313,7 @@ public class DepartamentFilterForm extends JPanel{
 		try {
 			int idSelec = (int) getTable().getValueAt(getTable().getSelectedRow(), 0);		
 			// Ordre de la taula			
-			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Informe" }
+			// { "Id","Nom Departament", "Escola", "Departament", "Empleat","Estudiant", "Servei", "Beca","Sessio", "Factura" }
 			// Fer la consulta individual per omplir les dades
 			deptEditForm= new DepartamentEditForm(controllerView.getMainview(),true ,controllerView, LLEGIR);
 			deptEditForm.setLocationRelativeTo(null);
@@ -339,12 +339,12 @@ public class DepartamentFilterForm extends JPanel{
 				deptEditForm.getChckbxServei().setEnabled(false);
 				deptEditForm.getChckbxSessio().setSelected(dept.getSessio());
 				deptEditForm.getChckbxSessio().setEnabled(false);
-				deptEditForm.getChckbxInforme().setSelected(dept.getInforme());
-				deptEditForm.getChckbxInforme().setEnabled(false);
+				deptEditForm.getChckbxFactura().setSelected(dept.getFactura());
+				deptEditForm.getChckbxFactura().setEnabled(false);
 				
+				// Un cop carregat el formulari el fem visible				
 				deptEditForm.getOkButton().setVisible(false);
 				deptEditForm.getCancelButton().setText("Sortir");
-				// Un cop carregat el formulari el fem visible
 				deptEditForm.setVisible(true);				
 			}else {
 				controllerView.missatgeErrorIncidencia("No s'ha trobat aquest departament");

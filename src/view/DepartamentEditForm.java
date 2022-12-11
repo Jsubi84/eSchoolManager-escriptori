@@ -36,7 +36,7 @@ public class DepartamentEditForm extends JDialog{
 	private JPanel panel;
 	private JTextField tfnomDep, tfCodi;
 	private JButton okButton, cancelButton;
-	private JCheckBox chckbxEscola, chckbxDep, chckbxBeca, chckbxEstudiant, chckbxEmpleat, chckbxServei, chckbxSessio, chckbxInforme;
+	private JCheckBox chckbxEscola, chckbxDep, chckbxBeca, chckbxEstudiant, chckbxEmpleat, chckbxServei, chckbxSessio, chckbxfactura;
 	private ControllerView controllerView;
 	
 	
@@ -144,9 +144,9 @@ public class DepartamentEditForm extends JDialog{
 		chckbxSessio.setBounds(152, 155, 99, 23);
 		panel.add(chckbxSessio);
 		
-		chckbxInforme = new JCheckBox("Informe");
-		chckbxInforme.setBounds(152, 181, 99, 23);
-		panel.add(chckbxInforme);
+		chckbxfactura = new JCheckBox("Factura");
+		chckbxfactura.setBounds(152, 181, 99, 23);
+		panel.add(chckbxfactura);
 		
 		JLabel lblPermisos = new JLabel("Permisos");
 		lblPermisos.setBounds(23, 82, 224, 14);
@@ -246,12 +246,12 @@ public class DepartamentEditForm extends JDialog{
 		this.chckbxSessio = chckbxSessio;
 	}
 
-	public JCheckBox getChckbxInforme() {
-		return chckbxInforme;
+	public JCheckBox getChckbxFactura() {
+		return chckbxfactura;
 	}
 
-	public void setChckbxInforme(JCheckBox chckbxInforme) {
-		this.chckbxInforme = chckbxInforme;
+	public void setChckbxFactura(JCheckBox chckbxFactura) {
+		this.chckbxfactura = chckbxFactura;
 	}
 
 	public JTextField getTfCodi() {

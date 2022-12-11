@@ -663,8 +663,9 @@ public class MainView extends JFrame {
 		isSessio = true; 
 		btnSessio.setBackground(Color.lightGray);
 		
-		sessioForm = new SessioFilterForm();
+		sessioForm = new SessioFilterForm(getControllerView());
 		carregarPanel(sessioForm);
+		sessioForm.llistarSessio();
 	}
 	
 	public void carregarPanel(JPanel panel) {

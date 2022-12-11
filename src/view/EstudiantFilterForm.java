@@ -317,10 +317,11 @@ public class EstudiantFilterForm extends JPanel {
 				estudiantEditForm.getTfEmail().setEditable(false);
 				estudiantEditForm.getTfTelefon().setEditable(false);
 				estudiantEditForm.getCkMatriculat().setEnabled(false);
-				estudiantEditForm.getOkButton().setVisible(false);
-				estudiantEditForm.getCancelButton().setText("Sortir");
+
 				
 				// Un cop carregat el formulari el fem visible
+				estudiantEditForm.getOkButton().setVisible(false);
+				estudiantEditForm.getCancelButton().setText("Sortir");				
 				estudiantEditForm.setVisible(true);				
 			}else {
 				controllerView.missatgeErrorIncidencia(NO_TROBAT);
