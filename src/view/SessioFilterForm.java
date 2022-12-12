@@ -277,11 +277,11 @@ public class SessioFilterForm extends JPanel {
 			if (sessio != null) {
 				sessioEditForm.getTfCodi().setText(String.valueOf(sessio.getCodi()));
 				sessioEditForm.getCbProfe().setSelectedIndex(retIndexCombo(
-						sessio.getCodi(), sessioEditForm.getCbProfe()));	
+						sessio.getCodiEmpleat(), sessioEditForm.getCbProfe()));	
 				sessioEditForm.getCbEstudiant().setSelectedIndex(retIndexCombo(
-						sessio.getCodi(), sessioEditForm.getCbEstudiant()));				
+						sessio.getCodiEstudiant(), sessioEditForm.getCbEstudiant()));				
 				sessioEditForm.getCbServei().setSelectedIndex(retIndexCombo(
-						sessio.getCodi(), sessioEditForm.getCbServei()));
+						sessio.getCodiServei(), sessioEditForm.getCbServei()));
 				
 				LocalDateTime dataIHora = sessio.getDataIHora();
 				sessioEditForm.getTfHora().setText(dataIHora.format(isoTime));
@@ -326,13 +326,13 @@ public class SessioFilterForm extends JPanel {
 				sessioEditForm.getTfCodi().setVisible(true);
 				sessioEditForm.getLblCodi().setVisible(true);
 				sessioEditForm.getCbProfe().setSelectedIndex(retIndexCombo(
-						sessio.getCodi(), sessioEditForm.getCbProfe()));	
+						sessio.getCodiEmpleat(), sessioEditForm.getCbProfe()));	
 				sessioEditForm.getCbProfe().setEnabled(false);
 				sessioEditForm.getCbEstudiant().setSelectedIndex(retIndexCombo(
-						sessio.getCodi(), sessioEditForm.getCbEstudiant()));	
+						sessio.getCodiEstudiant(), sessioEditForm.getCbEstudiant()));	
 				sessioEditForm.getCbEstudiant().setEnabled(false);
 				sessioEditForm.getCbServei().setSelectedIndex(retIndexCombo(
-						sessio.getCodi(), sessioEditForm.getCbServei()));
+						sessio.getCodiServei(), sessioEditForm.getCbServei()));
 				sessioEditForm.getCbServei().setEnabled(false);
 				
 				LocalDateTime dataIHora = sessio.getDataIHora();

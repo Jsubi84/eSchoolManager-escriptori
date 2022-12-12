@@ -42,9 +42,9 @@ public class MainView extends JFrame {
 	
 	private ControllerView controllerView;
 	private JLabel lblNomEmpleat, lblNomDepartament, lblLogo;
-	private JButton btnServei, btnBeca, btnSessio, btnEstudiant, btnEmpleat, btnDepartament, btnEscola, btnConfigUsuari, btnSortirSessio;
+	private JButton btnServei, btnBeca, btnSessio, btnEstudiant, btnEmpleat, btnDepartament, btnEscola, btnFactura, btnConfigUsuari, btnSortirSessio;
 	private JPanel dades;
-	private Boolean isServei, isBeca, isSessio, isEstudiant, isEmpleat, isDepartament, isEscola;
+	private Boolean isServei, isBeca, isSessio, isEstudiant, isEmpleat, isDepartament, isEscola, isFactura;
 	private EscolaUpdateForm escolaForm;
 	private DepartamentFilterForm departamentForm;
 	private SessioFilterForm sessioForm;
@@ -52,6 +52,7 @@ public class MainView extends JFrame {
 	private EstudiantFilterForm estudiantForm;
 	private ServeiFilterForm serveiForm;
 	private EmpleatFilterForm empleatForm;
+	private FacturaGeneForm facturaForm;
 	
 
 	/**
@@ -66,6 +67,7 @@ public class MainView extends JFrame {
 		isEmpleat= false; 
 		isDepartament = false; 
 		isEscola = false;
+		isFactura = false;
 		
 		
 		setResizable(false);
@@ -315,6 +317,38 @@ public class MainView extends JFrame {
 		});
 		
 		
+		//Button FACTURA
+		btnFactura = new JButton("Factura");
+		btnFactura.setFont(new Font("Dubai", Font.PLAIN, 14));
+		btnFactura.setFocusable(false);
+		btnFactura.setPreferredSize(new Dimension(60, 60));
+		btnFactura.setSize(new Dimension(60, 60));
+		btnFactura.setBackground(Color.WHITE);
+		btnFactura.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnFactura.setBorder(null);
+		btnFactura.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				opcioFactura();
+			}
+		});
+		
+		btnFactura.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnFactura.setBackground(Color.lightGray);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {				
+				if (isFactura) {
+					btnFactura.setBackground(Color.lightGray);
+				}else {
+					btnFactura.setBackground(Color.WHITE);	
+				}	
+			}
+		});
+				
+				
+		
 		//Button BECA
 		btnBeca = new JButton("Beca");
 		btnBeca.setFont(new Font("Dubai", Font.PLAIN, 14));
@@ -346,7 +380,7 @@ public class MainView extends JFrame {
 		});
 		
 		
-		//Button SERVI
+		//Button SERVEI
 		btnServei = new JButton("Servei");
 		btnServei.setFont(new Font("Dubai", Font.PLAIN, 14));
 		btnServei.setFocusable(false);
@@ -398,9 +432,10 @@ public class MainView extends JFrame {
 						.addComponent(btnEstudiant, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnBeca, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnServei, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnSessio, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))				
+						.addComponent(btnSessio, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)	
+						.addComponent(btnFactura, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
 						.addGap(0))
-					.addComponent(lblLogo, GroupLayout.DEFAULT_SIZE, 170 ,Short.MAX_VALUE )
+					.addComponent(lblLogo, GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE )
 		);
 		gl_menu.setVerticalGroup(
 			gl_menu.createParallelGroup(Alignment.LEADING)
@@ -419,6 +454,8 @@ public class MainView extends JFrame {
 						.addComponent(btnServei)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(btnSessio)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(btnFactura)
 						.addPreferredGap(ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
 						.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap())
@@ -438,9 +475,6 @@ public class MainView extends JFrame {
 	/**
 	 * Setters i Getters
 	 */
-	
-	
-	
 	public ControllerView getControllerView() {
 		return controllerView;
 	}
@@ -536,6 +570,14 @@ public class MainView extends JFrame {
 		this.empleatForm = empleatForm;
 	}
 
+	public FacturaGeneForm getFacturaForm() {
+		return facturaForm;
+	}
+
+	public void setFacturaForm(FacturaGeneForm facturaForm) {
+		this.facturaForm = facturaForm;
+	}
+
 
 	/**
 	 * Escalat dels icones dels botons de selecció
@@ -562,6 +604,7 @@ public class MainView extends JFrame {
 		btnEmpleat.setVisible(login.getpEmpleat());
 		btnDepartament.setVisible(login.getpDepartament());
 		btnEscola.setVisible(login.getpEscola());
+		btnFactura.setVisible(login.getpFactura());
 	}
 	
 	/**
@@ -583,6 +626,7 @@ public class MainView extends JFrame {
 		isEmpleat = false; 
 		isDepartament = false;
 		isEscola = false;
+		isFactura = false;
 		btnServei.setBackground(Color.WHITE);	
 		btnBeca.setBackground(Color.WHITE);
 		btnSessio.setBackground(Color.WHITE);
@@ -590,6 +634,7 @@ public class MainView extends JFrame {
 		btnEmpleat.setBackground(Color.WHITE);
 		btnDepartament.setBackground(Color.WHITE);
 		btnEscola.setBackground(Color.WHITE);
+		btnFactura.setBackground(Color.WHITE);
 	}
 	
 	
@@ -668,11 +713,19 @@ public class MainView extends JFrame {
 		sessioForm.llistarSessio();
 	}
 	
+	public void opcioFactura() {
+		resetDades();		
+		isFactura = true; 
+		btnFactura.setBackground(Color.lightGray);
+		
+		facturaForm = new FacturaGeneForm(getControllerView());
+		carregarPanel(facturaForm);
+	}
+	
 	public void carregarPanel(JPanel panel) {
 		dades.removeAll();
 		dades.add(panel);
 		dades.revalidate();
 		dades.repaint();
 	}
-
 }

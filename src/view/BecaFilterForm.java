@@ -264,9 +264,9 @@ public class BecaFilterForm extends JPanel {
 			if (beca != null) {
 				becaEditForm.getTfCodi().setText(String.valueOf(beca.getCodi()));
 				becaEditForm.getCbServei().setSelectedIndex(retIndexCombo(
-						beca.getCodi(), becaEditForm.getCbServei()));
+						beca.getCodiServei(), becaEditForm.getCbServei()));
 				becaEditForm.getCbEstudiant().setSelectedIndex(retIndexCombo(
-						beca.getCodi(), becaEditForm.getCbEstudiant()));
+						beca.getCodiEstudiant(), becaEditForm.getCbEstudiant()));
 				becaEditForm.getTfAdj().setText(String.valueOf(beca.getAdjudicant()));
 				becaEditForm.getTfImportIni().setText(String.valueOf(beca.getImportInicial()));
 			
@@ -324,10 +324,10 @@ public class BecaFilterForm extends JPanel {
 				becaEditForm.getCkFinal().setVisible(true);
 				
 				becaEditForm.getCbServei().setSelectedIndex(retIndexCombo(
-						beca.getCodi(), becaEditForm.getCbServei()));
+						beca.getCodiServei(), becaEditForm.getCbServei()));
 				becaEditForm.getCbServei().setEnabled(false);
 				becaEditForm.getCbEstudiant().setSelectedIndex(retIndexCombo(
-						beca.getCodi(), becaEditForm.getCbEstudiant()));
+						beca.getCodiEstudiant(), becaEditForm.getCbEstudiant()));
 				becaEditForm.getCbEstudiant().setEnabled(false);
 				
 				// Un cop carregat el formulari el fem visible				

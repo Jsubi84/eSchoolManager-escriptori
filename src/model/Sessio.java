@@ -139,7 +139,7 @@ public class Sessio {
 		json.put("codiSessio", codiSessio);
 		JSONObject dades = new JSONObject();
 		dades.put("codiSessio",this.getCodi());
-		dades.put("codiProfessor",this.getCodiEmpleat());	
+		dades.put("codiEmpleat",this.getCodiEmpleat());	
 		dades.put("codiEstudiant",this.getCodiEstudiant());
 		dades.put("codiServei",this.getCodiServei());
 		dades.put("dataIHora", this.dataIHora.format(isoDate) + " " + this.dataIHora.format(isoTime));

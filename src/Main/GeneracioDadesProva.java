@@ -1,7 +1,5 @@
 package main;
 
-import org.junit.jupiter.api.Assertions;
-
 import controller.ControllerOperation;
 import controller.ControllerView;
 import model.Beca;
@@ -54,12 +52,7 @@ public class GeneracioDadesProva {
 		cO.altaBeca(beca2);
 		
     	
-//    	//Generar Sessions
-//    	Sessio sessio = new Sessio ( 22 , 20 , "Generalitat", 600.00); //
-//    	Beca beca2 = new Beca ( 23 , 21 , "Diputacio", 650.00);	//
-//    	
-//		cO.altaBeca(beca);
-//		cO.altaBeca(beca2);		
+    	//Generar Sessions	
 
 		
 		login.logoutJSon();

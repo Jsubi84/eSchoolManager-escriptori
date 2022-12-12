@@ -782,8 +782,8 @@ public class ControllerOperation {
 				  JSONObject o = arr.getJSONObject(i);
 				  sessions[i]= new Sessio();
 				  sessions[i].setCodi(o.getInt("codiSessio"));
-				  sessions[i].setNomEmpleat(o.getString("nomProfessor"));
-				  sessions[i].setCognomEmpleat(o.getString("cognomsProfessor"));
+				  sessions[i].setNomEmpleat(o.getString("nomEmpleat"));
+				  sessions[i].setCognomEmpleat(o.getString("cognomsEmpleat"));
 				  sessions[i].setNomEstudiant(o.getString("nomEstudiant"));
 				  sessions[i].setCognomsEstudiant(o.getString("cognomsEstudiant"));
 				  sessions[i].setNomServei(o.getString("nomServei"));
@@ -823,9 +823,9 @@ public class ControllerOperation {
 			
 			JSONObject dades = jsonUsuari.getJSONObject("dades");
 			sessio.setCodi(dades.getInt("codiSessio"));
-			sessio.setCodiEmpleat(dades.getInt("codiProfessor"));
-			sessio.setNomEmpleat(dades.getString("nomProfessor"));
-			sessio.setCognomEmpleat(dades.getString("cognomsProfessor"));
+			sessio.setCodiEmpleat(dades.getInt("codiEmpleat"));
+			sessio.setNomEmpleat(dades.getString("nomEmpleat"));
+			sessio.setCognomEmpleat(dades.getString("cognomsEmpleat"));
 			sessio.setCodiEstudiant(dades.getInt("codiEstudiant"));
 			sessio.setNomEstudiant(dades.getString("nomEstudiant"));
 			sessio.setCognomsEstudiant(dades.getString("cognomsEstudiant"));

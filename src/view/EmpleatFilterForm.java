@@ -409,7 +409,7 @@ public class EmpleatFilterForm extends JPanel {
 	 */	
 	public int retIndexCombo(String valor, JComboBox<String> cB) {
 		int index = 0;
-        for(int i = 0; i < cB.getItemCount() ; i++ ){
+        for(int i = 0; i < cB.getItemCount() ; i++ ){   	
         	if(valor.equals(cB.getItemAt(i))) {
         		index=i;
         		break;

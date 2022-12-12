@@ -202,19 +202,22 @@ public class SessioEditForm extends JDialog {
         if (checkSessionOnly(login)) {
         	cbProfe.setEnabled(false);
         }else{
-        	Empleat empleats[] = controllerView.getControlOper().llistarEmpleat("codiDepartament", "17", "");
+        	Empleat empleats[] = controllerView.getControlOper().llistarEmpleat("", "", "");//("codiDepartament", "17", "");
 			cbProfe.removeAllItems();        	
         	
 	        //Omplir el combo box amb els professor
-	        for(int i = 0; i < empleats.length ; i++ ){
-	            cbProfe.addItem(String.valueOf(empleats[i].getCodi()) +"-"+ empleats[i].getNom()
-	            		+" "+ empleats[i].getCognoms());}
-	        cbProfe.setSelectedIndex(-1);        	
+			if (empleats != null) {
+		        for(int i = 0; i < empleats.length ; i++ ){
+		            cbProfe.addItem(String.valueOf(empleats[i].getCodi()) +"-"+ empleats[i].getNom()
+		            		+" "+ empleats[i].getCognoms());}
+		        cbProfe.setSelectedIndex(-1); 				
+			}
+       	
         }
         
         
         //COMBOBOX PER ESTUDIANT
-		Estudiant estudiants[] = controllerView.getControlOper().llistarEstudiant("registrat", "true", "");
+		Estudiant estudiants[] = controllerView.getControlOper().llistarEstudiant("", "", "");//("registrat", "true", "");
 		cbEstudiant.removeAllItems();
 
         //Omplir el combo box amb els professor
