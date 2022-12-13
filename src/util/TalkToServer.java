@@ -7,6 +7,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 
 /**
@@ -27,22 +33,37 @@ public class TalkToServer {
      * @return Entrada Resposta del servidor a la crida enviada.
      * @throws IOException
      * @throws ConnectException
+	 * @throws NoSuchPaddingException 
+	 * @throws NoSuchAlgorithmException 
+	 * @throws BadPaddingException 
+	 * @throws IllegalBlockSizeException 
+	 * @throws InvalidKeyException 
      * 
     */
-    public static String connection(String crida) throws IOException, ConnectException{
+    public static String connection(String crida) throws IOException, ConnectException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
     	
     	String entrada;
     	
 		// Resultat de la crida per consola per fer seguiment d'enviament.
 		System.out.println(crida); 	
+		
+		//Encriptacio comunicació
+		Encrip encriptar = new Encrip();
+		encriptar.afegirClau("IOC");
+		byte[] encriptat = encriptar.encriptar(crida);
+
+		System.out.println(encriptar.desencriptar(encriptat));
     	
     	Socket socket = new Socket(IPADDRESS, PORT);
     	
     	PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-    	out.println(crida);
+    	out.println(crida); //encriptat
     	
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     	entrada = in.readLine();
+    	
+    	//System.out.println(entrada); 
+    	//String  entradaDEC = encriptar.desencriptar(entrada);
     	
  		// Resposta a la crida per consola per fer seguiment resposta.
 		System.out.println(entrada);    	
