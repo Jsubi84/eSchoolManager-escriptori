@@ -35,13 +35,11 @@ public class Principal {
 		controllerView.setLoginview(loginView);
 		controllerView.setMainview(mainView);
 		
-		
 		//Relacions per control operacions
 		ControllerOperation controlleroperations= new ControllerOperation();
 		
 		//Relacio entre vistes i control
 		controllerView.setControlOper(controlleroperations);
-		controlleroperations.setControlView(controllerView);
-				
+		controlleroperations.setControlView(controllerView);	
 	}
 }

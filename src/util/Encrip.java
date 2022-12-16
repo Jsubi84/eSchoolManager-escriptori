@@ -1,43 +1,49 @@
 package util;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Base64;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Encrip {
 	
+	public final static String ALGORITME = "AES";
+	public final static String CLAU = "IOC";
+	
 	private SecretKey clau;
 	private Cipher cipher;
-	private String type = "AES";
 	private int keysize = 16;
 	
 	public Encrip() {
-	}
-
-	public void afegirClau(String valor) {
-		byte[] valuebytes = valor.getBytes();
-		clau = new SecretKeySpec(Arrays.copyOf(valuebytes, keysize), type);
+		clau = new SecretKeySpec(Arrays.copyOf(CLAU.getBytes(), keysize), ALGORITME);
 	}
 	
-	public byte[] encriptar(String crida) throws IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
-		cipher = Cipher.getInstance(type);
-		cipher.init(Cipher.ENCRYPT_MODE, clau);
-		byte[] cridaABytes = crida.getBytes();
-		byte[] cipherbytes = cipher.doFinal(cridaABytes);
-		return cipherbytes;
+	public String encriptar(String crida){
+		String encriptado = null;
+		try {
+			cipher = Cipher.getInstance(ALGORITME);
+			cipher.init(Cipher.ENCRYPT_MODE, clau);
+			byte[] cipherbytes = cipher.doFinal(crida.getBytes());
+			encriptado = Base64.getEncoder().encodeToString(cipherbytes);			
+		} catch (Exception e) {
+			
+		}
+		return encriptado;
 	}
 	
-	public String desencriptar(byte[] crida) throws IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
-		cipher = Cipher.getInstance(type);
-		cipher.init(Cipher.DECRYPT_MODE, clau);
-		byte[] cipherbytes = cipher.doFinal(crida);
+	public String desencriptar(String crida){
+		byte[] cipherbytes = null;
+			try {
+				cipher = Cipher.getInstance(ALGORITME);
+				cipher.init(Cipher.DECRYPT_MODE, clau);
+				byte[] bytesEncriptats = Base64.getDecoder().decode(crida);
+				cipherbytes = cipher.doFinal(bytesEncriptats);				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		return new String(cipherbytes);
 	}
 }

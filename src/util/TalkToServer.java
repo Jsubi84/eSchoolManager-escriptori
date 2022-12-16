@@ -31,6 +31,7 @@ public class TalkToServer {
      * Enviar crida i esperar la resposta del servidor.
      * @param Crida Format Json com a String, rep la crida a enviar.
      * @return Entrada Resposta del servidor a la crida enviada.
+	 * @throws ConnectException 
      * @throws IOException
      * @throws ConnectException
 	 * @throws NoSuchPaddingException 
@@ -40,37 +41,35 @@ public class TalkToServer {
 	 * @throws InvalidKeyException 
      * 
     */
-    public static String connection(String crida) throws IOException, ConnectException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
-    	
+    public static String connection(String crida) throws ConnectException, IOException{
     	String entrada;
     	
 		// Resultat de la crida per consola per fer seguiment d'enviament.
 		System.out.println(crida); 	
 		
-		//Encriptacio comunicació
+		//ncriptacio comunicació
 		Encrip encriptar = new Encrip();
-		encriptar.afegirClau("IOC");
-		byte[] encriptat = encriptar.encriptar(crida);
-
-		System.out.println(encriptar.desencriptar(encriptat));
+		String encriptat = encriptar.encriptar(crida);
+		System.out.println(encriptat);
     	
     	Socket socket = new Socket(IPADDRESS, PORT);
     	
     	PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-    	out.println(crida); //encriptat
+    	//out.println(crida); 
+    	out.println(encriptat);
     	
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     	entrada = in.readLine();
     	
-    	//System.out.println(entrada); 
-    	//String  entradaDEC = encriptar.desencriptar(entrada);
+    	System.out.println(entrada); 
+    	String  entradaDEC = encriptar.desencriptar(entrada);
     	
- 		// Resposta a la crida per consola per fer seguiment resposta.
-		System.out.println(entrada);    	
+ 		// Resposta a la crida per consola per fer seguiment resposta.   
+		System.out.println(entradaDEC);	
  	
         socket.close();           
      
-        return entrada;
+        return entradaDEC;
     }		
  
 }

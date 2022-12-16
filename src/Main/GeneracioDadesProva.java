@@ -3,18 +3,15 @@ package main;
 import controller.ControllerOperation;
 import controller.ControllerView;
 import model.Beca;
-import model.Departament;
-import model.Empleat;
 import model.Estudiant;
 import model.Login;
-import model.Servei;
-import model.Sessio;
+
 
 public class GeneracioDadesProva {
 	
 	//Variables necesaries per al controllerOperation
 	private ControllerView controlView = new ControllerView() ;
-	private ControllerOperation cO = new ControllerOperation(controlView); 
+	private ControllerOperation cO = new ControllerOperation(controlView);
 
 
 	/**
@@ -53,8 +50,23 @@ public class GeneracioDadesProva {
 		
     	
     	//Generar Sessions	
-
 		
 		login.logoutJSon();
 	}
+	
+
+//	private String encriptarPassword(String pass) {
+//		encriptar = new Encrip();
+//		encriptar.afegirClau("IOC");
+//		try {
+//			byte[] ePassword = encriptar.encriptar(pass);
+//			return ePassword.toString();
+//		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
+//				| NoSuchPaddingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			System.out.println("No s'ha pogut encriptar la contrasenya");
+//		}
+//		return null;
+//	}
 }
