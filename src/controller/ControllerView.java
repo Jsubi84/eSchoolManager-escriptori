@@ -10,6 +10,7 @@ import model.Departament;
 import model.Empleat;
 import model.Escola;
 import model.Estudiant;
+import model.Factura;
 import model.Login;
 import model.Servei;
 import model.Sessio;
@@ -25,11 +26,12 @@ import view.MainView;
  */
 public class ControllerView {
 	
-	
+//	private static final String FACTURA_OK= "Factura generada correctament";
 	private static final String ALTA_OK= "Alta correcte";
 	private static final String BAIXA_OK= "Baixa correcte";
 	private static final String MODI_OK= "Actualització correcte";
-	
+	private static final String PAGAT_OK= "S'ha actualitzat el pagament correctament";
+	private static final String DESPAGAT_OK= "Factura no pagada";	
 	
 		
 	private LoginView loginview;
@@ -732,4 +734,45 @@ public class ControllerView {
 		}
 	}
 	
+	
+	
+	/**
+	 * 	METODES PER A FACTURA
+	 */
+	
+	/**
+	 * Metode per generar una factura.
+	 */
+	public Factura generaFactura() {
+		
+		Factura factura= new Factura();
+		
+		factura.setCodiEstudiant(Convert.splitCombo((String) mainview.getFacturaForm().getCbEstudiant().getSelectedItem()));
+		factura.setMes(mainview.getFacturaForm().getCbMes().getSelectedIndex());
+		
+		factura = controlOper.generarFactura(factura);
+		
+		if (factura == null) {
+			missatgeErrorIncidencia(incidencia);
+			return null;
+		}else{
+			return factura;
+		}
+	}
+	
+	
+	/**
+	 * Metode per pagar factura.
+	 */
+	public void pagarFactura(Boolean pagat, int codiF) {
+		if (controlOper.pagarFactura(pagat, codiF)) {
+			if (pagat) {
+				missatgeIncidencia(PAGAT_OK);
+			}else {
+				missatgeIncidencia(DESPAGAT_OK);
+			}
+		}else {
+			missatgeErrorIncidencia(incidencia);
+		}
+	}
 }

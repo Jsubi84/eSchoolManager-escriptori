@@ -19,6 +19,8 @@ import model.Departament;
 import model.Empleat;
 import model.Escola;
 import model.Estudiant;
+import model.Factura;
+import model.LiniaFactura;
 import model.Login;
 import model.Servei;
 import model.Sessio;
@@ -43,6 +45,7 @@ public class ControllerOperation {
 	private Estudiant estudiants[];
 	private Beca beques[];
 	private Sessio sessions[];
+	private LiniaFactura linies[];
 	
 	
 	/**
@@ -134,12 +137,12 @@ public class ControllerOperation {
 		}
 		 
 			 
-		JSONObject jsonUsuari = new JSONObject(resposta);
-		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+		JSONObject json = new JSONObject(resposta);
+		if (json.get("resposta").equals(RESPOSTA_OK)) {
 			return true;
 		} else {
 			//Missatge d'error en la part del servidor
-			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			getControlView().setIncidencia((String)json.get("missatge"));
 			return false;
 		}				
 			
@@ -162,11 +165,11 @@ public class ControllerOperation {
 		}
 
 			
-	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+	   	JSONObject json = new JSONObject(resposta);	
 	   	JSONArray jsonArray = new JSONArray();
 
-		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
-			JSONObject dades = jsonUsuari.getJSONObject("dades");
+		if (json.get("resposta").equals(RESPOSTA_OK)) {
+			JSONObject dades = json.getJSONObject("dades");
 						
 			Iterator<String> x = dades.keys();
 			while (x.hasNext()){
@@ -177,7 +180,7 @@ public class ControllerOperation {
 			return jsonArray;
 		} else {
 			//Missatge d'error en la part del servidor
-			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			getControlView().setIncidencia((String)json.get("missatge"));
 			return null;
 		}				
 	}
@@ -261,12 +264,12 @@ public class ControllerOperation {
 		}
 
 		
-	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+	   	JSONObject json = new JSONObject(resposta);	
 
-		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+		if (json.get("resposta").equals(RESPOSTA_OK)) {
 			Departament dept= new Departament();			
 			
-			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			JSONObject dades = json.getJSONObject("dades");
 			dept.setCodi(dades.getInt("codiDepartament"));
 			dept.setNomDepartament(dades.getString("nomDepartament"));
 			
@@ -283,7 +286,7 @@ public class ControllerOperation {
 			return dept;
 		} else {
 			//Missatge d'error en la part del servidor
-			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			getControlView().setIncidencia((String)json.get("missatge"));
 			return null;
 		}				
 	
@@ -368,12 +371,12 @@ public class ControllerOperation {
 		}
 				
 			
-	   	JSONObject jsonUsuari = new JSONObject(resposta);	
+	   	JSONObject json = new JSONObject(resposta);	
 
-		if (jsonUsuari.get("resposta").equals(RESPOSTA_OK)) {
+		if (json.get("resposta").equals(RESPOSTA_OK)) {
 			Servei servei= new Servei();			
 			
-			JSONObject dades = jsonUsuari.getJSONObject("dades");
+			JSONObject dades = json.getJSONObject("dades");
 			servei.setCodi(dades.getInt("codiServei"));
 			servei.setNom(dades.getString("nomServei"));
 			servei.setDurada(dades.getInt("durada"));
@@ -382,7 +385,7 @@ public class ControllerOperation {
 			return servei;
 		} else {
 			//Missatge d'error en la part del servidor
-			getControlView().setIncidencia((String)jsonUsuari.get("missatge"));
+			getControlView().setIncidencia((String)json.get("missatge"));
 			return null;
 		}			
 			
@@ -872,5 +875,73 @@ public class ControllerOperation {
 			return null;
 		}			
 			
+	}
+	
+	
+	/**
+	 * METODES FACTURA
+	 */
+	
+	
+	/**
+	 * Metode per generar una factura confeccionant la crida i enviant-la
+	 * @param factura. Rep una factura per tal de fer la petició de generar
+	 * @return Retorna resposta afirmativa si ha s'ha generat correctament.
+	 */
+	public Factura generarFactura(Factura factura) {	
+		String resposta="";
+		try {
+			resposta = TalkToServer.connection(factura.facturarJSon(login.getCodiSessio()));
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();	
+		}
+			
+	   	JSONObject json = new JSONObject(resposta);	
+	   	JSONArray arr = new JSONArray();
+
+		if (json.get("resposta").equals(RESPOSTA_OK)) {
+			JSONObject dades = json.getJSONObject("dades");
+			factura.setCodiF(dades.getInt("codiFactura"));
+			factura.setPagat(dades.getBoolean("pagat"));
+			factura.setNomEstudiant(dades.getString("nomEstudiant"));
+			factura.setCognomEstudiant(dades.getString("cognomsEstudiant"));
+			
+			JSONObject sessions = json.getJSONObject("sessions");
+			Iterator<String> x = sessions.keys();
+			while (x.hasNext()){
+			    String key = (String) x.next();
+			    arr.put(sessions.get(key));
+			}
+		
+			linies = new LiniaFactura [arr.length()];
+			for(int i=0; i<arr.length(); i++){   
+				  JSONObject l = arr.getJSONObject(i);
+				  linies[i] = new LiniaFactura();
+				  linies[i].setDataIHora(l.getString("dataIhora"));
+				  linies[i].setImportBeca(l.getDouble("importBeca"));
+				  linies[i].setImportEstudiant(l.getDouble("importEstudiant"));
+				  linies[i].setNomServei(l.getString("nomServei"));
+			}
+			factura.setLinias(linies);
+			
+			return factura;
+		} else {
+			//Missatge d'error en la part del servidor
+			getControlView().setIncidencia((String)json.get("missatge"));
+			return null;
+		}
+	}
+	
+	
+	/**
+	 * Metode per pagar factura
+	 * @param Boolean. Rep un boolean per indicar si es pagat o no pagat
+	 * @param int. Rep el codi de la factura a pagar.
+	 * @return Retorna resposta afirmativa si l'actualització de pagat a anat correctament.
+	 */
+	public Boolean pagarFactura(Boolean pagat, int codiF) {
+		return enviarCridaSimple(Factura.pagarJSon(login.getCodiSessio(), pagat, codiF));
 	}
 }

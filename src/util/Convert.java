@@ -60,16 +60,14 @@ public class Convert {
 	/**
 	 * Extreiem el valor del camps combiants de la combobox
 	 * @param valorCombo Entrada del valor de la combobox
-	 * @return int valor del codi departament escollit
+	 * @return int valor del codi escollit
 	 */
 	public static int splitCombo(String valorCombo) {
 		String select = valorCombo;
-		String[] codiDept = select.split("-");
-		String comboCodiDept = codiDept[0];
-		return Integer.parseInt(comboCodiDept);
+		String[] codi = select.split("-");
+		String comboCodi = codi[0];
+		return Integer.parseInt(comboCodi);
 	}
-	
-	
 	
 	
 	/**
@@ -89,5 +87,4 @@ public class Convert {
 		}
 		return icon;
 	}
-	
 }
