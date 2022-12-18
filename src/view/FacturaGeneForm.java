@@ -42,18 +42,20 @@ public class FacturaGeneForm extends JPanel {
 	private static final long serialVersionUID = 1L;	
 	private static final String SELECCIO_MES = "Selecciona un mes de la llista";
 	private static final String SELECCIO_ESTUDIANT = "Selecciona un estudiant de la llista";
+	private static final String SENSE_SESSIONS = "L'estudiant no te pagaments per aquest mes";
 	
 	
 	private DefaultTableModel model = new DefaultTableModel();
 	private String[] mesos = {"Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre"};
 	private JComboBox<String> cbEstudiant, cbMes;
 	private ControllerView controllerView;
-	private JLabel lblFactura, lblTotalBeca, lblTotalEst, lblDadesFacturat, lblCodiF, lblNomEstudiant;
+	private JLabel lblFactura, lblTotalBeca, lblTotalEst, lblCodiT, lblCodiF, lblNomEstudiant;
 	private JButton btnGene;
 	private JPanel panel;
 	private JTable tableLiniesFactura;
 	private JToggleButton tglbtnPagat;
 	private Factura factura;
+	private JLabel lblTotalBeca_1;
 
 	
 	/**
@@ -154,43 +156,38 @@ public class FacturaGeneForm extends JPanel {
 		tableLiniesFactura.getColumnModel().getColumn(2).setCellRenderer(tcr);
 		tableLiniesFactura.getColumnModel().getColumn(3).setCellRenderer(tcr);
 
-		scrollPane.setViewportView(tableLiniesFactura); 
-        
-		JLabel lblTotalBecaTitol = new JLabel("TOTAL BECA :");
-        lblTotalBecaTitol.setBounds(442, 418, 84, 23);
-        panel.add(lblTotalBecaTitol);
+		scrollPane.setViewportView(tableLiniesFactura);
         
         lblTotalBeca = new JLabel("");
         lblTotalBeca.setHorizontalTextPosition(SwingConstants.CENTER);
         lblTotalBeca.setBorder(new LineBorder(new Color(0, 0, 0)));
-        lblTotalBeca.setBounds(527, 418, 72, 23);
+        lblTotalBeca.setBounds(499, 456, 100, 23);
         panel.add(lblTotalBeca);
-        
-        JLabel lblTotalEstudiantTitol = new JLabel("TOTAL ESTUDIANT :");
-        lblTotalEstudiantTitol.setBounds(624, 418, 111, 23);
-        panel.add(lblTotalEstudiantTitol);
         
         lblTotalEst = new JLabel("");
         lblTotalEst.setHorizontalTextPosition(SwingConstants.CENTER);
         lblTotalEst.setBorder(new LineBorder(new Color(0, 0, 0)));
-        lblTotalEst.setBounds(736, 418, 72, 23);
+        lblTotalEst.setBounds(680, 456, 128, 23);
         panel.add(lblTotalEst);
         
-        lblDadesFacturat = new JLabel("-DADES DE LA FACTURA");
-        lblDadesFacturat.setBounds(10, 443, 255, 23);
-        panel.add(lblDadesFacturat);
+        lblCodiT = new JLabel("Codi ");
+        lblCodiT.setBounds(10, 441, 53, 14);
+        panel.add(lblCodiT);
         
         lblCodiF = new JLabel("");
+        lblCodiF.setHorizontalAlignment(SwingConstants.CENTER);
         lblCodiF.setBorder(new LineBorder(new Color(0, 0, 0)));
-        lblCodiF.setBounds(10, 475, 53, 23);
+        lblCodiF.setBounds(10, 456, 53, 23);
         panel.add(lblCodiF);
         
         lblNomEstudiant = new JLabel("");
+        lblNomEstudiant.setHorizontalAlignment(SwingConstants.LEFT);
         lblNomEstudiant.setBorder(new LineBorder(new Color(0, 0, 0)));
-        lblNomEstudiant.setBounds(73, 475, 228, 23);
+        lblNomEstudiant.setBounds(73, 456, 228, 23);
         panel.add(lblNomEstudiant);
         
         tglbtnPagat = new JToggleButton("PAGAT");
+        tglbtnPagat.setBackground(Color.WHITE);
         tglbtnPagat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pagarFactura(); 
@@ -203,8 +200,20 @@ public class FacturaGeneForm extends JPanel {
 		    }
 		});
         
-        tglbtnPagat.setBounds(685, 475, 123, 23);
+        tglbtnPagat.setBounds(10, 490, 291, 23);
         panel.add(tglbtnPagat);
+        
+        JLabel lblEstudiantTitol = new JLabel("Estudiant");
+        lblEstudiantTitol.setBounds(73, 441, 228, 14);
+        panel.add(lblEstudiantTitol);
+        
+        lblTotalBeca_1 = new JLabel("TOTAL BECA:");
+        lblTotalBeca_1.setBounds(499, 441, 100, 14);
+        panel.add(lblTotalBeca_1);
+        
+        JLabel lblTotalEst_1 = new JLabel("TOTAL ESTUDIANT:");
+        lblTotalEst_1.setBounds(680, 441, 128, 14);
+        panel.add(lblTotalEst_1);
        
 	}
 
@@ -309,25 +318,30 @@ public class FacturaGeneForm extends JPanel {
 	private void presentaFactura() {
 		
 		factura = getControllerView().generaFactura();
+		
 		if (factura != null) {
-			double tBeca = 0, tEstudiant = 0;
-			
-		    for (int i = 0; tableLiniesFactura.getRowCount() > i; i++) {
-		    	model.removeRow(0);
-		    }
-		    LiniaFactura[] linies = factura.getLinias();
-			for(int i=0; i < linies.length; i++){
-				linies[i].getRow();
-				tBeca += linies[i].getImportBeca();
-				tEstudiant += linies[i].getImportEstudiant();
+			if  (factura.getLinias().length != 0) {
+				double tBeca = 0, tEstudiant = 0;
+				
+			    for (int i = 0; tableLiniesFactura.getRowCount() > i; i++) {
+			    	model.removeRow(0);
+			    }
+			    LiniaFactura[] linies = factura.getLinias();
+				for(int i=0; i < linies.length; i++){
+					model.insertRow(0, linies[i].getRow()); 				
+					tBeca += linies[i].getImportBeca();
+					tEstudiant += linies[i].getImportEstudiant();
+				}
+				
+				lblCodiF.setText(String.valueOf(factura.getCodiF()));
+				lblNomEstudiant.setText(factura.getNomEstudiant() + " " + factura.getCognomEstudiant());
+				tglbtnPagat.setSelected(factura.getPagat());
+				
+				lblTotalBeca.setText(String.valueOf(tBeca));
+				lblTotalEst.setText(String.valueOf(tEstudiant));					
+			}else{
+				controllerView.missatgeIncidencia(SENSE_SESSIONS);
 			}
-			
-			lblNomEstudiant.setText("Codi factura: " + factura.getCodiF() );
-			lblNomEstudiant.setText("Estudiant: " + factura.getNomEstudiant() + " " + factura.getCognomEstudiant());
-			tglbtnPagat.setSelected(factura.getPagat());
-			
-			lblTotalBeca.setText(String.valueOf(tBeca));
-			lblTotalEst.setText(String.valueOf(tEstudiant));	
 		}
 	}
 	

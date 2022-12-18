@@ -25,6 +25,13 @@ import javax.swing.table.DefaultTableModel;
 import controller.ControllerView;
 import model.Beca;
 import util.Convert;
+import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
+
+/**
+ * @author Jordi Subirana
+ *
+ */
 
 public class BecaFilterForm extends JPanel {
 	
@@ -33,6 +40,7 @@ public class BecaFilterForm extends JPanel {
 	private static final Short ALTA = 1;
 	private static final Short MODI = 2;
 	private static final Short LLEGIR = 3;
+	private static final String NO_REGISTRE_PER_LLEGIR = "No hi ha registre seleccionat per poder llegir";
 	private static final String NO_REGISTRE_PER_ACTUALITZAR = "No hi ha registre seleccionat per poder actualitzar";
 	private static final String NO_REGISTRE_BAIXA = "No hi ha registre seleccionat per donar de baixa";
 	private static final String NO_TROBAT = "No s'ha trobat aquest estudiant";
@@ -41,6 +49,12 @@ public class BecaFilterForm extends JPanel {
 	private BecaEditForm becaEditForm;
 	private ControllerView controllerView;
 	private DefaultTableModel model;
+	private JTextField tfValor;
+	
+	private JComboBox<String> cbCamp, cbOrdre;
+	private String[] campCombo = {"Codi de la beca", "Adjudicant", "Import Inicial","Import Restant", "Codi de l'estudiant", "Codi del Servei"};
+	private String[] camp = {"","codi","adjudicant","importInicial", "importRestant", "codiEstudiant", "codiServei"};
+	private String[] ordre = {"DESC","ASC"};
 
 	/**
 	 * Create the panel.
@@ -60,12 +74,12 @@ public class BecaFilterForm extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblTitolServei = new JLabel("Beca");
-		lblTitolServei.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		lblTitolServei.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitolServei.setFont(new Font("Dubai", Font.BOLD, 21));
-		lblTitolServei.setBounds(10, 11, 798, 41);
-		panel.add(lblTitolServei);
+		JLabel lblTitolBeca = new JLabel("Beca");
+		lblTitolBeca.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		lblTitolBeca.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitolBeca.setFont(new Font("Dubai", Font.BOLD, 21));
+		lblTitolBeca.setBounds(10, 11, 798, 41);
+		panel.add(lblTitolBeca);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 181, 818, 343);
@@ -158,6 +172,65 @@ public class BecaFilterForm extends JPanel {
 		btnSearch.setBounds(10, 130, 40, 40);
 		btnSearch.setIcon(setIcons("/pictures/search.png", btnSearch));		
 		panel.add(btnSearch);
+		
+		JButton btnFilter = new JButton("");
+		btnFilter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filtrarBeca();
+			}
+		});
+		
+		btnFilter.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnFilter.setSize(new Dimension(20, 20));
+		btnFilter.setPreferredSize(new Dimension(20, 20));
+		btnFilter.setFocusable(false);
+		btnFilter.setBorder(null);
+		btnFilter.setBackground(Color.WHITE);
+		btnFilter.setBounds(472, 76, 20, 20);
+		btnFilter.setIcon(setIcons("/pictures/filter.png", btnFilter));	
+		panel.add(btnFilter);
+		
+		cbCamp = new JComboBox<String>();
+		cbCamp.setSelectedIndex(-1);
+		cbCamp.setBorder(null);
+		cbCamp.setBounds(10, 74, 160, 22);
+		panel.add(cbCamp);
+		
+        //Omplir el combo box amb els camps
+		cbCamp.addItem("");
+        for(int i = 0; i < campCombo.length ; i++ ){
+            cbCamp.addItem(campCombo[i]);}
+        cbCamp.setSelectedIndex(0);
+		
+        tfValor = new JTextField();
+		tfValor.setColumns(10);
+		tfValor.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		tfValor.setBounds(180, 74, 202, 22);
+		panel.add(tfValor);
+		
+		cbOrdre = new JComboBox<String>();
+		cbOrdre.setSelectedIndex(-1);
+		cbOrdre.setBorder(null);
+		cbOrdre.setBounds(392, 74, 70, 22);
+		panel.add(cbOrdre);
+		
+        //Omplir el combo box amb els ordre
+		cbOrdre.addItem("");
+        for(int i = 0; i < ordre.length ; i++ ){
+            cbOrdre.addItem(ordre[i]);}
+        cbOrdre.setSelectedIndex(0);
+		
+		JLabel lblCamp = new JLabel("Camp a filtrar");
+		lblCamp.setBounds(10, 56, 160, 20);
+		panel.add(lblCamp);
+		
+		JLabel lblValor = new JLabel("Valor a trobar");
+		lblValor.setBounds(180, 56, 202, 20);
+		panel.add(lblValor);
+		
+		JLabel lblOrdre = new JLabel("Ordre");
+		lblOrdre.setBounds(392, 56, 70, 20);
+		panel.add(lblOrdre);
 
 	}
 	
@@ -340,7 +413,7 @@ public class BecaFilterForm extends JPanel {
 			}
 		} catch (Exception e) {
 			e.getMessage();
-			controllerView.missatgeErrorIncidencia(NO_REGISTRE_PER_ACTUALITZAR);
+			controllerView.missatgeErrorIncidencia(NO_REGISTRE_PER_LLEGIR);
 			//becaEditForm.dispose();
 		}
 	}
@@ -351,13 +424,24 @@ public class BecaFilterForm extends JPanel {
 	 *
 	 */	
 	public void recarregarTaula(){
-		JTable table = getControllerView().getMainview().getBecaForm().getTable();
-		int filas =	table.getRowCount();
-	    for (int i = 0;filas>i; i++) {
-	    	getControllerView().getMainview().getBecaForm().getModel().removeRow(0);
-	    }
+		borrarTaulaBeca();
 		getControllerView().llistarBeca();
 	}
+	
+	
+	/**
+	 * Metode per filtar els registres  
+	 *
+	 */	
+	public void filtrarBeca(){
+		borrarTaulaBeca();
+		cbCamp.getSelectedIndex();
+		String campF = camp[cbCamp.getSelectedIndex()];
+		String valor = tfValor.getText();
+		String ordre = (String)cbOrdre.getSelectedItem();
+		getControllerView().filtrarBeca(campF, valor, ordre);
+	}
+	
 	
 	
 	/**
@@ -376,4 +460,16 @@ public class BecaFilterForm extends JPanel {
         return index;
 	}
 	
+	
+	/**
+	 * Metode per borrar a la taula 
+	 *
+	 */	
+	public void borrarTaulaBeca(){
+		JTable table = getControllerView().getMainview().getBecaForm().getTable();
+		int filas =	table.getRowCount();
+	    for (int i = 0;filas>i; i++) {
+	    	getControllerView().getMainview().getBecaForm().getModel().removeRow(0);
+	    }
+	}
 }

@@ -32,6 +32,7 @@ public class ControllerView {
 	private static final String MODI_OK= "Actualització correcte";
 	private static final String PAGAT_OK= "S'ha actualitzat el pagament correctament";
 	private static final String DESPAGAT_OK= "Factura no pagada";	
+	private static final String NO_REGISTRES= "No hi ha registres";
 	
 		
 	private LoginView loginview;
@@ -188,6 +189,22 @@ public class ControllerView {
 	
 	
 	/**
+	 * Metode controlar la part de la vista de filtrar departament.
+	 */
+	public void filtrarDepartament(String camp, String valor, String ordre ) {						
+		Departament depts[] = controlOper.llistarDepartament(camp, valor, ordre);
+		if (depts == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else if (depts.length == 0){
+			missatgeIncidencia(NO_REGISTRES);
+		}else {
+			for(int i=0; i<depts.length; i++){
+				mainview.getDepartamentForm().getModel().insertRow(0, depts[i].getRow());
+			}			
+		}
+	}
+	
+	/**
 	 * Metode controlar la part de la vista consulta individual que s'ha de buscar departament.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Departament. Retorna la consulta
@@ -265,6 +282,23 @@ public class ControllerView {
 		Servei serveis[] = controlOper.llistarServei("", "", "");
 		if (serveis == null) {
 			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<serveis.length; i++){
+				mainview.getServeiForm().getModel().insertRow(0, serveis[i].getRow());
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vista de filtrar servei.
+	 */
+	public void filtrarServei(String camp, String valor, String ordre ) {						
+		Servei serveis[] = controlOper.llistarServei(camp, valor, ordre);
+		if (serveis == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else if (serveis.length == 0){
+			missatgeIncidencia(NO_REGISTRES);
 		}else {
 			for(int i=0; i<serveis.length; i++){
 				mainview.getServeiForm().getModel().insertRow(0, serveis[i].getRow());
@@ -420,6 +454,23 @@ public class ControllerView {
 	
 	
 	/**
+	 * Metode controlar la part de la vista de filtrar empleat.
+	 */
+	public void filtrarEmpleat(String camp, String valor, String ordre ) {						
+		Empleat emp[] = controlOper.llistarEmpleat(camp, valor, ordre);
+		if (emp == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else if (emp.length == 0){
+			missatgeIncidencia(NO_REGISTRES);
+		}else {
+			for(int i=0; i<emp.length; i++){
+				mainview.getEmpleatForm().getModel().insertRow(0, emp[i].getRow());
+			}			
+		}
+	}
+	
+	
+	/**
 	 * Metode controlar la part de la vista consulta individual que ha de buscar un empleat.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Empleat. Retorna la consulta
@@ -518,6 +569,22 @@ public class ControllerView {
 	
 	
 	/**
+	 * Metode controlar la part de la vista de filtrar estudiant.
+	 */
+	public void filtrarEstudiant(String camp, String valor, String ordre ) {						
+		Estudiant est[] = controlOper.llistarEstudiant(camp, valor, ordre);
+		if (est == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else if (est.length == 0){
+			missatgeIncidencia(NO_REGISTRES);
+		}else {
+			for(int i=0; i<est.length; i++){
+				mainview.getEstudiantForm().getModel().insertRow(0, est[i].getRow());
+			}			
+		}
+	}
+	
+	/**
 	 * Metode controlar la part de la vista consulta individual que ha de buscar un estudiant.
 	 * @param codi. Codi del registre que s'ha de consultar.
 	 * @return Estudiant. Retorna la consulta
@@ -603,6 +670,23 @@ public class ControllerView {
 		Beca beques[] = controlOper.llistarBeca("", "", "");
 		if (beques == null) {
 			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<beques.length; i++){
+				mainview.getBecaForm().getModel().insertRow(0, beques[i].getRow(beques[i].getNomCognomsEstudiant(), beques[i].getNomServei()));
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vista de filtrar beca.
+	 */
+	public void filtrarBeca(String camp, String valor, String ordre ) {						
+		Beca beques[] = controlOper.llistarBeca(camp, valor, ordre);
+		if (beques == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else if (beques.length == 0){
+			missatgeIncidencia(NO_REGISTRES);
 		}else {
 			for(int i=0; i<beques.length; i++){
 				mainview.getBecaForm().getModel().insertRow(0, beques[i].getRow(beques[i].getNomCognomsEstudiant(), beques[i].getNomServei()));
@@ -711,6 +795,23 @@ public class ControllerView {
 		Sessio sessions[] = controlOper.llistarSessio("", "", "");
 		if (sessions == null) {
 			missatgeErrorIncidencia(incidencia);
+		}else {
+			for(int i=0; i<sessions.length; i++){
+				mainview.getSessioForm().getModel().insertRow(0, sessions[i].getRow());
+			}			
+		}
+	}
+	
+	
+	/**
+	 * Metode controlar la part de la vista de filtrar sessions.
+	 */
+	public void filtrarSessio(String camp, String valor, String ordre ) {						
+		Sessio sessions[] = controlOper.llistarSessio(camp, valor, ordre);
+		if (sessions == null) {
+			missatgeErrorIncidencia(incidencia);
+		}else if (sessions.length == 0){
+			missatgeIncidencia(NO_REGISTRES);
 		}else {
 			for(int i=0; i<sessions.length; i++){
 				mainview.getSessioForm().getModel().insertRow(0, sessions[i].getRow());

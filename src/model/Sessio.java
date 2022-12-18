@@ -155,7 +155,7 @@ public class Sessio {
 		JSONObject dades = new JSONObject();	
 		dades.put("camp", camp);
 		dades.put("ordre", ordre);	
-		dades.put("valor", ordre);	
+		dades.put("valor", valor);	
 		json.put("dades", dades);
 		return json.toString();
 	}	

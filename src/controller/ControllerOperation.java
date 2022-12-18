@@ -908,7 +908,7 @@ public class ControllerOperation {
 			factura.setNomEstudiant(dades.getString("nomEstudiant"));
 			factura.setCognomEstudiant(dades.getString("cognomsEstudiant"));
 			
-			JSONObject sessions = json.getJSONObject("sessions");
+			JSONObject sessions = dades.getJSONObject("sessions");
 			Iterator<String> x = sessions.keys();
 			while (x.hasNext()){
 			    String key = (String) x.next();
@@ -919,7 +919,7 @@ public class ControllerOperation {
 			for(int i=0; i<arr.length(); i++){   
 				  JSONObject l = arr.getJSONObject(i);
 				  linies[i] = new LiniaFactura();
-				  linies[i].setDataIHora(l.getString("dataIhora"));
+				  linies[i].setDataIHora(l.getString("dataIHora"));
 				  linies[i].setImportBeca(l.getDouble("importBeca"));
 				  linies[i].setImportEstudiant(l.getDouble("importEstudiant"));
 				  linies[i].setNomServei(l.getString("nomServei"));
