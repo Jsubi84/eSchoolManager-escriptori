@@ -16,20 +16,6 @@ public class Beca {
 		
 	}
 
-	public Beca(int codi, int codiEstudiant, int codiServei, String adjudicant, double importInicial,
-			double importRestant, boolean finalitzada, String nomCognomsEstudiant, String nomServei) {
-		this.codi = codi;
-		this.codiEstudiant = codiEstudiant;
-		this.codiServei = codiServei;
-		this.adjudicant = adjudicant;
-		this.importInicial = importInicial;
-		this.importRestant = importRestant;
-		this.finalitzada = finalitzada;
-		this.nomCognomsEstudiant = nomCognomsEstudiant;
-		this.nomServei = nomServei;
-	}
-
-
 	public Beca(int codiEstudiant, int codiServei, String adjudicant, double importInicial) {
 		this.codiEstudiant = codiEstudiant;
 		this.codiServei = codiServei;

@@ -378,8 +378,7 @@ public class EmpleatFilterForm extends JPanel {
 			empleatEditForm.getTfAdreca().setText(emp.getAdreca());
 			empleatEditForm.getTfTelefon().setText(emp.getTelefon());
 			empleatEditForm.getTfEmail().setText(emp.getEmail());
-			empleatEditForm.getCbDepts().setSelectedIndex(retIndexCombo(
-					emp.getCodiDepartament() +"-" + emp.getNomDep(), empleatEditForm.getCbDepts()));
+			empleatEditForm.getLblDepartament().setText(emp.getCodiDepartament() + "-" + emp.getNomDep() );
 			empleatEditForm.getCbDepts().setEnabled(false);			
 			empleatEditForm.getTfUsuari().setText(emp.getUsuari());
 			empleatEditForm.getTfContrasenya().setText("");

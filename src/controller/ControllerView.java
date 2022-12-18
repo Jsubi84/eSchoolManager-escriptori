@@ -26,7 +26,6 @@ import view.MainView;
  */
 public class ControllerView {
 	
-//	private static final String FACTURA_OK= "Factura generada correctament";
 	private static final String ALTA_OK= "Alta correcte";
 	private static final String BAIXA_OK= "Baixa correcte";
 	private static final String MODI_OK= "Actualització correcte";
@@ -414,7 +413,7 @@ public class ControllerView {
 	 * Metode controlar la part de la vista modificar empleat.
 	 * @param codi. Codi del registre que s'ha de modificar.
 	 */
-	public void modiEmpleat(int codi) {
+	public void modiEmpleat(int codi, Short mode) {
 		Empleat emp= new Empleat();
 		
 		emp.setCodi(codi);
@@ -425,7 +424,12 @@ public class ControllerView {
 		emp.setAdreca(mainview.getEmpleatForm().getEmpleatEditForm().getTfAdreca().getText());
 		emp.setTelefon(mainview.getEmpleatForm().getEmpleatEditForm().getTfTelefon().getText());
 		emp.setEmail(mainview.getEmpleatForm().getEmpleatEditForm().getTfEmail().getText());
-		emp.setCodiDepartament(Convert.splitCombo((String) mainview.getEmpleatForm().getEmpleatEditForm().getCbDepts().getSelectedItem()));
+		if (mode == 2) {
+			emp.setCodiDepartament(Convert.splitCombo((String) mainview.getEmpleatForm().getEmpleatEditForm().getCbDepts().getSelectedItem()));
+		}else{
+			emp.setCodiDepartament(Convert.splitCombo((String) mainview.getEmpleatForm().getEmpleatEditForm().getLblDepartament().getText()));
+		}
+		
 		emp.setUsuari(mainview.getEmpleatForm().getEmpleatEditForm().getTfUsuari().getText());
 		emp.setContrasenya(mainview.getEmpleatForm().getEmpleatEditForm().getTfContrasenya().getText());
 		emp.setActiu(mainview.getEmpleatForm().getEmpleatEditForm().getCkActiu().isSelected());

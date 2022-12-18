@@ -187,6 +187,7 @@ public class FacturaGeneForm extends JPanel {
         panel.add(lblNomEstudiant);
         
         tglbtnPagat = new JToggleButton("PAGAT");
+        tglbtnPagat.setEnabled(false);
         tglbtnPagat.setBackground(Color.WHITE);
         tglbtnPagat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -338,7 +339,8 @@ public class FacturaGeneForm extends JPanel {
 				tglbtnPagat.setSelected(factura.getPagat());
 				
 				lblTotalBeca.setText(String.valueOf(tBeca));
-				lblTotalEst.setText(String.valueOf(tEstudiant));					
+				lblTotalEst.setText(String.valueOf(tEstudiant));
+				tglbtnPagat.setEnabled(true);
 			}else{
 				controllerView.missatgeIncidencia(SENSE_SESSIONS);
 			}

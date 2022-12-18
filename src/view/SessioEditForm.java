@@ -199,25 +199,31 @@ public class SessioEditForm extends JDialog {
 		
         //COMBOBOX PER PROFESSOR
 		Login login = controllerView.getControlOper().getLogin();
-        if (checkSessionOnly(login)) {
+		
+		if (checkSessionOnly(login)) {
         	cbProfe.setEnabled(false);
-        }else{
-        	Empleat empleats[] = controllerView.getControlOper().llistarEmpleat("", "", "");//("codiDepartament", "17", "");
+        	cbProfe.addItem(login.getCodiEmpleat() + "-" + login.getNom());
+        	cbProfe.setSelectedIndex(0);
+		}else {
+			Empleat empleats[] = controllerView.getControlOper().llistarEmpleat("", "", "");
+	
 			cbProfe.removeAllItems();        	
-        	
+	    	
 	        //Omplir el combo box amb els professor
 			if (empleats != null) {
 		        for(int i = 0; i < empleats.length ; i++ ){
 		            cbProfe.addItem(String.valueOf(empleats[i].getCodi()) +"-"+ empleats[i].getNom()
 		            		+" "+ empleats[i].getCognoms());}
 		        cbProfe.setSelectedIndex(-1); 				
-			}
-       	
-        }
-        
+			}  			
+		}
+		
+  
+			
+			
         
         //COMBOBOX PER ESTUDIANT
-		Estudiant estudiants[] = controllerView.getControlOper().llistarEstudiant("", "", "");//("registrat", "true", "");
+		Estudiant estudiants[] = controllerView.getControlOper().llistarEstudiant("", "", "");
 		cbEstudiant.removeAllItems();
 
         //Omplir el combo box amb els professor
@@ -352,5 +358,6 @@ public class SessioEditForm extends JDialog {
 		}
 		return sOnly;
 	}
+	
 	
 }

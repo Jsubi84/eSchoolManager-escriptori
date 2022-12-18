@@ -14,12 +14,11 @@ public class Empleat extends Persona {
 	}
 	
 	
-	public Empleat(int codi, int codiDepartament, Boolean actiu, String nomDep, String contrasenya, String usuari) {
-		super();
-		this.codi = codi;
+	public Empleat(String dni, String nom, String cognoms, String dataNaixament, String adreca, String telefon,
+			String email, int codiDepartament, Boolean actiu, String contrasenya, String usuari) {
+		super(dni, nom, cognoms, dataNaixament, adreca,telefon, email);
 		this.codiDepartament = codiDepartament;
 		this.actiu = actiu;
-		this.nomDep = nomDep;
 		this.contrasenya= contrasenya;
 		this.usuari = usuari;
 	}

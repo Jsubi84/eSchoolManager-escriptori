@@ -52,7 +52,7 @@ public class ServeiFilterForm extends JPanel {
 	private JTextField tfValor;
 
 	private JComboBox<String> cbCamp, cbOrdre;
-	private String[] campCombo = {"Codi del servi", "Nom", "Durada","Cost"};
+	private String[] campCombo = {"Codi del servei", "Nom", "Durada","Cost"};
 	private String[] camp = {" ","codi","nom","durada", "cost"};
 	private String[] ordre = {"DESC","ASC"};
 	

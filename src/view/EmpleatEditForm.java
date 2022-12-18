@@ -47,7 +47,7 @@ public class EmpleatEditForm extends JDialog {
 	private JButton okButton, cancelButton;
 	private JCheckBox ckActiu;
 	private ControllerView controllerView;
-	private JLabel lblDataNx, lblCognoms, lblTelefon, lblAdreca,lblnom,lblEmail,lblContrasenya,lblUsuari,lblCodi,lblDNI;
+	private JLabel lblDataNx, lblCognoms, lblTelefon, lblAdreca,lblnom,lblEmail,lblContrasenya,lblUsuari,lblCodi,lblDNI, lblDepartament;
 	private JFormattedTextField ftfDNI, ftfDataNa;
 	private JTextField tfnom,tfCodi,tfCognoms,tfTelefon,tfAdreca,tfEmail,tfContrasenya,tfUsuari; 
 	
@@ -105,8 +105,10 @@ public class EmpleatEditForm extends JDialog {
 					}else if(cbDepts.getSelectedIndex() == 0) {
 						controllerView.missatgeIncidencia(DEPARTAMENT_ISBLACK);						
 					}else {//Fem modificacio del empleat
-						getControllerView().modiEmpleat(Integer.parseInt(tfCodi.getText()));						
-						getControllerView().getMainview().getEmpleatForm().recarregarTaula();							
+						getControllerView().modiEmpleat(Integer.parseInt(tfCodi.getText()), mode);
+						if (mode == MODIFICAR) {
+							getControllerView().getMainview().getEmpleatForm().recarregarTaula();							
+						}
 						tancarForm();
 					}
 				}else if (mode == LLEGIR){ 
@@ -256,20 +258,25 @@ public class EmpleatEditForm extends JDialog {
 		cbDepts.setBounds(172, 7, 137, 22);
 		panel.add(cbDepts);
 		
-		Departament departaments[] = controllerView.getControlOper().llistarDepartament("", "", "");
-		cbDepts.removeAllItems();
-
-        //Omplir el combo box
-		cbDepts.addItem("<--DEPARTAMENT-->");
-        for(int i = 0; i < departaments.length ; i++ ){
-            cbDepts.addItem(String.valueOf(departaments[i].getCodi()) +"-" + departaments[i].getNomDepartament());
-        }
-        cbDepts.setSelectedIndex(0);
-        
-        if(mode == MODIUSER) {
-        	setTitle("Gestio dades usuari");
-        }
 		
+		if (mode != MODIUSER) {
+			Departament departaments[] = controllerView.getControlOper().llistarDepartament("", "", "");
+			cbDepts.removeAllItems();
+	
+	        //Omplir el combo box
+			cbDepts.addItem("<--DEPARTAMENT-->");
+	        for(int i = 0; i < departaments.length ; i++ ){
+	            cbDepts.addItem(String.valueOf(departaments[i].getCodi()) +"-" + departaments[i].getNomDepartament());
+	        }
+	        cbDepts.setSelectedIndex(0);
+	        
+		}else{
+			setTitle("Gestio dades usuari");
+			cbDepts.setVisible(false);
+			lblDepartament = new JLabel("");
+			lblDepartament.setBounds(172, 7, 137, 22);
+			panel.add(lblDepartament);
+		}
 	}
 	
 
@@ -429,5 +436,16 @@ public class EmpleatEditForm extends JDialog {
 	public void setLblCodi(JLabel lblCodi) {
 		this.lblCodi = lblCodi;
 	}
+
+
+	public JLabel getLblDepartament() {
+		return lblDepartament;
+	}
+
+
+	public void setLblDepartament(JLabel lblDepartament) {
+		this.lblDepartament = lblDepartament;
+	}
 	
+
 }

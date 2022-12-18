@@ -25,8 +25,8 @@ public class TalkToServer {
 	
     private static final int PORT=8080;
     //private static final String IPADDRESS="localhost";
-    //private static final String IPADDRESS="192.168.18.137";
-    private static final String IPADDRESS="10.2.55.226";
+    private static final String IPADDRESS="192.168.18.137";
+    //private static final String IPADDRESS="10.2.55.226";
 
 	/**
      * Enviar crida i esperar la resposta del servidor.
